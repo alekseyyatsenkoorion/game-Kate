@@ -1,6 +1,6 @@
 # Контракты модулей — «Шестое чувство»
 
-Версия **2.5** от 24.11.2026. Меняет только оркестратор. Агент, которому нужен другой интерфейс, пишет запрос оркестратору.
+Версия **2.6** от 24.11.2026. Меняет только оркестратор. Агент, которому нужен другой интерфейс, пишет запрос оркестратору.
 Нотация — сигнатуры в стиле TypeScript, без реализации. Код — ES-модули (`export`), классы.
 Для каждого модуля указаны: имя, входы, выходы, что происходит при ошибке.
 
@@ -234,7 +234,8 @@ type ImageSource =
 interface Scoring {
   trial(r: TrialResult, b: TrialBalance): TrialScore;
   episode(n: number, scores: TrialScore[]): EpisodeScore;
-  rivals(n: number, player: EpisodeScore, state: ProgressData, rng: Rng): RivalsOutcome;
+  rivals(n: number, player: EpisodeScore, state: ProgressData, rng: Rng, hintsUsed?: number, results?: TrialResult[]): RivalsOutcome;
+  guestGain(n: number, results: TrialResult[]): number;   // 2.6: base уровня × guest.accuracy + balance.guest.winBonus за забранное испытание
   title(totalPoints: number): { id: string; label: string };
 }
 interface TrialScore { points: number; stars: 0|1|2|3; breakdown: { base: number; hints: number; mistakes: number; time: number } }
@@ -251,7 +252,7 @@ interface RivalsOutcome {
 - **Выпуск:** очки складываются, звёзды — среднее с округлением вниз, `powerGain` — сумма звёзд всех испытаний.
 - **Соперники:** очки бота = `base × clamp(N(skill, spread), 0, 1)` через `rng` с seed выпуска, поэтому воспроизводимо. Выбывание только после выпусков из `eliminateAfter`: уходит последний из оставшихся. Если последняя игрок — `playerMustReplay = true`, никто не выбывает.
 - **Скептик:** `skepticTraps = hintsUsed выпуска ≥ 2 ? 1 : 0`.
-- **Гость (этап 4):** если `guest.enabled`, строка `guest` попадает в таблицу, но не выбывает.
+- **Гость (2.6):** если `guest.enabled`, строка `guest` попадает в таблицу (места), но не выбывает и не влияет на выбывание и `playerMustReplay`. Ходы по очереди — только Ширма и Багажник (`ctx.turn`); Кате испытание засчитывается решённым, её accuracy — по её ошибкам; достижения за испытание, которое забрал гость, не выдаются.
 - **Ошибки:** вход вне диапазонов (accuracy вне 0..1, неизвестный уровень, n вне 1..12) → бросает `SCORE_INPUT`. Это ошибка разработки, ловит тест 4.1.
 
 ---
@@ -361,7 +362,7 @@ interface TrialResult {
   hintsUsed: number; powerSpent: number; mistakes: number;
   timeMs: number;                                       // активное время, без пауз
   caseClues: string[];                                  // найденные улики сквозного дела
-  guest?: { solved: boolean; accuracy: number };        // этап 4
+  guest?: { solved: boolean; accuracy: number; winner: 'player' | 'guest' };   // режим вдвоём (2.6)
 }
 ```
 ### 11.2 Вход и выход
@@ -455,6 +456,7 @@ interface TrialResult {
 
 ## 14. Журнал изменений
 - 1.0 — 24.11.2026 — первая версия.
+- 2.6 — 24.11.2026 — режим «Играем вдвоём»: ctx.turn, TrialResult.guest.winner, Scoring.guestGain, balance.guest.winBonus.
 - 2.5 — 24.11.2026 — достижения: data/achievements.json (id, titleKey, descKey, icon, rule; виды правил episodes, starEpisodes, cleanRun, trial, survived, title, season, caseSolved), ContentLoader.achievements(); Settings.musicVolume, Audio.setMusicVolume(v).
 - 2.4 — 24.11.2026 — ловушки скептика добавляет само испытание (сверх данных уровня: ложных может стать на 1 больше, чем в §12.2); признаки предметов item.<id>.trait / traitKind в texts.json.
 - 2.3 — 24.11.2026 — Фото-дело: вещи с подписью (labelKey) вместо id предмета; Тёмная комната: предметы картинки с id и labelKey.

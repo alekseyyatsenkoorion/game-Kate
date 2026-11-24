@@ -61,6 +61,8 @@ class ShirmaTrial {
     this.done = false;         // ответ найден, ввод больше не принимается
     this.finished = false;
     this.mistakes = 0;
+    this.guestMistakes = 0;    // режим «Гость»: ошибки гостя (this.mistakes — ошибки игрока)
+    this.winner = null;        // режим «Гость»: кто ответил верно — 'player' | 'guest'
     this.hintsUsed = 0;
     this.powerSpent = 0;
     this.opened = 0;           // сколько подсказок открыто (включая бесплатную)
@@ -345,14 +347,18 @@ class ShirmaTrial {
   }
 
   // ---------- ответ ----------
+  // Режим «Гость» (ctx.turn): попытка — от имени ctx.turn.who, после ошибки ход переходит
   _choose(id, card) {
     if (card.classList.contains('is-wrong')) return;
-    if (id === this.p.answer) { this._win(card); return; }
-    this.mistakes++;
+    const turn = this.ctx.turn;
+    const who = turn ? turn.who : 'player';
+    if (id === this.p.answer) { if (turn) this.winner = who; this._win(card); return; }
+    if (who === 'guest') this.guestMistakes++; else this.mistakes++;
     card.classList.add('is-wrong');
     this._shake(card);
     this.ctx.audio.sfx('wrong');
     this.ctx.react('mistake');
+    if (turn) turn.next();
   }
 
   _win(card) {
@@ -381,18 +387,25 @@ class ShirmaTrial {
     if (this.finished || this.dead) return;
     this.finished = true;
     const n = this.p.options.length;
-    this.ctx.finish({
+    const acc = (m) => Math.max(0, 1 - m / Math.max(1, n - 1));
+    const result = {
       type: 'shirma',
       taskId: this.task.id,
       level: this.level,
       solved: solved,
-      accuracy: Math.max(0, 1 - this.mistakes / Math.max(1, n - 1)),
+      accuracy: acc(this.mistakes),
       hintsUsed: this.hintsUsed,
       powerSpent: this.powerSpent,
       mistakes: this.mistakes,
       timeMs: this.timeMs != null ? this.timeMs : this._activeMs(),
       caseClues: []
-    });
+    };
+    // Вдвоём: испытание завершено для игрока в любом случае, итог гостя — отдельно
+    if (this.ctx.turn) {
+      result.solved = true;
+      result.guest = { solved: this.winner === 'guest', accuracy: acc(this.guestMistakes), winner: this.winner || 'player' };
+    }
+    this.ctx.finish(result);
   }
 }
 

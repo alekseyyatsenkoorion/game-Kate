@@ -39,11 +39,13 @@ export class TrialHost extends Scene {
             (ep.trials.length > 1 ? ' · ' + this.t('ui.partOf', { i: idx + 1, k: ep.trials.length }) : '') +
             ' · ' + this.t('ui.level', { l: def.level }) + '</span><b>' + this.t('trial.' + def.type + '.name') + '</b></div>' +
           '<div class="power" data-power>' + this.t('ui.power') + ': <b>' + app.progress.get().power + '</b></div>' +
+          (this._guestOn(def.type) ? '<div class="turn-badge" data-turn></div>' : '') +
         '</div>' +
         '<div class="trial-field"></div>' +
       '</div>';
     this.field = root.querySelector('.trial-field');
     this.powerEl = root.querySelector('[data-power] b');
+    this.turnEl = root.querySelector('[data-turn]');
     if (!mod) {
       log.warn('TRIAL_UNKNOWN_' + def.type, 'Нет модуля ' + def.type);
       this.field.innerHTML = '<div class="wip">' + this.t('ui.inDevelopment') + '</div>';
@@ -96,9 +98,26 @@ export class TrialHost extends Scene {
         host._startTask(mod, tries + 1);
       }
     };
+    // Режим «Гость» (Т-19): ходы по очереди только в Ширме и Багажнике, первый ход у игрока
+    if (this.turnEl) {
+      ctx.turn = { who: 'player', next() { this.who = this.who === 'player' ? 'guest' : 'player'; host._syncTurn(true); } };
+      this.turn = ctx.turn;
+      this._syncTurn(false);
+    }
     this.inst = mod.create(ctx);
     try { await this.inst.start(this.field, task, def.level); }
     catch (e) { ctx.fail(e); }
+  }
+  _guestOn(type) {
+    const g = this.app.progress.get().guest;
+    return !!(g && g.enabled) && (type === 'shirma' || type === 'bagazhnik');
+  }
+  _syncTurn(changed) {
+    const el = this.turnEl; if (!el || !this.turn) return;
+    const guest = this.turn.who === 'guest';
+    el.textContent = this.t(guest ? 'ui.turnGuest' : 'ui.turnPlayer');
+    el.classList.toggle('is-guest', guest);
+    if (changed) { el.classList.remove('is-pulse'); void el.offsetWidth; el.classList.add('is-pulse'); }
   }
   _react(kind) {
     const app = this.app, rng = createRng(hashSeed(performance.now()));

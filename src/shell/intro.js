@@ -23,13 +23,29 @@ export class IntroScene extends Scene {
         '<div class="trial-list">' + this.t('ui.trials') + ': <b>' + esc(names) + '</b></div>' +
         '<p class="info small">' + this.t('trial.' + ep.trials[this.resumeIdx].type + '.rules') + '</p>' +
         (replay ? '<p class="info">' + this.t('ui.replayNote') + '</p>' : '') +
+        this.guestRow() +
         '<button class="btn gold" data-action="start">' + this.t(this.resumeIdx ? 'ui.resume' : 'ui.startTrial') + '</button>' +
       '</div>';
     if (app.audio.unlocked) app.audio.sayText(intro);
   }
+  // Переключатель «Играем вдвоём» (Т-19): хранится в progress.guest.enabled
+  guestOn() { const g = this.app.progress.get().guest; return !!(g && g.enabled); }
+  guestRow() {
+    const on = this.guestOn();
+    return '<div class="guest-row"><button class="btn small guest-tg' + (on ? ' is-on' : ' ghost') + '" data-action="guest">' +
+      this.t('ui.guestToggle') + ': ' + this.t(on ? 'ui.on' : 'ui.off') + '</button>' +
+      '<span class="guest-hint">' + this.t('ui.guestHint') + '</span></div>';
+  }
+  toggleGuest() {
+    const on = !this.guestOn();
+    this.app.progress.update((d) => { d.guest = Object.assign({ enabled: false, points: 0 }, d.guest, { enabled: on }); });
+    const row = this.root.querySelector('.guest-row');
+    if (row) row.outerHTML = this.guestRow();
+  }
   onInput(e) {
     const a = actionOf(e); if (!a) return;
     this.app.audio.sfx('tap');
+    if (a.act === 'guest') { this.toggleGuest(); return; }
     if (a.act === 'season') { this.app.audio.stopAll(); this.app.audio.music('ambient'); this.app.scenes.replace('season'); }
     if (a.act === 'start') { if (this.app.audio.speech) this.app.audio.speech.cancel(); this.app.scenes.replace('trial', { n: this.n, idx: this.resumeIdx }); }
   }

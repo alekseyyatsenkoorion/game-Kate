@@ -1,6 +1,6 @@
 // Стенд зоны B: запускает испытание с мок-ctx. Параметры URL:
 // ?type=shirma|bagazhnik|misterx&task=0&power=3&traps=0&texts=1&level=1
-// traps=0|1 — ловушка скептика; с texts=1 подгружает тексты ловушек; seed=N — свой seed для ctx.rng
+// traps=0|1 — ловушка скептика; turn=1 — режим «Гость» (ctx.turn); с texts=1 подгружает тексты ловушек; seed=N — свой seed для ctx.rng
 // Всё, что делает испытание, пишется в window.__log.
 
 const q = new URLSearchParams(location.search);
@@ -116,6 +116,11 @@ async function main() {
     finish: (result) => log.push({ ev: 'finish', result }),
     fail: (err) => log.push({ ev: 'fail', err })
   };
+
+  // ?turn=1 — режим «Гость»: ходы по очереди, первый у игрока; смена хода пишется в лог
+  if (q.get('turn') === '1') {
+    ctx.turn = { who: 'player', next() { this.who = this.who === 'player' ? 'guest' : 'player'; log.push({ ev: 'turn', who: this.who }); } };
+  }
 
   const field = document.getElementById('field');
   trackListeners = true;

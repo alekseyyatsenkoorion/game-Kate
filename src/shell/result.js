@@ -18,10 +18,13 @@ export class ResultScene extends Scene {
     const epScore = app.scoring.episode(n, scores);
     const hintsUsed = run.results.reduce((s, r) => s + r.hintsUsed, 0);
     const rng = createRng(hashSeed('rivals', n, run.attempt));
-    const riv = first ? app.scoring.rivals(n, epScore, state, rng, hintsUsed) : null;
+    const riv = first ? app.scoring.rivals(n, epScore, state, rng, hintsUsed, run.results) : null;
     const clues = (ep.clues || []).concat(...run.results.map((r) => r.caseClues || [])).filter((c, i, a) => a.indexOf(c) === i);
     this.mustReplay = !!(riv && riv.playerMustReplay);
     if (!this.mustReplay) app.progress.recordEpisode(n, epScore, riv, clues, app.dayLock.today());
+    // Режим «Гость»: очки гостя сезона — в progress.guest.points
+    const gRow = riv && !this.mustReplay ? riv.table.filter((r) => r.id === 'guest')[0] : null;
+    if (gRow) app.progress.update((d) => { d.guest = Object.assign({ enabled: true, points: 0 }, d.guest, { points: gRow.points }); });
     app.progress.clearRun();
     const newAch = this.mustReplay ? [] : await awardAchievements(app, { results: run.results });
 
@@ -31,11 +34,20 @@ export class ResultScene extends Scene {
     let table = '';
     if (riv) {
       table = '<table class="rivals">' + riv.table.map((r) => {
-        const name = r.id === 'player' ? this.t('ui.you') : c.character(r.id).name;
+        const me = r.id === 'player', guest = r.id === 'guest';
+        const name = me ? this.t('ui.you') : guest ? this.t('ui.guest') : c.character(r.id).name;
         const out = r.id === riv.eliminated ? ' <span class="out">' + this.t('ui.eliminated') + '</span>' : '';
-        return '<tr class="' + (r.id === 'player' ? 'me' : '') + '"><td>' + r.place + '</td><td class="nm">' + (r.id === 'player' ? '' : portrait(app, r.id, 30)) + esc(name) + out + '</td><td>' + r.points + '</td></tr>';
+        return '<tr class="' + (me ? 'me' : guest ? 'guest' : '') + '"><td>' + r.place + '</td><td class="nm">' + (me || guest ? '' : portrait(app, r.id, 30)) + esc(name) + out + '</td><td>' + r.points + '</td></tr>';
       }).join('') + '</table>';
     }
+    // Испытания вдвоём: кто забрал
+    const wonBy = run.results.map((r, i) => {
+      if (!r || !r.guest) return '';
+      const g = r.guest.winner === 'guest';
+      const who = '<b class="' + (g ? '' : 'me') + '">' + esc(this.t(g ? 'ui.guestName' : 'ui.playerName')) + '</b>';
+      const what = ep.trials.length > 1 ? esc(this.t('trial.' + ep.trials[i].type + '.name')) + ' · ' : '';
+      return '<p class="won-by">' + what + this.t('ui.wonBy', { name: who }) + '</p>';
+    }).join('');
     const gotClues = !this.mustReplay && first && clues.length ? '<p class="gain">' + this.t('ui.newClues', { k: clues.length }) + '</p>' : '';
     root.innerHTML =
       '<div class="screen result' + (n === 12 && !this.mustReplay ? ' has-case' : '') + '"' + bgAttr(app, 'bg-studio') + '>' + candles() +
@@ -44,6 +56,7 @@ export class ResultScene extends Scene {
         '<div class="res-row"><div class="res-left">' +
           '<div class="big-stars">' + stars(epScore.stars) + '</div>' +
           '<p class="pts">' + this.t('ui.points') + ': <b>' + epScore.points + '</b>' + (first && !this.mustReplay ? ' · +' + epScore.powerGain + ' ' + this.t('ui.powerGen') : '') + '</p>' +
+          wonBy +
           '<div class="host with-p">' + portrait(app, 'host', 56) + '<div><div class="host-name">' + this.t('char.host.name') + '</div><p>' + esc(hostLine) + '</p></div></div>' +
           '<div class="host skeptic with-p">' + portrait(app, 'skeptic', 56) + '<div><div class="host-name">' + this.t('char.skeptic.name') + '</div><p>' + esc(skLine) + '</p></div></div>' +
           gotClues +

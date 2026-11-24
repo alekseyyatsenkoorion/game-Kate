@@ -217,5 +217,8 @@
    "labelKey": "title.t5",
    "from": 1100
   }
- ]
+ ],
+ "guest": {
+  "winBonus": 20
+ }
 }

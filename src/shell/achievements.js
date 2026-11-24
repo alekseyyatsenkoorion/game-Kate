@@ -23,8 +23,9 @@ function done(st) { return Object.keys(st.episodes || {}); }
 const RULES = {
   episodes: (r, x) => done(x.state).length >= r.min,
   starEpisodes: (r, x) => done(x.state).filter((n) => x.state.episodes[n].stars >= r.stars).length >= r.min,
-  cleanRun: (r, x) => !!x.results && x.results.length > 0 && x.results.every((t) => t && t.solved && !t[r.zero]),
-  trial: (r, x) => !!x.results && x.results.some((t) => t && t.type === r.type && (r.level == null || t.level === r.level) && t.solved && !t[r.zero]),
+  // испытание, которое забрал гость (режим вдвоём), Кате в зачёт достижений не идёт
+  cleanRun: (r, x) => !!x.results && x.results.length > 0 && x.results.every((t) => t && t.solved && !t[r.zero] && !(t.guest && t.guest.winner === 'guest')),
+  trial: (r, x) => !!x.results && x.results.some((t) => t && t.type === r.type && (r.level == null || t.level === r.level) && t.solved && !t[r.zero] && !(t.guest && t.guest.winner === 'guest')),
   survived: (r, x) => Object.keys(x.state.rivals || {}).some((id) => x.state.rivals[id].eliminatedAfter != null),
   title: (r, x) => { const need = titleRank(x.app, r.id); return need >= 0 && titleRank(x.app, x.app.scoring.title(x.state.totalPoints).id) >= need; },
   season: (r, x) => done(x.state).length >= x.app.content.episodes().length,

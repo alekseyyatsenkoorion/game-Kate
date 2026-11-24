@@ -1,7 +1,7 @@
 # Проверка зоны B (испытания shirma, bagazhnik, misterx) на стенде tests/trials/harness.html.
 # Запуск: сервер `python3 -m http.server 8765` из корня проекта, затем
 #   python3 tests/trials/run_trials.py [base_url] [тип ...]
-# Без списка типов проверяются все. Тип traps — ловушки скептика (Ширма, Багажник).
+# Без списка типов проверяются все. Тип traps — ловушки скептика (Ширма, Багажник), guest — режим «Гость» (ctx.turn).
 # TRAPS_REBASELINE=1 — перезаписать эталон traps=0 (fixtures/traps0-baseline.json), только если вид машин меняли намеренно.
 # Снимки — в tests/snapshots/B/.
 import itertools, json, os, random, sys
@@ -702,9 +702,93 @@ def test_traps(b):
         json.dump(rebase, open(TR_BASE, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
+# --- режим «Гость» (Т-19): ctx.turn в Ширме и Багажнике ---
+def test_guest(b):
+    a3 = 1 - 1 / 3
+    # Ширма: ошибка игрока → ход гостю, гость отвечает верно
+    p = Page(b, 'type=shirma&turn=1&texts=1')
+    p.click('[data-sh="hint"]')
+    p.click('[data-opt="clock"]')
+    check('guest-shirma: после ошибки игрока ход перешёл к гостю', [e['who'] for e in p.ev('turn')] == ['guest'], p.ev('turn'))
+    p.click('[data-opt="clock"]')          # зачёркнутая — не попытка, ход не меняется
+    check('guest-shirma: тык по зачёркнутой не меняет ход', len(p.ev('turn')) == 1)
+    p.click('[data-opt="kettle"]', 1900)
+    f = p.finishes(); r = f[0] if f else {}
+    check('guest-shirma: finish 1 раз, solved, mistakes Кати 1, accuracy 1−1/3',
+          len(f) == 1 and r.get('solved') is True and r.get('mistakes') == 1 and abs(r.get('accuracy', 0) - a3) < 1e-9, r)
+    check('guest-shirma: guest = {solved: true, accuracy: 1, winner: guest}', r.get('guest') == {'solved': True, 'accuracy': 1, 'winner': 'guest'}, r.get('guest'))
+    check('guest-shirma: подсказка общая — hintsUsed 1', r.get('hintsUsed') == 1 and r.get('powerSpent') == 1, r)
+    check('guest-shirma: реакции mistake 1, correct 1', len(p.ev('react', kind='mistake')) == 1 and len(p.ev('react', kind='correct')) == 1)
+    check('guest-shirma: нет ошибок', not p.errors, p.errors)
+    p.close()
+    # Ширма: ошибка игрока, ошибка гостя, игрок отвечает верно
+    p = Page(b, 'type=shirma&turn=1')
+    p.click('[data-opt="clock"]'); p.click('[data-opt="teapot"]'); p.click('[data-opt="kettle"]', 1900)
+    r = (p.finishes() or [{}])[0]
+    check('guest-shirma(2): ходы игрок→гость→игрок', [e['who'] for e in p.ev('turn')] == ['guest', 'player'], p.ev('turn'))
+    check('guest-shirma(2): у Кати 1 ошибка, у гостя 1, забрала Катя',
+          r.get('mistakes') == 1 and abs(r.get('accuracy', 0) - a3) < 1e-9 and r.get('solved') is True and
+          r.get('guest', {}).get('winner') == 'player' and r['guest']['solved'] is False and abs(r['guest']['accuracy'] - a3) < 1e-9, r)
+    p.close()
+    # Ширма: игрок сразу верно — гость без ошибок, но не забрал
+    p = Page(b, 'type=shirma&turn=1')
+    p.click('[data-opt="kettle"]', 1900)
+    r = (p.finishes() or [{}])[0]
+    check('guest-shirma(3): Катя сразу верно — winner player, ход не менялся',
+          not p.ev('turn') and r.get('mistakes') == 0 and r.get('accuracy') == 1 and r.get('guest') == {'solved': False, 'accuracy': 1, 'winner': 'player'}, r)
+    p.close()
+    # Ширма без turn — поля guest нет
+    p = Page(b, 'type=shirma')
+    p.click('[data-opt="clock"]'); p.click('[data-opt="kettle"]', 1900)
+    r = (p.finishes() or [{}])[0]
+    check('guest-shirma: без ctx.turn нет поля guest и смен хода', 'guest' not in r and not p.ev('turn') and r.get('mistakes') == 1, r)
+    p.close()
+
+    # Багажник: ошибка игрока → ход гостю, гость находит
+    pl = FIX('bagazhnik.json')['tasks'][0]['payload']
+    tgt = pl['target']
+    wrong = [c['id'] for c in pl['cars'] if c['id'] != tgt]
+    p = Page(b, 'type=bagazhnik&turn=1&texts=1')
+    p.click('[data-car="%s"]' % wrong[0]); p.click('[data-bz="inspect"]')
+    p.click('[data-bz="choose"]', 300)
+    check('guest-bag: после ошибки игрока ход перешёл к гостю', [e['who'] for e in p.ev('turn')] == ['guest'], p.ev('turn'))
+    p.click('[data-car="%s"]' % tgt); p.click('[data-bz="inspect"]')
+    p.shot('guest-bag.png')
+    p.click('[data-bz="choose"]', 1900)
+    f = p.finishes(); r = f[0] if f else {}
+    check('guest-bag: finish 1 раз, solved, mistakes Кати 1, accuracy 0.75',
+          len(f) == 1 and r.get('solved') is True and r.get('mistakes') == 1 and r.get('accuracy') == 0.75, r)
+    check('guest-bag: guest = {solved: true, accuracy: 1, winner: guest}', r.get('guest') == {'solved': True, 'accuracy': 1, 'winner': 'guest'}, r.get('guest'))
+    check('guest-bag: осмотры общие — hintsUsed 2', r.get('hintsUsed') == 2 and r.get('powerSpent') == 2, r)
+    check('guest-bag: нет ошибок', not p.errors, p.errors)
+    p.close()
+    # Багажник: ошибки у обоих, гость ещё раз ошибается, Катя находит
+    p = Page(b, 'type=bagazhnik&turn=1')
+    for cid in wrong[:3]:
+        p.click('[data-car="%s"]' % cid); p.click('[data-bz="choose"]', 300)
+    p.click('[data-car="%s"]' % tgt); p.click('[data-bz="choose"]', 1900)
+    r = (p.finishes() or [{}])[0]
+    check('guest-bag(2): игрок, гость, игрок ошиблись — ход у гостя, гость нашёл',
+          [e['who'] for e in p.ev('turn')] == ['guest', 'player', 'guest'] and r.get('mistakes') == 2 and r.get('accuracy') == 0.5 and
+          r.get('guest') == {'solved': True, 'accuracy': 0.75, 'winner': 'guest'}, r)
+    p.close()
+    p = Page(b, 'type=bagazhnik')
+    p.click('[data-car="%s"]' % wrong[0]); p.click('[data-bz="choose"]', 300)
+    p.click('[data-car="%s"]' % tgt); p.click('[data-bz="choose"]', 1900)
+    r = (p.finishes() or [{}])[0]
+    check('guest-bag: без ctx.turn нет поля guest', 'guest' not in r and r.get('mistakes') == 1 and not p.ev('turn'), r)
+    p.close()
+    # destroy и случайные тыки вдвоём
+    for t in ('shirma', 'bagazhnik'):
+        p = Page(b, 'type=%s&turn=1' % t)
+        random_taps(p, 'guest-%s' % t, 7)
+        destroy_check(p, 'guest-%s' % t)
+        p.close()
+
+
 with sync_playwright() as pw:
     br = pw.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
-    for name, fn in [('shirma', test_shirma), ('bagazhnik', test_bagazhnik), ('misterx', test_misterx), ('traps', test_traps)]:
+    for name, fn in [('shirma', test_shirma), ('bagazhnik', test_bagazhnik), ('misterx', test_misterx), ('traps', test_traps), ('guest', test_guest)]:
         if not ONLY or name in ONLY:
             fn(br)
     br.close()

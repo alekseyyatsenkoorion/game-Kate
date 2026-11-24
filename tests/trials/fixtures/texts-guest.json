@@ -1,0 +1,10 @@
+{
+ "ui.guestToggle": "Играем вдвоём",
+ "ui.guestHint": "Ширму и Багажник проходите по очереди. Гость не выбывает",
+ "ui.turnPlayer": "Ход: Катя",
+ "ui.turnGuest": "Ход: Гость",
+ "ui.guest": "Гость",
+ "ui.wonBy": "Испытание забрал(а): {name}",
+ "ui.playerName": "Катя",
+ "ui.guestName": "Гость"
+}

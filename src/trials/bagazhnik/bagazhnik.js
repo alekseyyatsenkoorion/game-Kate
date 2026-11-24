@@ -167,6 +167,8 @@ class BagazhnikTrial {
     this.inspected = {};
     this.checked = {};
     this.mistakes = 0;
+    this.guestMistakes = 0;    // режим «Гость»: ошибки гостя (this.mistakes — ошибки игрока)
+    this.winner = null;        // режим «Гость»: кто нашёл человека — 'player' | 'guest'
     this.hintsUsed = 0;
     this.powerSpent = 0;
     this.t0 = 0;
@@ -426,13 +428,17 @@ class BagazhnikTrial {
     this._showClues(id);
   }
 
+  // Режим «Гость» (ctx.turn): «Человек здесь!» — от имени ctx.turn.who, после ошибки ход переходит
   _choose() {
     const id = this.sel;
     if (!id) return;
+    const turn = this.ctx.turn;
+    const who = turn ? turn.who : 'player';
     const spot = this.spots[id];
     this.ctx.audio.sfx('trunk');
     this._openTrunk(spot, id);
     if (id === this.p.target) {
+      if (turn) this.winner = who;
       this.done = true;
       this.timeMs = this._activeMs();             // время — до верного ответа, без анимации
       spot.classList.add('is-found');
@@ -444,7 +450,7 @@ class BagazhnikTrial {
       this.timers.push({ left: 1600, fn: () => this._finish(true) });
       return;
     }
-    this.mistakes++;
+    if (who === 'guest') this.guestMistakes++; else this.mistakes++;
     this.checked[id] = true;
     spot.classList.remove('is-sel');
     spot.classList.add('is-checked');
@@ -453,6 +459,7 @@ class BagazhnikTrial {
     this._flash('bag.empty', 'is-bad');
     this.timers.push({ left: 260, fn: () => this.ctx.audio.sfx('wrong') });
     this.ctx.react('mistake');
+    if (turn) turn.next();
   }
 
   _openTrunk(spot, id) {
@@ -489,18 +496,25 @@ class BagazhnikTrial {
   _finish(solved) {
     if (this.finished || this.dead) return;
     this.finished = true;
-    this.ctx.finish({
+    const acc = (m) => Math.max(0, 1 - 0.25 * m);
+    const result = {
       type: 'bagazhnik',
       taskId: this.task.id,
       level: this.level,
       solved: solved,
-      accuracy: Math.max(0, 1 - 0.25 * this.mistakes),
+      accuracy: acc(this.mistakes),
       hintsUsed: this.hintsUsed,
       powerSpent: this.powerSpent,
       mistakes: this.mistakes,
       timeMs: this.timeMs != null ? this.timeMs : this._activeMs(),
       caseClues: []
-    });
+    };
+    // Вдвоём: испытание завершено для игрока в любом случае, итог гостя — отдельно
+    if (this.ctx.turn) {
+      result.solved = true;
+      result.guest = { solved: this.winner === 'guest', accuracy: acc(this.guestMistakes), winner: this.winner || 'player' };
+    }
+    this.ctx.finish(result);
   }
 }
 

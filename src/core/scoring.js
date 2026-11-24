@@ -25,7 +25,8 @@ export class Scoring {
     const sumStars = scores.reduce((s, x) => s + x.stars, 0);
     return { points, stars: Math.floor(sumStars / scores.length), powerGain: sumStars, newClues: [] };
   }
-  rivals(n, player, state, rng, hintsUsed) {
+  // results (необязательно) — TrialResult выпуска: нужны для очков гостя (режим «Гость», Т-19)
+  rivals(n, player, state, rng, hintsUsed, results) {
     const bal = this.content.balance();
     const ep = this.content.episode(n);
     const rows = [];
@@ -41,14 +42,34 @@ export class Scoring {
     });
     const playerTotal = state.totalPoints + player.points;
     rows.push({ id: 'player', points: playerTotal, gained: player.points });
+    const g = state.guest;
+    if (g && g.enabled) {
+      const gained = this.guestGain(n, results);
+      rows.push({ id: 'guest', points: (g.points || 0) + gained, gained });
+    }
     rows.sort((a, b) => b.points - a.points);
     rows.forEach((r, i) => { r.place = i + 1; });
     let eliminated = null, playerMustReplay = false;
     if (bal.eliminateAfter.indexOf(n) >= 0) {
-      const last = rows[rows.length - 1];
+      const inGame = rows.filter((r) => r.id !== 'guest');      // гость не выбывает и на выбывание не влияет
+      const last = inGame[inGame.length - 1];
       if (last.id === 'player') playerMustReplay = true; else eliminated = last.id;
     }
     return { table: rows, eliminated, playerMustReplay, skepticTraps: (hintsUsed || 0) >= 2 ? 1 : 0 };
+  }
+  // Очки гостя за выпуск: base уровня × guest.accuracy по испытаниям вдвоём + бонус, если гость забрал испытание
+  guestGain(n, results) {
+    const ep = this.content.episode(n), bal = this.content.balance();
+    const bonus = bal.guest && typeof bal.guest.winBonus === 'number' ? bal.guest.winBonus : 20;
+    let sum = 0;
+    (results || []).forEach((r, i) => {
+      if (!r || !r.guest || !ep.trials[i]) return;
+      const acc = r.guest.accuracy;
+      if (!(acc >= 0 && acc <= 1)) throw bad('guest.accuracy ' + acc);
+      const b = this.content.trialBalance(ep.trials[i].type, ep.trials[i].level);
+      sum += Math.round(b.base * acc) + (r.guest.solved ? bonus : 0);
+    });
+    return sum;
   }
   title(totalPoints) {
     const ts = this.content.balance().titles.filter((t) => totalPoints >= t.from);

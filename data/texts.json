@@ -979,6 +979,14 @@
   "ach.season-done.title": "Финал сезона",
   "ach.season-done.desc": "Пройти все двенадцать выпусков",
   "ach.case-solved.title": "Тайна раскрыта",
-  "ach.case-solved.desc": "Верно связать все улики дела на Липовой"
+  "ach.case-solved.desc": "Верно связать все улики дела на Липовой",
+  "ui.guestToggle": "Играем вдвоём",
+  "ui.guestHint": "Ширму и Багажник проходите по очереди. Гость не выбывает",
+  "ui.turnPlayer": "Ход: Катя",
+  "ui.turnGuest": "Ход: Гость",
+  "ui.guest": "Гость",
+  "ui.wonBy": "Испытание забрал(а): {name}",
+  "ui.playerName": "Катя",
+  "ui.guestName": "Гость"
  }
 }
