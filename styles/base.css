@@ -40,7 +40,7 @@ h3 { font-size: 22px; color: #f1c86b; font-weight: normal; margin-bottom: 8px; }
 .modal .box { background: #1d0f2e; border: 2px solid #f1c86b; border-radius: 16px; padding: 28px 36px; max-width: 560px; text-align: center; }
 .modal p { font-size: 22px; margin-bottom: 20px; }
 .modal .row .btn { margin: 0 8px; }
-.banner { position: absolute; top: 10px; left: 50%; width: 600px; margin-left: -300px; display: flex; align-items: center; justify-content: space-between;
+.banner { position: absolute; bottom: 14px; left: 50%; width: 600px; margin-left: -300px; display: flex; align-items: center; justify-content: space-between;
   background: #1d0f2e; border: 2px solid #f1c86b; border-radius: 14px; padding: 8px 8px 8px 20px; font-size: 19px; }
 
 #rotate { display: none; }

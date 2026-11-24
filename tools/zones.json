@@ -1,0 +1,36 @@
+{
+ "about": "Карта зон из spec.md §10 в машинном виде. Читают tools/check-zone.js (какие файлы зона может менять) и tools/run-tests.py (какие тесты у зоны). Шаблоны: * — внутри одной папки, ** — любые вложенные папки.",
+ "zones": {
+  "O": { "name": "Оркестратор", "files": ["CLAUDE.md", "spec.md", "contracts.md", "tests.md", "prompt GPT.md", "STATUS.md", "schemas/**"] },
+  "A": { "name": "Каркас", "files": ["index.html", "manifest.webmanifest", "sw.js", "precache.json", "package.json", "package-lock.json", "playwright.config.js", "tools/**", "styles/base.css", "src/core/**", "tests/core/**", "tests/snapshots/A/**", "legacy/**"] },
+  "B": { "name": "Испытания", "files": ["src/trials/**", "tests/trials/**", "tests/snapshots/B/**"] },
+  "C": { "name": "Контент", "files": ["data/**", "assets/**", "tests/content/**", "tests/snapshots/C/**"] },
+  "D": { "name": "Оболочка", "files": ["src/shell/**", "tests/shell/**", "tests/snapshots/D/**"] }
+ },
+ "ignore": ["**/__pycache__/**", "**/*.pyc", "**/.DS_Store"],
+ "tests": {
+  "A": [
+   { "id": "smoke", "file": "tests/core/smoke.py", "title": "smoke: выпуски 1–2, режим теста, перезагрузка, без сети", "webkit": true },
+   { "id": "static", "file": "tests/core/static.py", "title": "1.8, 1.9, 2.14, 9.4: запреты в коде" },
+   { "id": "rules", "file": "tests/core/rules.py", "title": "группа 4: очки, звёзды, соперники, скептик, DayLock, мешок" },
+   { "id": "progress", "file": "tests/core/progress.py", "title": "группа 6: сохранение и продолжение" },
+   { "id": "update", "file": "tests/core/update.py", "title": "группы 7.1 и 8: обновление поверх старой версии" },
+   { "id": "levels", "file": "tests/core/levels.py", "title": "интеграция: выпуски 3–12 через режим теста" },
+   { "id": "size", "cmd": ["node", "tools/build-precache.js", "--check"], "title": "9.1: вес precache ≤ 15 МБ" }
+  ],
+  "B": [
+   { "id": "trials", "file": "tests/trials/run_trials.py", "server": true, "title": "Ширма, Багажник, Мистер Икс на стенде" },
+   { "glob": "tests/trials/*/run.py", "title": "испытание на своём стенде" }
+  ],
+  "C": [
+   { "id": "art", "file": "tests/content/art-check.py", "title": "картинки предметов и иконки" },
+   { "id": "pools", "file": "tests/content/check_pools.py", "title": "пулы заданий" },
+   { "id": "misterx-solver", "file": "tests/content/misterx_solver.py", "title": "2.6: решатель Мистера Икс" }
+  ],
+  "D": [
+   { "glob": "tests/shell/run*.py", "title": "оболочка" },
+   { "glob": "tests/shell/test_*.py", "title": "оболочка" }
+  ]
+ },
+ "always": "smoke"
+}

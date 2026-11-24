@@ -136,6 +136,7 @@ export class TrialHost extends Scene {
     this.finished = true;
     const run = this.run;
     run.results[this.idx] = result;
+    run.idx = this.idx + 1;                 // после перезапуска продолжаем со следующего испытания (или итогов)
     this.app.progress.saveRun(run);
     const next = this.idx + 1 < this.ep.trials.length;
     this.later(() => {

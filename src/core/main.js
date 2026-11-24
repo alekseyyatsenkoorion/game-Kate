@@ -11,7 +11,7 @@ import { Scoring } from './scoring.js';
 import { Updater } from './updater.js';
 import { TrialHost } from './trial-host.js';
 import { DebugScene, ErrorScene } from './debug-scene.js';
-import { initOverlay, banner } from './overlay.js';
+import { initOverlay, banner, hideBanner } from './overlay.js';
 import { registerShell } from '../shell/register.js';
 
 async function boot() {
@@ -52,12 +52,14 @@ async function boot() {
     if (document.hidden) { app.scenes.pause(); app.audio.pauseAll(); } else { app.scenes.resume(); app.audio.resumeAll(); }
   });
 
-  app.updater.onReady(() => {
-    banner(app.content.text('ui.updateReady'), app.content.text('ui.updateApply'), () => {
-      const ok = app.updater.applyNow(app.scenes.current().id);
-      return ok;
-    });
-  });
+  // Баннер обновления — только на заставке и карте сезона (contracts.md §10); в испытании не мешает.
+  const showBanner = () => {
+    const id = app.scenes.current().id;
+    if (!app.updater.ready || (id !== 'title' && id !== 'season')) { hideBanner(); return; }
+    banner(app.content.text('ui.updateReady'), app.content.text('ui.updateApply'), () => app.updater.applyNow(app.scenes.current().id));
+  };
+  app.updater.onReady(showBanner);
+  app.scenes.onChange(showBanner);
   app.updater.register();
 
   // цикл кадров

@@ -1,0 +1,23 @@
+{
+ "about": "tests.md 4.2–4.3: ожидаемые очки и звёзды по формуле contracts.md §7. Баланс задан прямо в примере, чтобы правка data/balance.json не меняла ожидания.",
+ "balances": {
+  "a": { "base": 100, "hintCost": 15, "mistakeCost": 20, "par": 90000, "timeBonus": 10, "unsolvedFactor": 0.3, "stars2": 50, "stars3": 80 },
+  "b": { "base": 200, "hintCost": 10, "mistakeCost": 30, "par": 120000, "timeBonus": 25, "unsolvedFactor": 0.5, "stars2": 100, "stars3": 180 }
+ },
+ "cases": [
+  { "name": "идеально и быстро", "b": "a", "r": { "solved": true, "accuracy": 1, "hintsUsed": 0, "mistakes": 0, "timeMs": 60000, "level": 1 }, "points": 110, "stars": 3 },
+  { "name": "идеально, но дольше par", "b": "a", "r": { "solved": true, "accuracy": 1, "hintsUsed": 0, "mistakes": 0, "timeMs": 120000, "level": 1 }, "points": 100, "stars": 3 },
+  { "name": "одна подсказка — не больше 2 звёзд", "b": "a", "r": { "solved": true, "accuracy": 1, "hintsUsed": 1, "mistakes": 0, "timeMs": 60000, "level": 2 }, "points": 95, "stars": 2 },
+  { "name": "одна ошибка, без подсказок", "b": "a", "r": { "solved": true, "accuracy": 1, "hintsUsed": 0, "mistakes": 1, "timeMs": 60000, "level": 3 }, "points": 90, "stars": 3 },
+  { "name": "точность 0.75 и ошибка", "b": "a", "r": { "solved": true, "accuracy": 0.75, "hintsUsed": 0, "mistakes": 1, "timeMs": 100000, "level": 1 }, "points": 55, "stars": 2 },
+  { "name": "между stars2 и stars3", "b": "a", "r": { "solved": true, "accuracy": 0.7, "hintsUsed": 0, "mistakes": 0, "timeMs": 100000, "level": 1 }, "points": 70, "stars": 2 },
+  { "name": "ниже stars2 — 1 звезда", "b": "a", "r": { "solved": true, "accuracy": 0.49, "hintsUsed": 0, "mistakes": 0, "timeMs": 100000, "level": 1 }, "points": 49, "stars": 1 },
+  { "name": "в ноль — не ниже нуля", "b": "a", "r": { "solved": true, "accuracy": 0.5, "hintsUsed": 2, "mistakes": 1, "timeMs": 100000, "level": 1 }, "points": 0, "stars": 1 },
+  { "name": "в минус — обрезается до 0", "b": "a", "r": { "solved": true, "accuracy": 0.25, "hintsUsed": 3, "mistakes": 2, "timeMs": 50000, "level": 2 }, "points": 0, "stars": 1 },
+  { "name": "не решено × unsolvedFactor, без бонуса за время", "b": "a", "r": { "solved": false, "accuracy": 0.6, "hintsUsed": 0, "mistakes": 1, "timeMs": 50000, "level": 1 }, "points": 12, "stars": 0 },
+  { "name": "не решено, точность 0", "b": "a", "r": { "solved": false, "accuracy": 0, "hintsUsed": 0, "mistakes": 0, "timeMs": 50000, "level": 1 }, "points": 0, "stars": 0 },
+  { "name": "другой баланс: идеально с ошибкой", "b": "b", "r": { "solved": true, "accuracy": 1, "hintsUsed": 0, "mistakes": 1, "timeMs": 95000, "level": 3 }, "points": 195, "stars": 3 },
+  { "name": "другой баланс: подсказка", "b": "b", "r": { "solved": true, "accuracy": 0.9, "hintsUsed": 1, "mistakes": 0, "timeMs": 130000, "level": 3 }, "points": 170, "stars": 2 },
+  { "name": "другой баланс: не решено", "b": "b", "r": { "solved": false, "accuracy": 0.5, "hintsUsed": 0, "mistakes": 0, "timeMs": 1000, "level": 1 }, "points": 50, "stars": 0 }
+ ]
+}

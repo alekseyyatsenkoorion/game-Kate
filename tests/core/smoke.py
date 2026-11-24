@@ -1,19 +1,22 @@
 # Сквозной smoke-тест приложения (зона A): выпуск 1 и 2, режим теста, перезагрузка, без сети. Снимки — tests/snapshots/A/.
-import subprocess, time, os, json
+# Браузер — S6_BROWSER (chromium|webkit), порт — S6_PORT, папка снимков — S6_SNAP_A (раннер tools/run-tests.py).
+import os, sys, json
 from playwright.sync_api import sync_playwright
-ROOT=os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')); OUT=ROOT+'/tests/snapshots/A/'; os.makedirs(OUT, exist_ok=True)
-srv = subprocess.Popen(['python3','-m','http.server','8771'], cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-time.sleep(1); errs=[]; ok=[]
+from _s6 import Server, SNAP_A, BROWSER, launch, fix_date
+OUT=SNAP_A+'/' if BROWSER == 'chromium' else SNAP_A+'/'+BROWSER+'-'; os.makedirs(SNAP_A, exist_ok=True)
+srv = Server(port=os.environ.get('S6_PORT') or 8771); URL = srv.url
+errs=[]; ok=[]
 def check(c, msg): ok.append(('PASS ' if c else 'FAIL ')+msg)
 def shot(pg, name): pg.wait_for_timeout(500); pg.screenshot(path=OUT+name+'.png')
 try:
   with sync_playwright() as p:
-    b = p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
+    b = launch(p)
     ctx = b.new_context(viewport={'width':1024,'height':768}, has_touch=True)
     pg = ctx.new_page()
     pg.on('pageerror', lambda e: errs.append(str(e)))
     pg.on('console', lambda m: errs.append(m.text) if m.type=='error' and '404' not in m.text else None)
-    pg.goto('http://localhost:8771/'); pg.wait_for_timeout(1500)
+    pg.goto(URL); pg.wait_for_timeout(1500)
+    fix_date(pg, 2026, 11, 24)                          # вторник: «выпуск 2 — завтра» не зависит от дня запуска
     shot(pg,'title')
     pg.click('[data-action=season]'); pg.wait_for_timeout(700); shot(pg,'season-new')
     pg.click('.card.open[data-action=ep]'); pg.wait_for_timeout(700); shot(pg,'intro-1')
@@ -59,5 +62,6 @@ try:
     pg.set_viewport_size({'width':768,'height':1024}); pg.wait_for_timeout(300); shot(pg,'portrait')
     b.close()
 finally:
-    srv.terminate()
+    srv.stop()
 print('\n'.join(ok)); print('ERRORS:', errs)
+sys.exit(1 if errs or any(x.startswith('FAIL') for x in ok) else 0)

@@ -1,16 +1,15 @@
-# Статус проекта — 24.11.2026
+# Статус проекта — 24.11.2026, версия 1.2.1
 
-**Готово:** демо (интерфейс, выпуск 1 «Ширма», выпуск 2 «Багажник», озвучка, работа без сети). Код — в этой папке и на GitHub: alekseyyatsenkoorion/game-Kate (ветка main).
+**Готово:** весь сезон (12 выпусков, 5 испытаний × 3 уровня, 75 заданий), картинки ChatGPT (31), генеративная музыка и озвучка, ловушки скептика, 12 достижений, громкость музыки, режим «Играем вдвоём», сквозное дело с разгадкой, работа без сети, обновление без потери прогресса.
+Игра: https://alekseyyatsenkoorion.github.io/game-Kate/ · код: GitHub alekseyyatsenkoorion/game-Kate (main) и эта папка.
 
-## Ждёт Alex
-1. Включить GitHub Pages: репозиторий → Settings → Pages → Branch: main, / (root) → Save. Адрес игры: https://alekseyyatsenkoorion.github.io/game-Kate/
-2. Проверить демо на iPad (4 пункта в последнем отчёте: установка иконкой, выпуск 1 со смехом и похвалой, режим теста — 7 касаний по глазу → выпуск 2, авиарежим).
-3. Картинки: вставить «Блок для ChatGPT» из prompt GPT.md, ChatGPT сохраняет 31 WebP в assets/gpt/. Затем сказать «картинки готовы».
+## Проверка
+`npm test` — все 14 групп (≈ 11 мин, Chrome). `npm test -- --zone B`, `npm test -- --only rules`. `npm run check-zone -- <зона>`.
+WebKit (движок Safari) в среде разработки недоступен — финальная проверка на iPad.
 
-## Следующие шаги оркестратора
-- После «картинки готовы»: `node tools/gpt-index.js`, подключить фоны bg-* к сценам, портреты char-*/rival-* к вступлению и итогам, пересобрать precache, выложить.
-- После реакции Кати: решение, продолжать ли этапы 1–3 (spec.md §8).
-- Позже: переезд на VPS Alex с приватным репозиторием (домен с HTTPS + автообновление).
+## Отложено (решение Alex)
+- Личный слой и финальный сюрприз (spec.md §10).
+- Переезд на VPS с приватным репозиторием.
 
-## Как проверить локально
-`python3 -m http.server 8080` в этой папке → http://localhost:8080. Автотесты: `python3 tests/core/smoke.py`, `python3 tests/trials/run_trials.py` (нужен сервер на 8765), `python3 tests/content/art-check.py`.
+## Картинки
+Новые картинки ChatGPT: ZIP в assets/gpt/ → `python3 tools/import-gpt.py <zip>` → `node tools/gpt-index.js` → `node tools/build-precache.js`.

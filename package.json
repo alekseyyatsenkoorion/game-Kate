@@ -4,6 +4,8 @@
   "description": "Шестое чувство — мистическое шоу испытаний (PWA для iPad)",
   "scripts": {
     "serve": "python3 -m http.server 8080",
+    "test": "python3 tools/run-tests.py",
+    "check-zone": "node tools/check-zone.js",
     "build": "node tools/build-precache.js",
     "size": "node tools/build-precache.js --check"
   }

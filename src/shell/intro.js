@@ -21,7 +21,7 @@ export class IntroScene extends Scene {
         '<div class="host with-p">' + portrait(app, 'host', 64) + '<div><div class="host-name">' + this.t('char.host.name') + '</div><p>' + esc(intro) + '</p></div></div>' +
         (traps && !replay ? '<div class="host skeptic with-p">' + portrait(app, 'skeptic', 64) + '<div><div class="host-name">' + this.t('char.skeptic.name') + '</div><p>' + this.t('skeptic.trapWarn') + '</p></div></div>' : '') +
         '<div class="trial-list">' + this.t('ui.trials') + ': <b>' + esc(names) + '</b></div>' +
-        '<p class="info small">' + this.t('trial.' + ep.trials[this.resumeIdx].type + '.rules') + '</p>' +
+        '<p class="info small">' + this.t('trial.' + ep.trials[Math.min(this.resumeIdx, ep.trials.length - 1)].type + '.rules') + '</p>' +
         (replay ? '<p class="info">' + this.t('ui.replayNote') + '</p>' : '') +
         this.guestRow() +
         '<button class="btn gold" data-action="start">' + this.t(this.resumeIdx ? 'ui.resume' : 'ui.startTrial') + '</button>' +
@@ -47,6 +47,11 @@ export class IntroScene extends Scene {
     this.app.audio.sfx('tap');
     if (a.act === 'guest') { this.toggleGuest(); return; }
     if (a.act === 'season') { this.app.audio.stopAll(); this.app.audio.music('ambient'); this.app.scenes.replace('season'); }
-    if (a.act === 'start') { if (this.app.audio.speech) this.app.audio.speech.cancel(); this.app.scenes.replace('trial', { n: this.n, idx: this.resumeIdx }); }
+    if (a.act === 'start') {
+      if (this.app.audio.speech) this.app.audio.speech.cancel();
+      const ep = this.app.content.episode(this.n);
+      if (this.resumeIdx >= ep.trials.length) this.app.scenes.replace('result', { n: this.n });   // все испытания сыграны — сразу итоги
+      else this.app.scenes.replace('trial', { n: this.n, idx: this.resumeIdx });
+    }
   }
 }

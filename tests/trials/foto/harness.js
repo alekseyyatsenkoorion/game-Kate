@@ -27,7 +27,7 @@ window.requestAnimationFrame = function (fn) {
 window.cancelAnimationFrame = function (id) { active.rafs.delete(id); orig.caf(id); };
 let trackListeners = false;
 EventTarget.prototype.addEventListener = function (type, fn, opt) {
-  if (trackListeners) active.listeners.push({ t: this, type, fn });
+  if (trackListeners && String(new Error().stack || '').indexOf('/src/') >= 0) active.listeners.push({ t: this, type, fn });
   return orig.add.call(this, type, fn, opt);
 };
 EventTarget.prototype.removeEventListener = function (type, fn, opt) {

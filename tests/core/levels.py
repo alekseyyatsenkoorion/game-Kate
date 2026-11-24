@@ -1,18 +1,19 @@
 # Интеграция (зона A): режим теста → выпуски 3 (Мистер Икс 1), 7 (Багажник 2), 8 (Мистер Икс 2), 11 (Багажник 3 + Ширма 3). Снимки tests/snapshots/A/lv-*.png
-import subprocess, time, os, json
+import os, sys, json
 from playwright.sync_api import sync_playwright
-ROOT=os.path.abspath(os.path.join(os.path.dirname(__file__),'..','..')); OUT=ROOT+'/tests/snapshots/A/'
-srv=subprocess.Popen(['python3','-m','http.server','8773'],cwd=ROOT,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL); time.sleep(1)
+from _s6 import Server, SNAP_A, launch
+OUT=SNAP_A+'/'; os.makedirs(OUT, exist_ok=True)
+srv=Server(port=os.environ.get('S6_PORT') or 8773)
 errs=[]; res=[]
 def ck(c,m): res.append(('PASS ' if c else 'FAIL ')+m)
 def pool(pg,t,l,tid): return pg.evaluate("(async()=> (await __s6.content.pool('%s',%d)).find(x=>x.id==='%s').payload)()"%(t,l,tid))
 try:
  with sync_playwright() as p:
-  b=p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
+  b=launch(p)
   pg=b.new_page(viewport={'width':1024,'height':768},has_touch=True)
   pg.on('pageerror',lambda e:errs.append(str(e)))
   pg.on('console',lambda m: errs.append(m.text) if m.type=='error' and '404' not in m.text else None)
-  pg.goto('http://localhost:8773/'); pg.wait_for_timeout(1500)
+  pg.goto(srv.url); pg.wait_for_timeout(1500)
   pg.evaluate("__s6.progress.setSettings({test:true})")
   def jump(n):
     pg.evaluate("__s6.scenes.replace('debug')"); pg.wait_for_timeout(600)
@@ -61,5 +62,6 @@ try:
   jump(11); pg.screenshot(path=OUT+'lv-bag3.png'); solve_bag(3); pg.wait_for_timeout(1200); pg.screenshot(path=OUT+'lv-shirma3.png'); solve_sh(3)
   ck(pg.query_selector('.big-stars') is not None,'выпуск 11 (Багажник 3 + Ширма 3) пройден'); pg.screenshot(path=OUT+'lv-result11.png')
   b.close()
-finally: srv.terminate()
+finally: srv.stop()
 print('\n'.join(res)); print('ERRORS',errs)
+sys.exit(1 if errs or any(x.startswith('FAIL') for x in res) else 0)
