@@ -3,7 +3,7 @@
 import { log } from './log.js';
 import { createRng, randomSeed } from './rng.js';
 
-const MUSIC_VOL = 0.5;
+const MUSIC_VOL = 1.4;
 const midi = (n) => 440 * Math.pow(2, (n - 69) / 12);
 // ре минор: Dm — B♭ — Gm — A (гармонический минор даёт «загадочную» доминанту)
 const CHORDS = [[50, 53, 57], [46, 50, 53], [43, 46, 50], [45, 49, 52], [50, 53, 57], [46, 50, 53], [48, 52, 55], [45, 49, 52]];
