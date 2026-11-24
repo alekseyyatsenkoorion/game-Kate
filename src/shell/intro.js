@@ -1,5 +1,5 @@
 import { Scene } from '../core/scene-manager.js';
-import { candles, esc, actionOf, topbar } from './ui.js';
+import { candles, esc, actionOf, topbar, bgAttr, portrait } from './ui.js';
 
 export class IntroScene extends Scene {
   static get id() { return 'intro'; }
@@ -15,11 +15,11 @@ export class IntroScene extends Scene {
     const intro = this.t(ep.introKey);
     const names = ep.trials.map((t) => this.t('trial.' + t.type + '.name') + ' (' + this.t('ui.level', { l: t.level }) + ')').join(' + ');
     root.innerHTML =
-      '<div class="screen intro">' + candles() + topbar(this, 'season') +
+      '<div class="screen intro"' + bgAttr(app, 'bg-studio') + '>' + candles() + topbar(this, 'season') +
         '<div class="ep-label">' + this.t('ui.episodeN', { n }) + '</div>' +
         '<h2>' + esc(ep.title) + '</h2>' +
-        '<div class="host"><div class="host-name">' + this.t('char.host.name') + '</div><p>' + esc(intro) + '</p></div>' +
-        (traps && !replay ? '<div class="host skeptic"><div class="host-name">' + this.t('char.skeptic.name') + '</div><p>' + this.t('skeptic.trapWarn') + '</p></div>' : '') +
+        '<div class="host with-p">' + portrait(app, 'host', 64) + '<div><div class="host-name">' + this.t('char.host.name') + '</div><p>' + esc(intro) + '</p></div></div>' +
+        (traps && !replay ? '<div class="host skeptic with-p">' + portrait(app, 'skeptic', 64) + '<div><div class="host-name">' + this.t('char.skeptic.name') + '</div><p>' + this.t('skeptic.trapWarn') + '</p></div></div>' : '') +
         '<div class="trial-list">' + this.t('ui.trials') + ': <b>' + esc(names) + '</b></div>' +
         '<p class="info small">' + this.t('trial.' + ep.trials[this.resumeIdx].type + '.rules') + '</p>' +
         (replay ? '<p class="info">' + this.t('ui.replayNote') + '</p>' : '') +

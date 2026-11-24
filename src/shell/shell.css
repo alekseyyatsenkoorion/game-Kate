@@ -80,3 +80,11 @@ table.rivals tr.me td { color: #f1c86b; font-weight: bold; }
 .debug .log { font: 13px monospace; color: #b9a6d6; margin-top: 8px; width: 900px; }
 .ver { color: #b9a6d6; font-size: 16px; }
 
+
+/* портреты */
+.host.with-p { display: flex; align-items: flex-start; }
+.host.with-p > div { flex: 1; }
+.portrait { flex: none; border-radius: 50%; margin-right: 14px; object-fit: cover; border: 2px solid #f1c86b; }
+.portrait.medal { display: inline-block; text-align: center; background: radial-gradient(#2a1544, #0d0716); border: 2px solid; font-family: Georgia, serif; }
+td.nm .portrait { margin-right: 8px; vertical-align: middle; border-width: 1px; }
+td.nm .portrait.medal { line-height: 28px !important; }

@@ -1,7 +1,8 @@
 # Превью оболочки с заглушками чужих зон (реестр испытаний и items.json подменяются).
+import os
 import json, subprocess, time, sys
 from playwright.sync_api import sync_playwright
-srv = subprocess.Popen(['python3','-m','http.server','8770'], cwd='/home/claude/gk', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+srv = subprocess.Popen(['python3','-m','http.server','8770'], cwd=os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 time.sleep(1)
 errs=[]
 try:

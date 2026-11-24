@@ -1,7 +1,7 @@
 # Сквозной smoke-тест приложения (зона A): выпуск 1 и 2, режим теста, перезагрузка, без сети. Снимки — tests/snapshots/A/.
 import subprocess, time, os, json
 from playwright.sync_api import sync_playwright
-ROOT='/home/claude/gk'; OUT=ROOT+'/tests/snapshots/A/'; os.makedirs(OUT, exist_ok=True)
+ROOT=os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')); OUT=ROOT+'/tests/snapshots/A/'; os.makedirs(OUT, exist_ok=True)
 srv = subprocess.Popen(['python3','-m','http.server','8771'], cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 time.sleep(1); errs=[]; ok=[]
 def check(c, msg): ok.append(('PASS ' if c else 'FAIL ')+msg)

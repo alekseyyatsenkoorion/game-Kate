@@ -20,3 +20,16 @@ export function topbar(scene, backAction) {
     (backAction ? '<button class="btn small ghost" data-action="' + backAction + '">' + scene.t('ui.back') + '</button>' : '<span></span>') +
     '<div class="power">' + scene.t('ui.power') + ': <b>' + app.progress.get().power + '</b></div></div>';
 }
+
+// Фон сцены: картинка из ChatGPT (если есть) под тёмной вуалью, иначе — фон по умолчанию.
+export function bgAttr(app, id) {
+  if (!app.assets.has(id)) return '';
+  return ' style="background-image:linear-gradient(rgba(13,7,22,0.55),rgba(13,7,22,0.75)),url(' + app.assets.url(id) + ');background-size:cover;background-position:center"';
+}
+// Портрет персонажа: картинка из ChatGPT или медальон с инициалом в цвете персонажа.
+export function portrait(app, charId, size) {
+  const c = app.content.character(charId); if (!c) return '';
+  const s = size || 64, id = c.portrait;
+  if (app.assets.has(id)) return '<img class="portrait" src="' + app.assets.url(id) + '" width="' + s + '" height="' + s + '" alt="">';
+  return '<span class="portrait medal" style="width:' + s + 'px;height:' + s + 'px;line-height:' + s + 'px;font-size:' + Math.round(s * 0.45) + 'px;border-color:' + c.color + ';color:' + c.color + '">' + esc(c.name.charAt(0)) + '</span>';
+}

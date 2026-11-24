@@ -1,5 +1,5 @@
 import { Scene } from '../core/scene-manager.js';
-import { candles, EYE } from './ui.js';
+import { candles, EYE, bgAttr } from './ui.js';
 import { confirmBox } from '../core/overlay.js';
 
 export class TitleScene extends Scene {
@@ -12,7 +12,7 @@ export class TitleScene extends Scene {
   draw() {
     const app = this.app, started = Object.keys(app.progress.get().episodes).length > 0 || !!app.progress.run();
     this.root.innerHTML =
-      '<div class="screen center title-screen">' + candles() +
+      '<div class="screen center title-screen"' + bgAttr(app, 'bg-title') + '>' + candles() +
         (app.debug ? '<div class="test-badge">' + this.t('ui.testBadge') + '</div>' : '') +
         '<div class="eye" data-action="eye">' + EYE + '</div>' +
         '<h1>' + this.t('ui.gameTitle') + '</h1>' +

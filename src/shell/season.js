@@ -1,6 +1,6 @@
 import { Scene } from '../core/scene-manager.js';
 import { TRIALS } from '../trials/index.js';
-import { stars, esc, actionOf, topbar } from './ui.js';
+import { stars, esc, actionOf, topbar, bgAttr } from './ui.js';
 
 export class SeasonScene extends Scene {
   static get id() { return 'season'; }
@@ -35,7 +35,7 @@ export class SeasonScene extends Scene {
       app.debug ? this.t('ui.testNoLock') : this.t(dl.availability(dl.nextEpisode()) === 'open' ? 'ui.todayOpen' : 'ui.todayWait');
     const title = app.scoring.title(p.totalPoints).label;
     this.root.innerHTML =
-      '<div class="screen season">' + topbar(this, 'title') +
+      '<div class="screen season"' + bgAttr(app, 'bg-season') + '>' + topbar(this, 'title') +
         '<h2>' + this.t('ui.season') + '</h2>' +
         '<p class="info">' + esc(title) + ' · ' + this.t('ui.points') + ': ' + p.totalPoints + ' · ' + info + '</p>' +
         '<div class="grid">' + cards + '</div>' +

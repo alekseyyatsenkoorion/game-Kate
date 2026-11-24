@@ -1,6 +1,6 @@
 import { Scene } from '../core/scene-manager.js';
 import { createRng, hashSeed } from '../core/rng.js';
-import { candles, stars, esc, actionOf } from './ui.js';
+import { candles, stars, esc, actionOf, bgAttr, portrait } from './ui.js';
 
 export class ResultScene extends Scene {
   static get id() { return 'result'; }
@@ -30,19 +30,19 @@ export class ResultScene extends Scene {
       table = '<table class="rivals">' + riv.table.map((r) => {
         const name = r.id === 'player' ? this.t('ui.you') : c.character(r.id).name;
         const out = r.id === riv.eliminated ? ' <span class="out">' + this.t('ui.eliminated') + '</span>' : '';
-        return '<tr class="' + (r.id === 'player' ? 'me' : '') + '"><td>' + r.place + '</td><td>' + esc(name) + out + '</td><td>' + r.points + '</td></tr>';
+        return '<tr class="' + (r.id === 'player' ? 'me' : '') + '"><td>' + r.place + '</td><td class="nm">' + (r.id === 'player' ? '' : portrait(app, r.id, 30)) + esc(name) + out + '</td><td>' + r.points + '</td></tr>';
       }).join('') + '</table>';
     }
     const gotClues = !this.mustReplay && first && clues.length ? '<p class="gain">' + this.t('ui.newClues', { k: clues.length }) + '</p>' : '';
     root.innerHTML =
-      '<div class="screen result">' + candles() +
+      '<div class="screen result"' + bgAttr(app, 'bg-studio') + '>' + candles() +
         '<div class="ep-label">' + this.t('ui.resultsOf', { n }) + '</div>' +
         '<h2>' + esc(ep.title) + '</h2>' +
         '<div class="res-row"><div class="res-left">' +
           '<div class="big-stars">' + stars(epScore.stars) + '</div>' +
           '<p class="pts">' + this.t('ui.points') + ': <b>' + epScore.points + '</b>' + (first && !this.mustReplay ? ' · +' + epScore.powerGain + ' ' + this.t('ui.powerGen') : '') + '</p>' +
-          '<div class="host"><div class="host-name">' + this.t('char.host.name') + '</div><p>' + esc(hostLine) + '</p></div>' +
-          '<div class="host skeptic"><div class="host-name">' + this.t('char.skeptic.name') + '</div><p>' + esc(skLine) + '</p></div>' +
+          '<div class="host with-p">' + portrait(app, 'host', 56) + '<div><div class="host-name">' + this.t('char.host.name') + '</div><p>' + esc(hostLine) + '</p></div></div>' +
+          '<div class="host skeptic with-p">' + portrait(app, 'skeptic', 56) + '<div><div class="host-name">' + this.t('char.skeptic.name') + '</div><p>' + esc(skLine) + '</p></div></div>' +
           gotClues +
         '</div>' + (table ? '<div class="res-right"><h3>' + this.t('ui.standings') + '</h3>' + table +
           (this.mustReplay ? '<p class="warn">' + this.t('ui.mustReplay') + '</p>' : '') + '</div>' : '') +
