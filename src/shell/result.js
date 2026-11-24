@@ -1,6 +1,7 @@
 import { Scene } from '../core/scene-manager.js';
 import { createRng, hashSeed } from '../core/rng.js';
 import { candles, stars, esc, actionOf, bgAttr, portrait } from './ui.js';
+import { confirmBox } from '../core/overlay.js';
 
 export class ResultScene extends Scene {
   static get id() { return 'result'; }
@@ -17,7 +18,7 @@ export class ResultScene extends Scene {
     const hintsUsed = run.results.reduce((s, r) => s + r.hintsUsed, 0);
     const rng = createRng(hashSeed('rivals', n, run.attempt));
     const riv = first ? app.scoring.rivals(n, epScore, state, rng, hintsUsed) : null;
-    const clues = (ep.clues || []).concat(...run.results.map((r) => r.caseClues || []));
+    const clues = (ep.clues || []).concat(...run.results.map((r) => r.caseClues || [])).filter((c, i, a) => a.indexOf(c) === i);
     this.mustReplay = !!(riv && riv.playerMustReplay);
     if (!this.mustReplay) app.progress.recordEpisode(n, epScore, riv, clues, app.dayLock.today());
     app.progress.clearRun();
@@ -47,6 +48,7 @@ export class ResultScene extends Scene {
         '</div>' + (table ? '<div class="res-right"><h3>' + this.t('ui.standings') + '</h3>' + table +
           (this.mustReplay ? '<p class="warn">' + this.t('ui.mustReplay') + '</p>' : '') + '</div>' : '') +
         '</div>' +
+        (n === 12 && !this.mustReplay ? '<button class="btn ghost case-btn" data-action="solution">' + this.t('ui.caseSolution') + '</button>' : '') +
         (this.mustReplay ? '<button class="btn gold" data-action="replay">' + this.t('ui.replay') + '</button>'
                          : '<button class="btn gold" data-action="season">' + this.t('ui.toSeason') + '</button>') +
       '</div>';
@@ -58,5 +60,12 @@ export class ResultScene extends Scene {
     this.app.audio.sfx('tap');
     if (a.act === 'season') this.app.scenes.replace('season');
     if (a.act === 'replay') this.app.scenes.replace('intro', { n: this.n });
+    if (a.act === 'solution') {
+      const c = this.app.content, p = this.app.progress.get();
+      const right = c.caseData.links.filter((l) => p.case.links.some((m) => (m[0] === l[0] && m[1] === l[1]) || (m[0] === l[1] && m[1] === l[0]))).length;
+      const txt = c.text(c.caseData.solutionKey) + '\n\n' + this.t('ui.caseLinks', { k: right, n: c.caseData.links.length });
+      this.app.audio.sayText(c.text(c.caseData.solutionKey));
+      confirmBox(txt, this.t('ui.close'));
+    }
   }
 }

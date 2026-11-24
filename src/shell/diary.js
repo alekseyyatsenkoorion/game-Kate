@@ -23,7 +23,8 @@ export class DiaryScene extends Scene {
       '<div class="screen diary">' + topbar(this, 'back') +
         '<h2>' + this.t('case.title') + '</h2>' +
         '<p class="info">' + (ids.length ? this.t('ui.diaryHelp') : this.t('ui.diaryEmpty')) + '</p>' +
-        '<svg class="links" width="1024" height="768">' + lines + '</svg>' + cards +
+        '<div class="diary-pad" style="height:' + Math.max(0, 60 + Math.ceil(ids.length / 4) * 145 - 588) + 'px"></div>' +
+        '<svg class="links" width="1024" height="' + Math.max(768, 200 + Math.ceil(ids.length / 4) * 145) + '">' + lines + '</svg>' + cards +
       '</div>';
   }
   onInput(e) {

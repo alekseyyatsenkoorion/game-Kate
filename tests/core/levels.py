@@ -35,6 +35,22 @@ try:
       o=objs[f]; x=32+o['x']*800; y=132+o['y']*600
       pg.mouse.click(x,y); pg.wait_for_timeout(150); pg.mouse.click(x,y); pg.wait_for_timeout(250)
     pg.wait_for_timeout(5000)
+  def solve_fo(level):
+    tid=pg.evaluate('__s6.progress.run().taskIds[__s6.progress.run().idx]'); pl=pool(pg,'foto',level,tid)
+    texts=[pg.evaluate('__s6.content.text(%s)'%json.dumps(st['textKey'])) for st in pl['statements'] if st['true']]
+    for tx in texts:
+      pg.evaluate('(tx)=>{ const n=[...document.querySelectorAll("[data-st]")].find(e=>e.querySelector(".fo-st-tx").textContent===tx); const r=n.getBoundingClientRect(); window.__pt=[r.x+r.width/2,r.y+r.height/2]; }', tx)
+      x,y=pg.evaluate('window.__pt'); pg.mouse.click(x,y); pg.wait_for_timeout(120)
+    pg.click('[data-fo=check]'); pg.wait_for_timeout(8000)
+  jump(4); pg.screenshot(path=OUT+'lv-foto1.png'); solve_fo(1); ck(pg.query_selector('.big-stars') is not None,'выпуск 4 (Фото-дело 1) пройден')
+  jump(10); solve_fo(2); ck(pg.query_selector('.big-stars') is not None,'выпуск 10 (Фото-дело 2) пройден')
+  jump(12); solve_mx(3); pg.wait_for_timeout(1500); solve_fo(3); pg.wait_for_timeout(1500)
+  pg.mouse.click(432,432); pg.wait_for_timeout(300); solve_km(3)
+  ck(pg.query_selector('.big-stars') is not None,'выпуск 12 (финал: Мистер Икс 3 + Фото-дело 3 + Тёмная комната 3) пройден'); pg.screenshot(path=OUT+'lv-result12.png')
+  pg.click('[data-action=solution]'); pg.wait_for_timeout(500); pg.screenshot(path=OUT+'lv-solution.png'); ck(pg.query_selector('.modal') is not None,'разгадка дела показана'); pg.click('.modal .btn')
+  pg.evaluate("__s6.progress.update(d=>{d.case.clues=__s6.content.caseData.clues.map(c=>c.id)})")
+  pg.click('[data-action=season]'); pg.wait_for_timeout(600); pg.click('[data-action=diary]'); pg.wait_for_timeout(600)
+  ck(len(pg.query_selector_all('.clue'))==22,'в дневнике 22 улики'); pg.mouse.wheel(0,600); pg.wait_for_timeout(400); pg.screenshot(path=OUT+'lv-diary22.png')
   jump(5); pg.mouse.click(432,432); pg.wait_for_timeout(400); pg.screenshot(path=OUT+'lv-komnata1.png'); solve_km(1)
   ck(pg.query_selector('.big-stars') is not None,'выпуск 5 (Тёмная комната 1) пройден'); pg.screenshot(path=OUT+'lv-result5.png')
   jump(9); solve_km(2); ck(pg.query_selector('.big-stars') is not None,'выпуск 9 (Тёмная комната 2) пройден')

@@ -1,0 +1,766 @@
+{
+ "schema": 1,
+ "type": "foto",
+ "tasks": [
+  {
+   "id": "foto-1-001",
+   "level": 1,
+   "payload": {
+    "photo": "foto-1-01",
+    "items": [
+     {
+      "labelKey": "fo.l1t1.item1",
+      "art": "item-hat"
+     },
+     {
+      "labelKey": "fo.l1t1.item2"
+     },
+     {
+      "labelKey": "fo.l1t1.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l1t1.s1",
+      "true": true,
+      "explainKey": "fo.l1t1.e1"
+     },
+     {
+      "textKey": "fo.l1t1.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t1.s3",
+      "true": true,
+      "explainKey": "fo.l1t1.e3"
+     },
+     {
+      "textKey": "fo.l1t1.s4",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t1.s5",
+      "true": false
+     }
+    ],
+    "pick": 2
+   }
+  },
+  {
+   "id": "foto-1-002",
+   "level": 1,
+   "payload": {
+    "photo": "foto-1-02",
+    "items": [
+     {
+      "labelKey": "fo.l1t2.item1",
+      "art": "item-scissors"
+     },
+     {
+      "labelKey": "fo.l1t2.item2"
+     },
+     {
+      "labelKey": "fo.l1t2.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l1t2.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t2.s2",
+      "true": true,
+      "explainKey": "fo.l1t2.e2"
+     },
+     {
+      "textKey": "fo.l1t2.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t2.s4",
+      "true": true,
+      "explainKey": "fo.l1t2.e4"
+     },
+     {
+      "textKey": "fo.l1t2.s5",
+      "true": false
+     }
+    ],
+    "pick": 2
+   }
+  },
+  {
+   "id": "foto-1-003",
+   "level": 1,
+   "payload": {
+    "photo": "foto-1-03",
+    "items": [
+     {
+      "labelKey": "fo.l1t3.item1"
+     },
+     {
+      "labelKey": "fo.l1t3.item2",
+      "art": "item-cinnamon"
+     },
+     {
+      "labelKey": "fo.l1t3.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l1t3.s1",
+      "true": true,
+      "explainKey": "fo.l1t3.e1"
+     },
+     {
+      "textKey": "fo.l1t3.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t3.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t3.s4",
+      "true": true,
+      "explainKey": "fo.l1t3.e4"
+     },
+     {
+      "textKey": "fo.l1t3.s5",
+      "true": false
+     }
+    ],
+    "pick": 2
+   }
+  },
+  {
+   "id": "foto-1-004",
+   "level": 1,
+   "payload": {
+    "photo": "foto-1-04",
+    "items": [
+     {
+      "labelKey": "fo.l1t4.item1",
+      "art": "item-glasses"
+     },
+     {
+      "labelKey": "fo.l1t4.item2"
+     },
+     {
+      "labelKey": "fo.l1t4.item3",
+      "art": "item-book"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l1t4.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t4.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t4.s3",
+      "true": true,
+      "explainKey": "fo.l1t4.e3"
+     },
+     {
+      "textKey": "fo.l1t4.s4",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t4.s5",
+      "true": true,
+      "explainKey": "fo.l1t4.e5"
+     }
+    ],
+    "pick": 2
+   }
+  },
+  {
+   "id": "foto-1-005",
+   "level": 1,
+   "payload": {
+    "photo": "foto-1-05",
+    "items": [
+     {
+      "labelKey": "fo.l1t5.item1",
+      "art": "item-guitar"
+     },
+     {
+      "labelKey": "fo.l1t5.item2"
+     },
+     {
+      "labelKey": "fo.l1t5.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l1t5.s1",
+      "true": true,
+      "explainKey": "fo.l1t5.e1"
+     },
+     {
+      "textKey": "fo.l1t5.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t5.s3",
+      "true": true,
+      "explainKey": "fo.l1t5.e3"
+     },
+     {
+      "textKey": "fo.l1t5.s4",
+      "true": false
+     },
+     {
+      "textKey": "fo.l1t5.s5",
+      "true": false
+     }
+    ],
+    "pick": 2
+   }
+  },
+  {
+   "id": "foto-2-001",
+   "level": 2,
+   "payload": {
+    "photo": "foto-2-01",
+    "items": [
+     {
+      "labelKey": "fo.l2t1.item1",
+      "art": "item-lamp"
+     },
+     {
+      "labelKey": "fo.l2t1.item2",
+      "art": "item-cup"
+     },
+     {
+      "labelKey": "fo.l2t1.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l2t1.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t1.s2",
+      "true": true,
+      "explainKey": "fo.l2t1.e2"
+     },
+     {
+      "textKey": "fo.l2t1.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t1.s4",
+      "true": true,
+      "explainKey": "fo.l2t1.e4"
+     },
+     {
+      "textKey": "fo.l2t1.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t1.s6",
+      "true": true,
+      "explainKey": "fo.l2t1.e6"
+     }
+    ],
+    "pick": 3
+   }
+  },
+  {
+   "id": "foto-2-002",
+   "level": 2,
+   "payload": {
+    "photo": "foto-2-02",
+    "items": [
+     {
+      "labelKey": "fo.l2t2.item1"
+     },
+     {
+      "labelKey": "fo.l2t2.item2",
+      "art": "item-hat"
+     },
+     {
+      "labelKey": "fo.l2t2.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l2t2.s1",
+      "true": true,
+      "explainKey": "fo.l2t2.e1"
+     },
+     {
+      "textKey": "fo.l2t2.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t2.s3",
+      "true": true,
+      "explainKey": "fo.l2t2.e3"
+     },
+     {
+      "textKey": "fo.l2t2.s4",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t2.s5",
+      "true": true,
+      "explainKey": "fo.l2t2.e5"
+     },
+     {
+      "textKey": "fo.l2t2.s6",
+      "true": false
+     }
+    ],
+    "pick": 3
+   }
+  },
+  {
+   "id": "foto-2-003",
+   "level": 2,
+   "payload": {
+    "photo": "foto-2-03",
+    "items": [
+     {
+      "labelKey": "fo.l2t3.item1",
+      "art": "item-scissors"
+     },
+     {
+      "labelKey": "fo.l2t3.item2",
+      "art": "item-clock"
+     },
+     {
+      "labelKey": "fo.l2t3.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l2t3.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t3.s2",
+      "true": true,
+      "explainKey": "fo.l2t3.e2"
+     },
+     {
+      "textKey": "fo.l2t3.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t3.s4",
+      "true": true,
+      "explainKey": "fo.l2t3.e4"
+     },
+     {
+      "textKey": "fo.l2t3.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t3.s6",
+      "true": true,
+      "explainKey": "fo.l2t3.e6"
+     }
+    ],
+    "pick": 3
+   }
+  },
+  {
+   "id": "foto-2-004",
+   "level": 2,
+   "payload": {
+    "photo": "foto-2-04",
+    "items": [
+     {
+      "labelKey": "fo.l2t4.item1"
+     },
+     {
+      "labelKey": "fo.l2t4.item2",
+      "art": "item-clock"
+     },
+     {
+      "labelKey": "fo.l2t4.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l2t4.s1",
+      "true": true,
+      "explainKey": "fo.l2t4.e1"
+     },
+     {
+      "textKey": "fo.l2t4.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t4.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t4.s4",
+      "true": true,
+      "explainKey": "fo.l2t4.e4"
+     },
+     {
+      "textKey": "fo.l2t4.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t4.s6",
+      "true": true,
+      "explainKey": "fo.l2t4.e6"
+     }
+    ],
+    "pick": 3
+   }
+  },
+  {
+   "id": "foto-2-005",
+   "level": 2,
+   "payload": {
+    "photo": "foto-2-05",
+    "items": [
+     {
+      "labelKey": "fo.l2t5.item1",
+      "art": "item-camera"
+     },
+     {
+      "labelKey": "fo.l2t5.item2"
+     },
+     {
+      "labelKey": "fo.l2t5.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l2t5.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t5.s2",
+      "true": true,
+      "explainKey": "fo.l2t5.e2"
+     },
+     {
+      "textKey": "fo.l2t5.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t5.s4",
+      "true": true,
+      "explainKey": "fo.l2t5.e4"
+     },
+     {
+      "textKey": "fo.l2t5.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l2t5.s6",
+      "true": true,
+      "explainKey": "fo.l2t5.e6"
+     }
+    ],
+    "pick": 3
+   }
+  },
+  {
+   "id": "foto-3-001",
+   "level": 3,
+   "payload": {
+    "photo": "foto-3-01",
+    "items": [
+     {
+      "labelKey": "fo.l3t1.item1",
+      "art": "item-key"
+     },
+     {
+      "labelKey": "fo.l3t1.item2"
+     },
+     {
+      "labelKey": "fo.l3t1.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l3t1.s1",
+      "true": true,
+      "explainKey": "fo.l3t1.e1"
+     },
+     {
+      "textKey": "fo.l3t1.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t1.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t1.s4",
+      "true": true,
+      "explainKey": "fo.l3t1.e4"
+     },
+     {
+      "textKey": "fo.l3t1.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t1.s6",
+      "true": true,
+      "explainKey": "fo.l3t1.e6"
+     },
+     {
+      "textKey": "fo.l3t1.s7",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t1.s8",
+      "true": true,
+      "explainKey": "fo.l3t1.e8"
+     }
+    ],
+    "pick": 4
+   }
+  },
+  {
+   "id": "foto-3-002",
+   "level": 3,
+   "payload": {
+    "photo": "foto-3-02",
+    "items": [
+     {
+      "labelKey": "fo.l3t2.item1"
+     },
+     {
+      "labelKey": "fo.l3t2.item2",
+      "art": "item-umbrella"
+     },
+     {
+      "labelKey": "fo.l3t2.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l3t2.s1",
+      "true": true,
+      "explainKey": "fo.l3t2.e1"
+     },
+     {
+      "textKey": "fo.l3t2.s2",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t2.s3",
+      "true": true,
+      "explainKey": "fo.l3t2.e3"
+     },
+     {
+      "textKey": "fo.l3t2.s4",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t2.s5",
+      "true": true,
+      "explainKey": "fo.l3t2.e5"
+     },
+     {
+      "textKey": "fo.l3t2.s6",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t2.s7",
+      "true": true,
+      "explainKey": "fo.l3t2.e7"
+     },
+     {
+      "textKey": "fo.l3t2.s8",
+      "true": false
+     }
+    ],
+    "pick": 4
+   }
+  },
+  {
+   "id": "foto-3-003",
+   "level": 3,
+   "payload": {
+    "photo": "foto-3-03",
+    "items": [
+     {
+      "labelKey": "fo.l3t3.item1"
+     },
+     {
+      "labelKey": "fo.l3t3.item2"
+     },
+     {
+      "labelKey": "fo.l3t3.item3",
+      "art": "item-clock"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l3t3.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t3.s2",
+      "true": true,
+      "explainKey": "fo.l3t3.e2"
+     },
+     {
+      "textKey": "fo.l3t3.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t3.s4",
+      "true": true,
+      "explainKey": "fo.l3t3.e4"
+     },
+     {
+      "textKey": "fo.l3t3.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t3.s6",
+      "true": true,
+      "explainKey": "fo.l3t3.e6"
+     },
+     {
+      "textKey": "fo.l3t3.s7",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t3.s8",
+      "true": true,
+      "explainKey": "fo.l3t3.e8"
+     }
+    ],
+    "pick": 4
+   }
+  },
+  {
+   "id": "foto-3-004",
+   "level": 3,
+   "payload": {
+    "photo": "foto-3-04",
+    "items": [
+     {
+      "labelKey": "fo.l3t4.item1",
+      "art": "item-key"
+     },
+     {
+      "labelKey": "fo.l3t4.item2"
+     },
+     {
+      "labelKey": "fo.l3t4.item3"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l3t4.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t4.s2",
+      "true": true,
+      "explainKey": "fo.l3t4.e2"
+     },
+     {
+      "textKey": "fo.l3t4.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t4.s4",
+      "true": true,
+      "explainKey": "fo.l3t4.e4"
+     },
+     {
+      "textKey": "fo.l3t4.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t4.s6",
+      "true": true,
+      "explainKey": "fo.l3t4.e6"
+     },
+     {
+      "textKey": "fo.l3t4.s7",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t4.s8",
+      "true": true,
+      "explainKey": "fo.l3t4.e8"
+     }
+    ],
+    "pick": 4
+   }
+  },
+  {
+   "id": "foto-3-005",
+   "level": 3,
+   "payload": {
+    "photo": "foto-3-05",
+    "items": [
+     {
+      "labelKey": "fo.l3t5.item1",
+      "art": "item-candle"
+     },
+     {
+      "labelKey": "fo.l3t5.item2",
+      "art": "item-clock"
+     },
+     {
+      "labelKey": "fo.l3t5.item3",
+      "art": "item-vase"
+     }
+    ],
+    "statements": [
+     {
+      "textKey": "fo.l3t5.s1",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t5.s2",
+      "true": true,
+      "explainKey": "fo.l3t5.e2"
+     },
+     {
+      "textKey": "fo.l3t5.s3",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t5.s4",
+      "true": true,
+      "explainKey": "fo.l3t5.e4"
+     },
+     {
+      "textKey": "fo.l3t5.s5",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t5.s6",
+      "true": true,
+      "explainKey": "fo.l3t5.e6"
+     },
+     {
+      "textKey": "fo.l3t5.s7",
+      "true": false
+     },
+     {
+      "textKey": "fo.l3t5.s8",
+      "true": true,
+      "explainKey": "fo.l3t5.e8"
+     }
+    ],
+    "pick": 4
+   }
+  }
+ ]
+}

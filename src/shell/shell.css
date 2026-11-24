@@ -88,3 +88,11 @@ table.rivals tr.me td { color: #f1c86b; font-weight: bold; }
 .portrait.medal { display: inline-block; text-align: center; background: radial-gradient(#2a1544, #0d0716); border: 2px solid; font-family: Georgia, serif; }
 td.nm .portrait { margin-right: 8px; vertical-align: middle; border-width: 1px; }
 td.nm .portrait.medal { line-height: 28px !important; }
+
+.screen.diary { overflow-y: auto; -webkit-overflow-scrolling: touch; display: block; text-align: center; }
+.screen.diary .topbar { display: flex; }
+.case-btn { margin-top: 6px; }
+.modal p { white-space: pre-line; max-height: 560px; overflow-y: auto; font-size: 20px; line-height: 1.4; text-align: left; }
+
+.clue { text-align: left; height: 136px; }
+.clue-t { font-size: 15px; }
