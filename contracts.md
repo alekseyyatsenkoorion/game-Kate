@@ -218,7 +218,7 @@ type ImageSource =
   | { kind: 'drawn'; draw: (ctx: CanvasRenderingContext2D, w: number, h: number) => void };   // рисует код
 ```
 **Правило подмены (Т-17):** для id ищем по порядку:
-1. `assets/gpt/<id>.webp`, если id есть в `assets/gpt/index.json` (webp делает `tools/gpt-index` из `<id>.png`, который кладёт Alex);
+1. `assets/gpt/<id>.webp`, если id есть в `assets/gpt/index.json` (файл кладёт ChatGPT, список собирает `tools/gpt-index`);
 2. `assets/art/<id>.svg`;
 3. функцию-рисовальщик из `src/core/art-fallback.js` по префиксу id (`bg-`, `char-`, `rival-`, `room-`, `foto-`).
 

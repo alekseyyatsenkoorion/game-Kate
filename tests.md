@@ -119,7 +119,7 @@
 | 9.2 | Счётчик кадров при 4-кратном замедлении процессора (эмуляция старого iPad) в каждом испытании и на title: средний ≥ 30 кадров/с |
 | 9.3 | От открытия до интерактивного title ≤ 3 с с кэшем |
 | 9.4 | Поиск по src/ и styles/: нет запрещённых API из spec.md §6 (import maps, вложенность CSS, container queries, roundRect, ctx.filter, OffscreenCanvas, requestIdleCallback, Intl.Segmenter) |
-| 9.5 | Картинки из precache: сторона ≤ 2048 px, формат webp или svg; у каждого `assets/gpt/*.png` есть свой .webp в index.json |
+| 9.5 | Картинки из precache: сторона ≤ 2048 px, формат webp или svg; каждый `assets/gpt/*.webp` есть в index.json; фоны и комнаты 2048×1536, портреты и фото 1024×1024 |
 
 ## 10. Хаотичные касания
 | № | Тест |
