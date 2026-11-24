@@ -1,11 +1,13 @@
-# Проверка зоны B (испытания shirma и bagazhnik) на стенде tests/trials/harness.html.
+# Проверка зоны B (испытания shirma, bagazhnik, misterx) на стенде tests/trials/harness.html.
 # Запуск: сервер `python3 -m http.server 8765` из корня проекта, затем
-#   python3 tests/trials/run_trials.py [base_url]
+#   python3 tests/trials/run_trials.py [base_url] [тип ...]
+# Без списка типов проверяются все.
 # Снимки — в tests/snapshots/B/.
-import json, os, random, sys
+import itertools, json, os, random, sys
 from playwright.sync_api import sync_playwright
 
 BASE = (sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:8765').rstrip('/')
+ONLY = set(sys.argv[2:])
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SNAP = os.path.join(ROOT, 'tests', 'snapshots', 'B')
 os.makedirs(SNAP, exist_ok=True)
@@ -269,10 +271,243 @@ def test_bagazhnik(b):
     p.close()
 
 
+
+# ---------- Мистер Икс ----------
+MX_FIX = os.path.join(ROOT, 'tests', 'trials', 'fixtures', 'misterx.json')
+
+
+def mx_solve(pl, limit=2):
+    # Перебор с отсечением по правилам rule: решения таблицы целиком (тест-решатель как 2.6)
+    people = [q['id'] for q in pl['people']]
+    cats = [(c['key'], [v['id'] for v in c['values']]) for c in pl['categories']]
+    rules = [k['rule'] for k in pl['clues']]
+    sols, assign = [], {}
+
+    def ok(r):
+        if r[0] in ('is', 'not'):
+            _, q, c, v = r
+            return c not in assign or (assign[c][q] == v) == (r[0] == 'is')
+        _, c1, v1, c2, v2 = r
+        if c1 not in assign or c2 not in assign:
+            return True
+        q = [x for x in people if assign[c1][x] == v1][0]
+        return (assign[c2][q] == v2) == (r[0] == 'link')
+
+    def rec(i):
+        if len(sols) >= limit:
+            return
+        if i == len(cats):
+            sols.append({q: {k: assign[k][q] for k, _ in cats} for q in people})
+            return
+        k, vals = cats[i]
+        for perm in itertools.permutations(vals):
+            assign[k] = dict(zip(people, perm))
+            if all(ok(r) for r in rules):
+                rec(i + 1)
+            del assign[k]
+    rec(0)
+    return sols
+
+
+def mx_pick(p, answer):
+    for k, v in answer.items():
+        p.click('[data-mx-chip="%s:%s"]' % (k, v), 30)
+
+
+def mx_cell(p, r, j, times=1):
+    for _ in range(times):
+        p.click('[data-mx-cell="%d:%d"]' % (r, j), 30)
+
+
+def mx_cls(p, r, j):
+    return p.js("document.querySelector('[data-mx-cell=\"%d:%d\"]').className" % (r, j))
+
+
+def test_misterx(b):
+    T = 'type=misterx'
+    L1 = T + '&task=0&level=1'
+    L3 = T + '&task=1&level=3'
+    fx = json.load(open(MX_FIX, encoding='utf-8'))
+    for t in fx['tasks']:
+        sols = mx_solve(t['payload'])
+        check('misterx(фикстуры): %s — решение единственное и совпадает с solution' % t['id'],
+              len(sols) == 1 and sols[0] == t['payload']['solution'], len(sols))
+    S1 = fx['tasks'][0]['payload']['solution']['x']
+    S3 = fx['tasks'][1]['payload']['solution']['x']
+
+    # (а) верный ответ сразу
+    p = Page(b, L1 + '&texts=1')
+    p.shot('misterx-l1-start.png')
+    check('misterx(а): таблица 3×9, улик 6, чипов 9',
+          p.js("document.querySelectorAll('.mx-cell').length") == 27 and p.js("document.querySelectorAll('.mx-clue').length") == 6
+          and p.js("document.querySelectorAll('.mx-chip').length") == 9)
+    check('misterx(а): «Ответить» неактивна, пока выбраны не все', p.js("document.querySelector('.mx-submit').classList.contains('is-off')"))
+    p.click('[data-mx="submit"]')
+    check('misterx(а): неполный ответ не считается', not p.ev('react') and not p.finishes())
+    mx_pick(p, S1)
+    check('misterx(а): все выбраны — «Ответить» активна', not p.js("document.querySelector('.mx-submit').classList.contains('is-off')"))
+    p.click('[data-mx="submit"]', 1500)
+    p.shot('misterx-solved.png')
+    p.wait(500)
+    p.pg.click('[data-mx="submit"]', force=True)    # под раскрытием: тык не должен дать второй finish
+    p.wait(200)
+    f = p.finishes()
+    check('misterx(а): finish ровно 1 раз', len(f) == 1, len(f))
+    r = f[0] if f else {}
+    check('misterx(а): solved, accuracy 1, mistakes 0, hintsUsed 0',
+          r.get('solved') is True and r.get('accuracy') == 1 and r.get('mistakes') == 0 and r.get('hintsUsed') == 0 and r.get('powerSpent') == 0, r)
+    check('misterx(а): формат TrialResult', set(r.keys()) >= {'type', 'taskId', 'level', 'solved', 'accuracy', 'hintsUsed', 'powerSpent', 'mistakes', 'timeMs', 'caseClues'}
+          and r.get('type') == 'misterx' and r.get('taskId') == 'misterx-1-001' and r.get('level') == 1 and r.get('caseClues') == [] and isinstance(r.get('timeMs'), int), r)
+    check('misterx(а): react(correct) 1 раз, mistake 0', len(p.ev('react', kind='correct')) == 1 and not p.ev('react', kind='mistake'))
+    check('misterx(а): раскрытие показано, текст mx.solved', 'Мистер Икс раскрыт' in (p.js("(document.querySelector('.mx-reveal-title')||{}).textContent") or ''))
+    check('misterx(а): нет ошибок', not p.errors, p.errors)
+    p.close()
+
+    # (б) один неверный ответ, потом верный
+    p = Page(b, L1 + '&texts=1')
+    wrong = dict(S1)
+    wrong['job'] = 'pilot'
+    mx_pick(p, wrong)
+    p.click('[data-mx="submit"]', 200)
+    msg = p.js("document.querySelector('.mx-ans-msg').textContent")
+    check('misterx(б): сообщение mx.partial «Верно 2 из 3»', 'Верно 2 из 3' in msg and p.js("document.querySelector('.mx-answer').classList.contains('has-msg')"), msg)
+    p.click('[data-mx="submit"]', 100)              # тот же ответ повторно — не ошибка
+    check('misterx(б): тот же неверный ответ повторно не считается', len(p.ev('react', kind='mistake')) == 1)
+    p.click('[data-mx-chip="job:%s"]' % S1['job'])
+    check('misterx(б): смена ответа убирает сообщение', not p.js("document.querySelector('.mx-answer').classList.contains('has-msg')"))
+    p.click('[data-mx="submit"]', 2100)
+    f = p.finishes()
+    r = f[0] if f else {}
+    check('misterx(б): finish 1 раз, solved, mistakes 1, accuracy 0.75',
+          len(f) == 1 and r.get('solved') is True and r.get('mistakes') == 1 and r.get('accuracy') == 0.75, r)
+    check('misterx(б): react(mistake) 1 раз, звук wrong 1 раз', len(p.ev('react', kind='mistake')) == 1 and len(p.ev('sfx', id='wrong')) == 1, p.ev('react'))
+    check('misterx(б): нет ошибок', not p.errors, p.errors)
+    p.close()
+
+    # (в) подсказки тратят силу; при нуле ничего не списывается
+    p = Page(b, L1 + '&power=2')
+    for _ in range(3):
+        p.click('[data-mx="hint"]')
+    spends = p.ev('spend')
+    check('misterx(в): 2 подсказки по 1, 3-я отказ', [s['ok'] for s in spends] == [True, True, False]
+          and all(s['reason'] == 'misterx' for s in spends), spends)
+    check('misterx(в): сила 0, ctx.hint(reveal) 2 раза', p.js('window.__h.getPower()') == 0 and [h['kind'] for h in p.ev('hint')] == ['reveal', 'reveal'])
+    check('misterx(в): открыто 2 верные клетки в строке Икс', p.js("document.querySelectorAll('[data-mx-cell^=\"0:\"].is-h').length") == 2)
+    check('misterx(в): показано mx.noPower', p.js("document.querySelector('.mx-msg').classList.contains('is-on')") and p.js("document.querySelector('.mx-msg').textContent") == 'mx.noPower')
+    p.wait(2200)
+    check('misterx(в): mx.noPower скрыто через 2 с', not p.js("document.querySelector('.mx-msg').classList.contains('is-on')"))
+    p.close()
+
+    p = Page(b, L1 + '&power=0')
+    p.click('[data-mx="hint"]')
+    check('misterx(в): при силе 0 ничего не списано', p.js('window.__h.getPower()') == 0 and [s['ok'] for s in p.ev('spend')] == [False] and not p.ev('hint')
+          and p.js("document.querySelectorAll('.mx-cell.is-h').length") == 0)
+    p.close()
+
+    p = Page(b, L1 + '&power=10')
+    for _ in range(4):
+        p.click('[data-mx="hint"]')
+    check('misterx(в): всё открыто — кнопка неактивна (mx.noMoreHints), лишнего не списано',
+          p.js("document.querySelector('.mx-hintbtn').classList.contains('is-off')") and 'mx.noMoreHints' in p.js("document.querySelector('.mx-hintbtn').textContent")
+          and len(p.ev('spend')) == 3 and p.js('window.__h.getPower()') == 7)
+    cells = p.js("[...document.querySelectorAll('[data-mx-cell^=\"0:\"].is-h')].map(c => c.getAttribute('data-mx-cell'))")
+    check('misterx(в): подсказки открыли именно верные клетки', sorted(cells) == ['0:%d' % j for j in [1, 5, 6]], cells)
+    mx_cell(p, 0, 1)
+    check('misterx(в): клетка от подсказки закреплена', 'is-h' in mx_cls(p, 0, 1))
+    check('misterx(в): подсказки выбрали ответ — «Ответить» активна', not p.js("document.querySelector('.mx-submit').classList.contains('is-off')"))
+    p.click('[data-mx="submit"]', 2100)
+    r = (p.finishes() or [{}])[0]
+    check('misterx(в): hintsUsed 3, powerSpent 3, solved', r.get('hintsUsed') == 3 and r.get('powerSpent') == 3 and r.get('solved') is True, r)
+    p.close()
+
+    # порядок подсказок зависит только от seed (тест 3.7)
+    order = []
+    for _ in range(2):
+        p = Page(b, L3 + '&power=1')
+        p.click('[data-mx="hint"]')
+        order.append(p.js("document.querySelector('.mx-cell.is-h').getAttribute('data-mx-cell')"))
+        p.close()
+    check('misterx(в): одинаковый seed — та же подсказка', order[0] == order[1], order)
+
+    # заметки: цикл пусто → ✗ → ✓ → пусто и авто-✗ (уровень 3)
+    p = Page(b, L3 + '&texts=1&power=3')
+    p.shot('misterx-l3-start.png')
+    check('misterx(з): уровень 3 — 5×20 клеток', p.js("document.querySelectorAll('.mx-cell').length") == 100)
+    small = p.js("[...document.querySelectorAll('.mx-cell')].filter(c => { const r = c.getBoundingClientRect(); return r.width < 30 || r.height < 30; }).length")
+    check('misterx(з): все клетки не меньше 30×30', small == 0, small)
+    out = p.js("""(() => { const f = document.getElementById('field').getBoundingClientRect(); return [...document.querySelectorAll('.mx-table > div, .mx-chip, .mx-submit, .mx-hintbtn')]
+      .filter(c => { const r = c.getBoundingClientRect(); return r.left < f.left - 0.5 || r.right > f.right + 0.5 || r.top < f.top - 0.5 || r.bottom > f.bottom + 0.5; }).length; })()""")
+    check('misterx(з): таблица и панель ответа целиком в поле', out == 0, out)
+    tbl = p.js("(() => { const t = document.querySelector('.mx-table'); return [t.scrollWidth, t.clientWidth, t.scrollHeight, t.clientHeight]; })()")
+    check('misterx(з): таблица без прокрутки', tbl[0] <= tbl[1] and tbl[2] <= tbl[3], tbl)
+    mx_cell(p, 2, 6)
+    check('misterx(з): 1 тык — ✗', 'is-x' in mx_cls(p, 2, 6))
+    mx_cell(p, 2, 6)
+    n_ax = p.js("document.querySelectorAll('.mx-cell.is-ax').length")
+    check('misterx(з): 2 тыка — ✓ и 8 авто-✗ (строка в категории + столбец)', 'is-v' in mx_cls(p, 2, 6) and n_ax == 8
+          and 'is-ax' in mx_cls(p, 2, 5) and 'is-ax' in mx_cls(p, 0, 6) and 'is-ax' not in mx_cls(p, 2, 10), n_ax)
+    mx_cell(p, 2, 6)
+    check('misterx(з): 3 тыка — пусто, авто-✗ сняты', mx_cls(p, 2, 6) == 'mx-cell' and p.js("document.querySelectorAll('.mx-cell.is-ax').length") == 0)
+    check('misterx(з): заметки бесплатны', not p.ev('spend') and not p.ev('hint'))
+    # сцена с заметками для снимка
+    for (r, j) in [(1, 4), (3, 2), (4, 10), (1, 18)]:
+        mx_cell(p, r, j, 2)
+    for (r, j) in [(2, 3), (2, 15), (2, 16), (0, 13), (0, 0)]:
+        mx_cell(p, r, j, 1)
+    p.click('[data-mx="hint"]', 600)
+    for i in [1, 4, 9]:
+        p.click('[data-mx-clue="%d"]' % i, 30)
+    check('misterx(з): улика зачёркивается тыком', p.js("document.querySelectorAll('.mx-clue.is-used').length") == 3)
+    p.js("document.querySelector('.mx-clues').scrollTop = 0")
+    p.wait(100)
+    p.shot('misterx-l3-notes.png')
+    check('misterx(з): нет ошибок', not p.errors, p.errors)
+    p.close()
+
+    # уровень 3: решение целиком
+    p = Page(b, L3)
+    mx_pick(p, S3)
+    p.click('[data-mx="submit"]', 2100)
+    r = (p.finishes() or [{}])[0]
+    check('misterx(з): уровень 3 решается, level 3', r.get('solved') is True and r.get('level') == 3 and r.get('taskId') == 'misterx-3-001', r)
+    p.close()
+
+    # (г) destroy посреди ожиданий (сообщение + раскрытие)
+    p = Page(b, L1 + '&power=0')
+    p.click('[data-mx="hint"]')
+    mx_pick(p, S1)
+    p.click('[data-mx="submit"]', 100)
+    destroy_check(p, 'misterx(г)')
+    p.close()
+
+    # (д) 300 случайных тыков
+    p = Page(b, L3 + '&power=2&texts=1')
+    random_taps(p, 'misterx(д)', 3)
+    p.close()
+    p = Page(b, L1 + '&power=2')
+    random_taps(p, 'misterx(д, ур.1)', 4)
+    p.close()
+
+    # доп.: пауза не входит во время, битое задание → fail
+    p = Page(b, L1)
+    p.js('window.__h.inst.pause()')
+    p.wait(1500)
+    p.js('window.__h.inst.resume()')
+    mx_pick(p, S1)
+    p.click('[data-mx="submit"]', 2100)
+    r = (p.finishes() or [{}])[0]
+    check('misterx(доп): timeMs без паузы', r.get('timeMs', 99999) < 1400, r.get('timeMs'))
+    p.close()
+    p = Page(b, L1 + '&bad=1')
+    check('misterx(доп): битое задание → ctx.fail TASK_INVALID', [e['err']['code'] for e in p.ev('fail')] == ['TASK_INVALID'] and p.js('window.__h.field.children.length') == 0)
+    p.close()
+
+
 with sync_playwright() as pw:
     br = pw.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
-    test_shirma(br)
-    test_bagazhnik(br)
+    for name, fn in [('shirma', test_shirma), ('bagazhnik', test_bagazhnik), ('misterx', test_misterx)]:
+        if not ONLY or name in ONLY:
+            fn(br)
     br.close()
 
 bad = [r for r in results if not r[1]]

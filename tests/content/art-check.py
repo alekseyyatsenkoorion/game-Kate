@@ -4,6 +4,8 @@
 python3 tests/content/art-check.py           — только проверки (код выхода 1 при ошибке)
 python3 tests/content/art-check.py --render  — сначала пересобрать PNG-иконки и листы-превью
                                                (нужен Python Playwright и /usr/bin/google-chrome)
+python3 tests/content/art-check.py --sheets  — пересобрать только листы-превью предметов
+                                               (items-*.png, items-new-*.png), иконки не трогать
 """
 import json
 import re
@@ -18,8 +20,15 @@ ICONS = ROOT / 'assets' / 'icons'
 SNAP = ROOT / 'tests' / 'snapshots' / 'C'
 ITEM_IDS = ['clock', 'kettle', 'lamp', 'book', 'key', 'umbrella', 'scissors',
             'guitar', 'bottle', 'cup', 'candle', 'glasses', 'bell', 'hat']
+NEW_IDS = ['coffee', 'perfume', 'orange', 'soap', 'bread', 'rose', 'cinnamon', 'lemon',
+           'violin', 'typewriter', 'telephone', 'camera', 'globe', 'compass', 'teapot',
+           'mirror', 'vase', 'fan', 'hourglass', 'gramophone',
+           'person-ballerina', 'person-violinist', 'person-chef', 'person-doctor',
+           'person-magician', 'person-detective']
+ALL_IDS = ITEM_IDS + NEW_IDS
 SVG_NS = '{http://www.w3.org/2000/svg}'
 errors = []
+warnings = []
 
 
 def fail(msg):
@@ -66,7 +75,7 @@ def png_size(path):
 
 
 def check():
-    for i in ITEM_IDS:
+    for i in ALL_IDS:
         check_svg(ART / f'item-{i}.svg', '0 0 256 256')
 
     try:
@@ -78,8 +87,13 @@ def check():
         if data.get('schema') != 1:
             fail('items.json: schema должна быть 1')
         items = data.get('items', [])
-        if [x.get('id') for x in items] != ITEM_IDS:
-            fail('items.json: id не совпадают со списком/порядком из задачи')
+        ids = [x.get('id') for x in items]
+        if len(items) != len(ALL_IDS):
+            # Записи добавляет другой агент; пока их не 40 — только предупреждение.
+            warnings.append(f'items.json: записей {len(items)}, ожидается {len(ALL_IDS)} — проверка items.json пропущена')
+            items = []
+        elif ids[:len(ITEM_IDS)] != ITEM_IDS or sorted(ids) != sorted(ALL_IDS):
+            fail('items.json: id не совпадают со списком из задачи (первые 14 — в прежнем порядке)')
         for x in items:
             if set(x) != {'id', 'labelKey', 'art'}:
                 fail(f'items.json: лишние/недостающие поля у {x}')
@@ -97,7 +111,7 @@ def check():
             fail(f'{p.name}: размер {png_size(p)}, нужен {n}×{n}')
 
 
-def render():
+def render(sheets_only=False):
     import tempfile
     from playwright.sync_api import sync_playwright
     tmp = Path(tempfile.mkdtemp()) / 'page.html'
@@ -110,18 +124,22 @@ def render():
     with sync_playwright() as p:
         br = p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
         pg = br.new_page()
-        for n in (180, 512):
+        for n in (() if sheets_only else (180, 512)):
             pg.set_viewport_size({'width': n, 'height': n})
             show(pg, f'<style>*{{margin:0}}img{{display:block}}</style>'
                      f'<img src="{(ICONS / "icon.svg").as_uri()}" width="{n}" height="{n}">')
             pg.screenshot(path=str(ICONS / f'icon-{n}.png'), omit_background=False)
-        for name, css, bg in (('items-color', '', '#3a2456'),
-                              ('items-silhouette', 'filter:brightness(0);', '#d9d9d9')):
-            cells = ''.join(f'<div><img src="{(ART / f"item-{i}.svg").as_uri()}"></div>' for i in ITEM_IDS)
-            pg.set_viewport_size({'width': 7 * 136 + 8, 'height': 2 * 136 + 8})
+        sheets = []
+        for prefix, ids, cols in (('items', ITEM_IDS, 7), ('items-new', NEW_IDS, 7)):
+            sheets.append((f'{prefix}-color', '', '#3a2456', ids, cols))
+            sheets.append((f'{prefix}-silhouette', 'filter:brightness(0);', '#d9d9d9', ids, cols))
+        for name, css, bg, ids, cols in sheets:
+            rows = -(-len(ids) // cols)
+            cells = ''.join(f'<div><img src="{(ART / f"item-{i}.svg").as_uri()}"></div>' for i in ids)
+            pg.set_viewport_size({'width': cols * 136 + 8, 'height': rows * 136 + 8})
             show(pg,
                 f'<style>*{{margin:0}}body{{background:{bg};padding:4px;display:grid;'
-                f'grid-template-columns:repeat(7,136px)}}div{{width:136px;height:136px;'
+                f'grid-template-columns:repeat({cols},136px)}}div{{width:136px;height:136px;'
                 f'display:flex;align-items:center;justify-content:center}}'
                 f'img{{width:128px;height:128px;{css}}}</style>{cells}')
             pg.screenshot(path=str(SNAP / f'{name}.png'))
@@ -129,12 +147,15 @@ def render():
 
 
 if __name__ == '__main__':
-    if '--render' in sys.argv:
-        render()
+    if '--render' in sys.argv or '--sheets' in sys.argv:
+        render(sheets_only='--render' not in sys.argv)
     check()
+    for w in warnings:
+        print('  ! предупреждение:', w)
     if errors:
         print('ART-CHECK: ОШИБКИ')
         for e in errors:
             print('  ✗', e)
         sys.exit(1)
-    print(f'ART-CHECK: ок — {len(ITEM_IDS)} иконок, items.json, иконка приложения 180/512')
+    print(f'ART-CHECK: ок — {len(ALL_IDS)} иконок'
+          f'{"" if warnings else ", items.json"}, иконка приложения 180/512')

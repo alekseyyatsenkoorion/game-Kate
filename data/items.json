@@ -70,6 +70,136 @@
       "id": "hat",
       "labelKey": "item.hat",
       "art": "item-hat"
+    },
+    {
+      "id": "coffee",
+      "labelKey": "item.coffee",
+      "art": "item-coffee"
+    },
+    {
+      "id": "perfume",
+      "labelKey": "item.perfume",
+      "art": "item-perfume"
+    },
+    {
+      "id": "orange",
+      "labelKey": "item.orange",
+      "art": "item-orange"
+    },
+    {
+      "id": "soap",
+      "labelKey": "item.soap",
+      "art": "item-soap"
+    },
+    {
+      "id": "bread",
+      "labelKey": "item.bread",
+      "art": "item-bread"
+    },
+    {
+      "id": "rose",
+      "labelKey": "item.rose",
+      "art": "item-rose"
+    },
+    {
+      "id": "cinnamon",
+      "labelKey": "item.cinnamon",
+      "art": "item-cinnamon"
+    },
+    {
+      "id": "lemon",
+      "labelKey": "item.lemon",
+      "art": "item-lemon"
+    },
+    {
+      "id": "violin",
+      "labelKey": "item.violin",
+      "art": "item-violin"
+    },
+    {
+      "id": "typewriter",
+      "labelKey": "item.typewriter",
+      "art": "item-typewriter"
+    },
+    {
+      "id": "telephone",
+      "labelKey": "item.telephone",
+      "art": "item-telephone"
+    },
+    {
+      "id": "camera",
+      "labelKey": "item.camera",
+      "art": "item-camera"
+    },
+    {
+      "id": "globe",
+      "labelKey": "item.globe",
+      "art": "item-globe"
+    },
+    {
+      "id": "compass",
+      "labelKey": "item.compass",
+      "art": "item-compass"
+    },
+    {
+      "id": "teapot",
+      "labelKey": "item.teapot",
+      "art": "item-teapot"
+    },
+    {
+      "id": "mirror",
+      "labelKey": "item.mirror",
+      "art": "item-mirror"
+    },
+    {
+      "id": "vase",
+      "labelKey": "item.vase",
+      "art": "item-vase"
+    },
+    {
+      "id": "fan",
+      "labelKey": "item.fan",
+      "art": "item-fan"
+    },
+    {
+      "id": "hourglass",
+      "labelKey": "item.hourglass",
+      "art": "item-hourglass"
+    },
+    {
+      "id": "gramophone",
+      "labelKey": "item.gramophone",
+      "art": "item-gramophone"
+    },
+    {
+      "id": "person-ballerina",
+      "labelKey": "item.person-ballerina",
+      "art": "item-person-ballerina"
+    },
+    {
+      "id": "person-violinist",
+      "labelKey": "item.person-violinist",
+      "art": "item-person-violinist"
+    },
+    {
+      "id": "person-chef",
+      "labelKey": "item.person-chef",
+      "art": "item-person-chef"
+    },
+    {
+      "id": "person-doctor",
+      "labelKey": "item.person-doctor",
+      "art": "item-person-doctor"
+    },
+    {
+      "id": "person-magician",
+      "labelKey": "item.person-magician",
+      "art": "item-person-magician"
+    },
+    {
+      "id": "person-detective",
+      "labelKey": "item.person-detective",
+      "art": "item-person-detective"
     }
   ]
 }

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<g transform="translate(0,-18)">
+<path d="M24,214 L24,170 C18,128 34,104 60,104 C66,84 88,78 104,86 C114,72 140,70 152,86 C168,78 190,84 196,104 C222,104 238,128 232,170 L232,214 Q232,224 222,224 L34,224 Q24,224 24,214 Z M54,140 Q52,110 82,96 Q82,128 54,140 Z M94,124 Q92,94 122,80 Q122,112 94,124 Z M134,124 Q132,94 162,80 Q162,112 134,124 Z M174,140 Q172,110 202,96 Q202,128 174,140 Z" fill="#f1c86b" fill-rule="evenodd"/>
+<path d="M28,182 C80,192 176,192 228,182 L228,214 Q228,220 222,220 L34,220 Q28,220 28,214 Z" fill="#b8862f" stroke="none"/>
+<path d="M26,182 C80,192 176,192 230,182" fill="none" stroke-width="5"/>
+<path d="M36,160 C34,132 44,118 60,114 C50,128 48,142 50,162 Z" fill="#fff6dc" stroke="none" opacity="0.6"/>
+</g>
+</g>
+</svg>

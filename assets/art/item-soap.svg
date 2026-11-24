@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(-8 128 170)">
+<rect x="34" y="134" width="188" height="92" rx="40" fill="#e9d3a0"/>
+<rect x="34" y="134" width="188" height="64" rx="32" fill="#fbf1d6"/>
+<ellipse cx="128" cy="166" rx="56" ry="16" fill="none" stroke="#e9d3a0" stroke-width="6"/>
+<path d="M54,156 Q60,142 84,140 Q66,150 62,164 Z" fill="#fff6dc" stroke="none" opacity="0.8"/>
+</g>
+<path d="M50,92 A24,24 0 1 0 98,92 A24,24 0 1 0 50,92 Z M59,92 A15,15 0 1 0 89,92 A15,15 0 1 0 59,92 Z" fill="#e9d3a0" fill-rule="evenodd"/>
+<path d="M108,52 A18,18 0 1 0 144,52 A18,18 0 1 0 108,52 Z M116,52 A10,10 0 1 0 136,52 A10,10 0 1 0 116,52 Z" fill="#e9d3a0" fill-rule="evenodd"/>
+<path d="M146,86 A30,30 0 1 0 206,86 A30,30 0 1 0 146,86 Z M156,86 A20,20 0 1 0 196,86 A20,20 0 1 0 156,86 Z" fill="#e9d3a0" fill-rule="evenodd"/>
+<path d="M201,34 A13,13 0 1 0 227,34 A13,13 0 1 0 201,34 Z M208,34 A6,6 0 1 0 220,34 A6,6 0 1 0 208,34 Z" fill="#e9d3a0" fill-rule="evenodd"/>
+<path d="M64,84 Q66,76 74,74" fill="none" stroke="#fff6dc" stroke-width="4"/>
+<path d="M164,74 Q168,66 178,64" fill="none" stroke="#fff6dc" stroke-width="5"/>
+</g>
+</svg>

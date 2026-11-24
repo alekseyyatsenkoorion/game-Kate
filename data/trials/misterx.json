@@ -1,0 +1,3386 @@
+{
+ "schema": 1,
+ "type": "misterx",
+ "tasks": [
+  {
+   "id": "misterx-1-001",
+   "level": 1,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l1t1.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       }
+      ]
+     },
+     {
+      "key": "city",
+      "labelKey": "mx.l1t1.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       }
+      ]
+     },
+     {
+      "key": "drink",
+      "labelKey": "mx.l1t1.cat.drink",
+      "values": [
+       {
+        "id": "tea",
+        "labelKey": "mx.val.tea"
+       },
+       {
+        "id": "coffee",
+        "labelKey": "mx.val.coffee"
+       },
+       {
+        "id": "cocoa",
+        "labelKey": "mx.val.cocoa"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l1t1.c1",
+      "rule": [
+       "not",
+       "hatlady",
+       "drink",
+       "cocoa"
+      ]
+     },
+     {
+      "textKey": "mx.l1t1.c2",
+      "rule": [
+       "not",
+       "hatlady",
+       "job",
+       "pilot"
+      ]
+     },
+     {
+      "textKey": "mx.l1t1.c3",
+      "rule": [
+       "link",
+       "job",
+       "pilot",
+       "drink",
+       "coffee"
+      ]
+     },
+     {
+      "textKey": "mx.l1t1.c4",
+      "rule": [
+       "unlink",
+       "job",
+       "pilot",
+       "city",
+       "prague"
+      ]
+     },
+     {
+      "textKey": "mx.l1t1.c5",
+      "rule": [
+       "is",
+       "neighbor",
+       "job",
+       "doctor"
+      ]
+     },
+     {
+      "textKey": "mx.l1t1.c6",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "city",
+       "vienna"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "pilot",
+      "city": "riga",
+      "drink": "coffee"
+     },
+     "neighbor": {
+      "job": "doctor",
+      "city": "vienna",
+      "drink": "cocoa"
+     },
+     "hatlady": {
+      "job": "photographer",
+      "city": "prague",
+      "drink": "tea"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-1-002",
+   "level": 1,
+   "payload": {
+    "categories": [
+     {
+      "key": "coat",
+      "labelKey": "mx.l1t2.cat.coat",
+      "values": [
+       {
+        "id": "coat-grey",
+        "labelKey": "mx.val.coat-grey"
+       },
+       {
+        "id": "coat-black",
+        "labelKey": "mx.val.coat-black"
+       },
+       {
+        "id": "coat-burgundy",
+        "labelKey": "mx.val.coat-burgundy"
+       }
+      ]
+     },
+     {
+      "key": "thing",
+      "labelKey": "mx.l1t2.cat.thing",
+      "values": [
+       {
+        "id": "cane",
+        "labelKey": "mx.val.cane"
+       },
+       {
+        "id": "envelope",
+        "labelKey": "mx.val.envelope"
+       },
+       {
+        "id": "cards",
+        "labelKey": "mx.val.cards"
+       }
+      ]
+     },
+     {
+      "key": "row",
+      "labelKey": "mx.l1t2.cat.row",
+      "values": [
+       {
+        "id": "row1",
+        "labelKey": "mx.val.row1"
+       },
+       {
+        "id": "row2",
+        "labelKey": "mx.val.row2"
+       },
+       {
+        "id": "row3",
+        "labelKey": "mx.val.row3"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "veil",
+      "labelKey": "mx.person.veil"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l1t2.c1",
+      "rule": [
+       "not",
+       "veil",
+       "thing",
+       "cane"
+      ]
+     },
+     {
+      "textKey": "mx.l1t2.c2",
+      "rule": [
+       "link",
+       "coat",
+       "coat-burgundy",
+       "row",
+       "row2"
+      ]
+     },
+     {
+      "textKey": "mx.l1t2.c3",
+      "rule": [
+       "is",
+       "veil",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l1t2.c4",
+      "rule": [
+       "unlink",
+       "coat",
+       "coat-grey",
+       "thing",
+       "cards"
+      ]
+     },
+     {
+      "textKey": "mx.l1t2.c5",
+      "rule": [
+       "not",
+       "x",
+       "coat",
+       "coat-burgundy"
+      ]
+     },
+     {
+      "textKey": "mx.l1t2.c6",
+      "rule": [
+       "link",
+       "thing",
+       "envelope",
+       "row",
+       "row1"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "coat": "coat-grey",
+      "thing": "envelope",
+      "row": "row1"
+     },
+     "veil": {
+      "coat": "coat-black",
+      "thing": "cards",
+      "row": "row3"
+     },
+     "mustache": {
+      "coat": "coat-burgundy",
+      "thing": "cane",
+      "row": "row2"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-1-003",
+   "level": 1,
+   "payload": {
+    "categories": [
+     {
+      "key": "pet",
+      "labelKey": "mx.l1t3.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       }
+      ]
+     },
+     {
+      "key": "ring",
+      "labelKey": "mx.l1t3.cat.ring",
+      "values": [
+       {
+        "id": "amethyst",
+        "labelKey": "mx.val.amethyst"
+       },
+       {
+        "id": "ruby",
+        "labelKey": "mx.val.ruby"
+       },
+       {
+        "id": "emerald",
+        "labelKey": "mx.val.emerald"
+       }
+      ]
+     },
+     {
+      "key": "city",
+      "labelKey": "mx.l1t3.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "redhead",
+      "labelKey": "mx.person.redhead"
+     },
+     {
+      "id": "silent",
+      "labelKey": "mx.person.silent"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l1t3.c1",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "ring",
+       "ruby"
+      ]
+     },
+     {
+      "textKey": "mx.l1t3.c2",
+      "rule": [
+       "link",
+       "ring",
+       "ruby",
+       "city",
+       "prague"
+      ]
+     },
+     {
+      "textKey": "mx.l1t3.c3",
+      "rule": [
+       "is",
+       "x",
+       "city",
+       "riga"
+      ]
+     },
+     {
+      "textKey": "mx.l1t3.c4",
+      "rule": [
+       "not",
+       "redhead",
+       "pet",
+       "cat"
+      ]
+     },
+     {
+      "textKey": "mx.l1t3.c5",
+      "rule": [
+       "link",
+       "ring",
+       "amethyst",
+       "city",
+       "vienna"
+      ]
+     },
+     {
+      "textKey": "mx.l1t3.c6",
+      "rule": [
+       "unlink",
+       "pet",
+       "raven",
+       "city",
+       "vienna"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "pet": "raven",
+      "ring": "emerald",
+      "city": "riga"
+     },
+     "redhead": {
+      "pet": "owl",
+      "ring": "amethyst",
+      "city": "vienna"
+     },
+     "silent": {
+      "pet": "cat",
+      "ring": "ruby",
+      "city": "prague"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-1-004",
+   "level": 1,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l1t4.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       }
+      ]
+     },
+     {
+      "key": "coat",
+      "labelKey": "mx.l1t4.cat.coat",
+      "values": [
+       {
+        "id": "coat-grey",
+        "labelKey": "mx.val.coat-grey"
+       },
+       {
+        "id": "coat-black",
+        "labelKey": "mx.val.coat-black"
+       },
+       {
+        "id": "coat-burgundy",
+        "labelKey": "mx.val.coat-burgundy"
+       }
+      ]
+     },
+     {
+      "key": "pet",
+      "labelKey": "mx.l1t4.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l1t4.c1",
+      "rule": [
+       "is",
+       "x",
+       "coat",
+       "coat-burgundy"
+      ]
+     },
+     {
+      "textKey": "mx.l1t4.c2",
+      "rule": [
+       "not",
+       "hatlady",
+       "pet",
+       "raven"
+      ]
+     },
+     {
+      "textKey": "mx.l1t4.c3",
+      "rule": [
+       "not",
+       "hatlady",
+       "job",
+       "pilot"
+      ]
+     },
+     {
+      "textKey": "mx.l1t4.c4",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "coat",
+       "coat-black"
+      ]
+     },
+     {
+      "textKey": "mx.l1t4.c5",
+      "rule": [
+       "is",
+       "mustache",
+       "pet",
+       "owl"
+      ]
+     },
+     {
+      "textKey": "mx.l1t4.c6",
+      "rule": [
+       "not",
+       "mustache",
+       "coat",
+       "coat-grey"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "pilot",
+      "coat": "coat-burgundy",
+      "pet": "raven"
+     },
+     "hatlady": {
+      "job": "photographer",
+      "coat": "coat-grey",
+      "pet": "cat"
+     },
+     "mustache": {
+      "job": "doctor",
+      "coat": "coat-black",
+      "pet": "owl"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-1-005",
+   "level": 1,
+   "payload": {
+    "categories": [
+     {
+      "key": "drink",
+      "labelKey": "mx.l1t5.cat.drink",
+      "values": [
+       {
+        "id": "tea",
+        "labelKey": "mx.val.tea"
+       },
+       {
+        "id": "coffee",
+        "labelKey": "mx.val.coffee"
+       },
+       {
+        "id": "cocoa",
+        "labelKey": "mx.val.cocoa"
+       }
+      ]
+     },
+     {
+      "key": "thing",
+      "labelKey": "mx.l1t5.cat.thing",
+      "values": [
+       {
+        "id": "cane",
+        "labelKey": "mx.val.cane"
+       },
+       {
+        "id": "envelope",
+        "labelKey": "mx.val.envelope"
+       },
+       {
+        "id": "cards",
+        "labelKey": "mx.val.cards"
+       }
+      ]
+     },
+     {
+      "key": "ring",
+      "labelKey": "mx.l1t5.cat.ring",
+      "values": [
+       {
+        "id": "amethyst",
+        "labelKey": "mx.val.amethyst"
+       },
+       {
+        "id": "ruby",
+        "labelKey": "mx.val.ruby"
+       },
+       {
+        "id": "emerald",
+        "labelKey": "mx.val.emerald"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "veil",
+      "labelKey": "mx.person.veil"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l1t5.c1",
+      "rule": [
+       "is",
+       "x",
+       "thing",
+       "cane"
+      ]
+     },
+     {
+      "textKey": "mx.l1t5.c2",
+      "rule": [
+       "link",
+       "drink",
+       "cocoa",
+       "ring",
+       "amethyst"
+      ]
+     },
+     {
+      "textKey": "mx.l1t5.c3",
+      "rule": [
+       "is",
+       "neighbor",
+       "drink",
+       "coffee"
+      ]
+     },
+     {
+      "textKey": "mx.l1t5.c4",
+      "rule": [
+       "unlink",
+       "thing",
+       "envelope",
+       "ring",
+       "ruby"
+      ]
+     },
+     {
+      "textKey": "mx.l1t5.c5",
+      "rule": [
+       "link",
+       "thing",
+       "cards",
+       "ring",
+       "amethyst"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "drink": "tea",
+      "thing": "cane",
+      "ring": "ruby"
+     },
+     "neighbor": {
+      "drink": "coffee",
+      "thing": "envelope",
+      "ring": "emerald"
+     },
+     "veil": {
+      "drink": "cocoa",
+      "thing": "cards",
+      "ring": "amethyst"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-2-001",
+   "level": 2,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l2t1.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       },
+       {
+        "id": "librarian",
+        "labelKey": "mx.val.librarian"
+       }
+      ]
+     },
+     {
+      "key": "city",
+      "labelKey": "mx.l2t1.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       },
+       {
+        "id": "odessa",
+        "labelKey": "mx.val.odessa"
+       }
+      ]
+     },
+     {
+      "key": "coat",
+      "labelKey": "mx.l2t1.cat.coat",
+      "values": [
+       {
+        "id": "coat-grey",
+        "labelKey": "mx.val.coat-grey"
+       },
+       {
+        "id": "coat-black",
+        "labelKey": "mx.val.coat-black"
+       },
+       {
+        "id": "coat-burgundy",
+        "labelKey": "mx.val.coat-burgundy"
+       },
+       {
+        "id": "coat-green",
+        "labelKey": "mx.val.coat-green"
+       }
+      ]
+     },
+     {
+      "key": "thing",
+      "labelKey": "mx.l2t1.cat.thing",
+      "values": [
+       {
+        "id": "cane",
+        "labelKey": "mx.val.cane"
+       },
+       {
+        "id": "envelope",
+        "labelKey": "mx.val.envelope"
+       },
+       {
+        "id": "cards",
+        "labelKey": "mx.val.cards"
+       },
+       {
+        "id": "lantern",
+        "labelKey": "mx.val.lantern"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l2t1.c1",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "coat",
+       "coat-black"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c2",
+      "rule": [
+       "link",
+       "city",
+       "vienna",
+       "thing",
+       "cane"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c3",
+      "rule": [
+       "link",
+       "city",
+       "odessa",
+       "coat",
+       "coat-green"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c4",
+      "rule": [
+       "link",
+       "city",
+       "riga",
+       "coat",
+       "coat-burgundy"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c5",
+      "rule": [
+       "is",
+       "neighbor",
+       "city",
+       "riga"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c6",
+      "rule": [
+       "link",
+       "coat",
+       "coat-burgundy",
+       "thing",
+       "envelope"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c7",
+      "rule": [
+       "is",
+       "hatlady",
+       "job",
+       "pilot"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c8",
+      "rule": [
+       "link",
+       "coat",
+       "coat-grey",
+       "thing",
+       "cane"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c9",
+      "rule": [
+       "is",
+       "mustache",
+       "job",
+       "photographer"
+      ]
+     },
+     {
+      "textKey": "mx.l2t1.c10",
+      "rule": [
+       "link",
+       "job",
+       "photographer",
+       "thing",
+       "cards"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "doctor",
+      "city": "prague",
+      "coat": "coat-black",
+      "thing": "lantern"
+     },
+     "neighbor": {
+      "job": "librarian",
+      "city": "riga",
+      "coat": "coat-burgundy",
+      "thing": "envelope"
+     },
+     "hatlady": {
+      "job": "pilot",
+      "city": "vienna",
+      "coat": "coat-grey",
+      "thing": "cane"
+     },
+     "mustache": {
+      "job": "photographer",
+      "city": "odessa",
+      "coat": "coat-green",
+      "thing": "cards"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-2-002",
+   "level": 2,
+   "payload": {
+    "categories": [
+     {
+      "key": "drink",
+      "labelKey": "mx.l2t2.cat.drink",
+      "values": [
+       {
+        "id": "tea",
+        "labelKey": "mx.val.tea"
+       },
+       {
+        "id": "coffee",
+        "labelKey": "mx.val.coffee"
+       },
+       {
+        "id": "cocoa",
+        "labelKey": "mx.val.cocoa"
+       },
+       {
+        "id": "mulled",
+        "labelKey": "mx.val.mulled"
+       }
+      ]
+     },
+     {
+      "key": "pet",
+      "labelKey": "mx.l2t2.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       },
+       {
+        "id": "dog",
+        "labelKey": "mx.val.dog"
+       }
+      ]
+     },
+     {
+      "key": "row",
+      "labelKey": "mx.l2t2.cat.row",
+      "values": [
+       {
+        "id": "row1",
+        "labelKey": "mx.val.row1"
+       },
+       {
+        "id": "row2",
+        "labelKey": "mx.val.row2"
+       },
+       {
+        "id": "row3",
+        "labelKey": "mx.val.row3"
+       },
+       {
+        "id": "row4",
+        "labelKey": "mx.val.row4"
+       }
+      ]
+     },
+     {
+      "key": "ring",
+      "labelKey": "mx.l2t2.cat.ring",
+      "values": [
+       {
+        "id": "amethyst",
+        "labelKey": "mx.val.amethyst"
+       },
+       {
+        "id": "ruby",
+        "labelKey": "mx.val.ruby"
+       },
+       {
+        "id": "emerald",
+        "labelKey": "mx.val.emerald"
+       },
+       {
+        "id": "sapphire",
+        "labelKey": "mx.val.sapphire"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "veil",
+      "labelKey": "mx.person.veil"
+     },
+     {
+      "id": "redhead",
+      "labelKey": "mx.person.redhead"
+     },
+     {
+      "id": "silent",
+      "labelKey": "mx.person.silent"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l2t2.c1",
+      "rule": [
+       "link",
+       "drink",
+       "cocoa",
+       "pet",
+       "raven"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c2",
+      "rule": [
+       "is",
+       "silent",
+       "ring",
+       "ruby"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c3",
+      "rule": [
+       "link",
+       "pet",
+       "owl",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c4",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "row",
+       "row1"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c5",
+      "rule": [
+       "link",
+       "row",
+       "row2",
+       "ring",
+       "sapphire"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c6",
+      "rule": [
+       "link",
+       "drink",
+       "mulled",
+       "row",
+       "row4"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c7",
+      "rule": [
+       "link",
+       "drink",
+       "tea",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c8",
+      "rule": [
+       "is",
+       "veil",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c9",
+      "rule": [
+       "not",
+       "redhead",
+       "row",
+       "row1"
+      ]
+     },
+     {
+      "textKey": "mx.l2t2.c10",
+      "rule": [
+       "link",
+       "row",
+       "row1",
+       "ring",
+       "amethyst"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "drink": "coffee",
+      "pet": "cat",
+      "row": "row1",
+      "ring": "amethyst"
+     },
+     "veil": {
+      "drink": "tea",
+      "pet": "owl",
+      "row": "row3",
+      "ring": "emerald"
+     },
+     "redhead": {
+      "drink": "cocoa",
+      "pet": "raven",
+      "row": "row2",
+      "ring": "sapphire"
+     },
+     "silent": {
+      "drink": "mulled",
+      "pet": "dog",
+      "row": "row4",
+      "ring": "ruby"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-2-003",
+   "level": 2,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l2t3.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       },
+       {
+        "id": "librarian",
+        "labelKey": "mx.val.librarian"
+       }
+      ]
+     },
+     {
+      "key": "ring",
+      "labelKey": "mx.l2t3.cat.ring",
+      "values": [
+       {
+        "id": "amethyst",
+        "labelKey": "mx.val.amethyst"
+       },
+       {
+        "id": "ruby",
+        "labelKey": "mx.val.ruby"
+       },
+       {
+        "id": "emerald",
+        "labelKey": "mx.val.emerald"
+       },
+       {
+        "id": "sapphire",
+        "labelKey": "mx.val.sapphire"
+       }
+      ]
+     },
+     {
+      "key": "thing",
+      "labelKey": "mx.l2t3.cat.thing",
+      "values": [
+       {
+        "id": "cane",
+        "labelKey": "mx.val.cane"
+       },
+       {
+        "id": "envelope",
+        "labelKey": "mx.val.envelope"
+       },
+       {
+        "id": "cards",
+        "labelKey": "mx.val.cards"
+       },
+       {
+        "id": "lantern",
+        "labelKey": "mx.val.lantern"
+       }
+      ]
+     },
+     {
+      "key": "drink",
+      "labelKey": "mx.l2t3.cat.drink",
+      "values": [
+       {
+        "id": "tea",
+        "labelKey": "mx.val.tea"
+       },
+       {
+        "id": "coffee",
+        "labelKey": "mx.val.coffee"
+       },
+       {
+        "id": "cocoa",
+        "labelKey": "mx.val.cocoa"
+       },
+       {
+        "id": "mulled",
+        "labelKey": "mx.val.mulled"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     },
+     {
+      "id": "redhead",
+      "labelKey": "mx.person.redhead"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l2t3.c1",
+      "rule": [
+       "link",
+       "job",
+       "librarian",
+       "ring",
+       "sapphire"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c2",
+      "rule": [
+       "is",
+       "hatlady",
+       "drink",
+       "mulled"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c3",
+      "rule": [
+       "is",
+       "mustache",
+       "job",
+       "photographer"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c4",
+      "rule": [
+       "link",
+       "ring",
+       "ruby",
+       "thing",
+       "cane"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c5",
+      "rule": [
+       "link",
+       "ring",
+       "emerald",
+       "thing",
+       "cards"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c6",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "ring",
+       "amethyst"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c7",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "drink",
+       "tea"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c8",
+      "rule": [
+       "link",
+       "job",
+       "pilot",
+       "drink",
+       "coffee"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c9",
+      "rule": [
+       "is",
+       "redhead",
+       "thing",
+       "lantern"
+      ]
+     },
+     {
+      "textKey": "mx.l2t3.c10",
+      "rule": [
+       "unlink",
+       "ring",
+       "emerald",
+       "drink",
+       "coffee"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "pilot",
+      "ring": "ruby",
+      "thing": "cane",
+      "drink": "coffee"
+     },
+     "hatlady": {
+      "job": "librarian",
+      "ring": "sapphire",
+      "thing": "envelope",
+      "drink": "mulled"
+     },
+     "mustache": {
+      "job": "photographer",
+      "ring": "emerald",
+      "thing": "cards",
+      "drink": "cocoa"
+     },
+     "redhead": {
+      "job": "doctor",
+      "ring": "amethyst",
+      "thing": "lantern",
+      "drink": "tea"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-2-004",
+   "level": 2,
+   "payload": {
+    "categories": [
+     {
+      "key": "city",
+      "labelKey": "mx.l2t4.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       },
+       {
+        "id": "odessa",
+        "labelKey": "mx.val.odessa"
+       }
+      ]
+     },
+     {
+      "key": "pet",
+      "labelKey": "mx.l2t4.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       },
+       {
+        "id": "dog",
+        "labelKey": "mx.val.dog"
+       }
+      ]
+     },
+     {
+      "key": "coat",
+      "labelKey": "mx.l2t4.cat.coat",
+      "values": [
+       {
+        "id": "coat-grey",
+        "labelKey": "mx.val.coat-grey"
+       },
+       {
+        "id": "coat-black",
+        "labelKey": "mx.val.coat-black"
+       },
+       {
+        "id": "coat-burgundy",
+        "labelKey": "mx.val.coat-burgundy"
+       },
+       {
+        "id": "coat-green",
+        "labelKey": "mx.val.coat-green"
+       }
+      ]
+     },
+     {
+      "key": "row",
+      "labelKey": "mx.l2t4.cat.row",
+      "values": [
+       {
+        "id": "row1",
+        "labelKey": "mx.val.row1"
+       },
+       {
+        "id": "row2",
+        "labelKey": "mx.val.row2"
+       },
+       {
+        "id": "row3",
+        "labelKey": "mx.val.row3"
+       },
+       {
+        "id": "row4",
+        "labelKey": "mx.val.row4"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "veil",
+      "labelKey": "mx.person.veil"
+     },
+     {
+      "id": "silent",
+      "labelKey": "mx.person.silent"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l2t4.c1",
+      "rule": [
+       "link",
+       "city",
+       "riga",
+       "pet",
+       "raven"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c2",
+      "rule": [
+       "is",
+       "neighbor",
+       "coat",
+       "coat-green"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c3",
+      "rule": [
+       "not",
+       "x",
+       "row",
+       "row2"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c4",
+      "rule": [
+       "link",
+       "coat",
+       "coat-grey",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c5",
+      "rule": [
+       "link",
+       "coat",
+       "coat-black",
+       "row",
+       "row4"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c6",
+      "rule": [
+       "link",
+       "pet",
+       "owl",
+       "coat",
+       "coat-burgundy"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c7",
+      "rule": [
+       "link",
+       "pet",
+       "raven",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c8",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "row",
+       "row1"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c9",
+      "rule": [
+       "link",
+       "city",
+       "vienna",
+       "pet",
+       "owl"
+      ]
+     },
+     {
+      "textKey": "mx.l2t4.c10",
+      "rule": [
+       "is",
+       "silent",
+       "city",
+       "prague"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "city": "riga",
+      "pet": "raven",
+      "coat": "coat-grey",
+      "row": "row3"
+     },
+     "neighbor": {
+      "city": "odessa",
+      "pet": "cat",
+      "coat": "coat-green",
+      "row": "row1"
+     },
+     "veil": {
+      "city": "vienna",
+      "pet": "owl",
+      "coat": "coat-burgundy",
+      "row": "row2"
+     },
+     "silent": {
+      "city": "prague",
+      "pet": "dog",
+      "coat": "coat-black",
+      "row": "row4"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-2-005",
+   "level": 2,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l2t5.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       },
+       {
+        "id": "librarian",
+        "labelKey": "mx.val.librarian"
+       }
+      ]
+     },
+     {
+      "key": "drink",
+      "labelKey": "mx.l2t5.cat.drink",
+      "values": [
+       {
+        "id": "tea",
+        "labelKey": "mx.val.tea"
+       },
+       {
+        "id": "coffee",
+        "labelKey": "mx.val.coffee"
+       },
+       {
+        "id": "cocoa",
+        "labelKey": "mx.val.cocoa"
+       },
+       {
+        "id": "mulled",
+        "labelKey": "mx.val.mulled"
+       }
+      ]
+     },
+     {
+      "key": "pet",
+      "labelKey": "mx.l2t5.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       },
+       {
+        "id": "dog",
+        "labelKey": "mx.val.dog"
+       }
+      ]
+     },
+     {
+      "key": "city",
+      "labelKey": "mx.l2t5.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       },
+       {
+        "id": "odessa",
+        "labelKey": "mx.val.odessa"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     },
+     {
+      "id": "redhead",
+      "labelKey": "mx.person.redhead"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l2t5.c1",
+      "rule": [
+       "link",
+       "job",
+       "pilot",
+       "pet",
+       "owl"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c2",
+      "rule": [
+       "unlink",
+       "drink",
+       "cocoa",
+       "pet",
+       "dog"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c3",
+      "rule": [
+       "is",
+       "mustache",
+       "drink",
+       "tea"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c4",
+      "rule": [
+       "link",
+       "drink",
+       "cocoa",
+       "city",
+       "odessa"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c5",
+      "rule": [
+       "is",
+       "hatlady",
+       "job",
+       "photographer"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c6",
+      "rule": [
+       "link",
+       "job",
+       "librarian",
+       "drink",
+       "mulled"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c7",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "city",
+       "riga"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c8",
+      "rule": [
+       "link",
+       "drink",
+       "tea",
+       "city",
+       "riga"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c9",
+      "rule": [
+       "is",
+       "redhead",
+       "job",
+       "pilot"
+      ]
+     },
+     {
+      "textKey": "mx.l2t5.c10",
+      "rule": [
+       "link",
+       "job",
+       "pilot",
+       "city",
+       "prague"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "librarian",
+      "drink": "mulled",
+      "pet": "dog",
+      "city": "vienna"
+     },
+     "hatlady": {
+      "job": "photographer",
+      "drink": "cocoa",
+      "pet": "raven",
+      "city": "odessa"
+     },
+     "redhead": {
+      "job": "pilot",
+      "drink": "coffee",
+      "pet": "owl",
+      "city": "prague"
+     },
+     "mustache": {
+      "job": "doctor",
+      "drink": "tea",
+      "pet": "cat",
+      "city": "riga"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-3-001",
+   "level": 3,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l3t1.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       },
+       {
+        "id": "librarian",
+        "labelKey": "mx.val.librarian"
+       },
+       {
+        "id": "jeweler",
+        "labelKey": "mx.val.jeweler"
+       }
+      ]
+     },
+     {
+      "key": "city",
+      "labelKey": "mx.l3t1.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       },
+       {
+        "id": "odessa",
+        "labelKey": "mx.val.odessa"
+       },
+       {
+        "id": "tbilisi",
+        "labelKey": "mx.val.tbilisi"
+       }
+      ]
+     },
+     {
+      "key": "coat",
+      "labelKey": "mx.l3t1.cat.coat",
+      "values": [
+       {
+        "id": "coat-grey",
+        "labelKey": "mx.val.coat-grey"
+       },
+       {
+        "id": "coat-black",
+        "labelKey": "mx.val.coat-black"
+       },
+       {
+        "id": "coat-burgundy",
+        "labelKey": "mx.val.coat-burgundy"
+       },
+       {
+        "id": "coat-green",
+        "labelKey": "mx.val.coat-green"
+       },
+       {
+        "id": "coat-beige",
+        "labelKey": "mx.val.coat-beige"
+       }
+      ]
+     },
+     {
+      "key": "thing",
+      "labelKey": "mx.l3t1.cat.thing",
+      "values": [
+       {
+        "id": "cane",
+        "labelKey": "mx.val.cane"
+       },
+       {
+        "id": "envelope",
+        "labelKey": "mx.val.envelope"
+       },
+       {
+        "id": "cards",
+        "labelKey": "mx.val.cards"
+       },
+       {
+        "id": "lantern",
+        "labelKey": "mx.val.lantern"
+       },
+       {
+        "id": "medallion",
+        "labelKey": "mx.val.medallion"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     },
+     {
+      "id": "veil",
+      "labelKey": "mx.person.veil"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l3t1.c1",
+      "rule": [
+       "is",
+       "mustache",
+       "job",
+       "pilot"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c2",
+      "rule": [
+       "link",
+       "city",
+       "odessa",
+       "coat",
+       "coat-beige"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c3",
+      "rule": [
+       "is",
+       "hatlady",
+       "thing",
+       "cane"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c4",
+      "rule": [
+       "link",
+       "city",
+       "vienna",
+       "thing",
+       "lantern"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c5",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "thing",
+       "envelope"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c6",
+      "rule": [
+       "is",
+       "veil",
+       "coat",
+       "coat-grey"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c7",
+      "rule": [
+       "link",
+       "job",
+       "photographer",
+       "city",
+       "prague"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c8",
+      "rule": [
+       "link",
+       "job",
+       "photographer",
+       "coat",
+       "coat-black"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c9",
+      "rule": [
+       "link",
+       "city",
+       "tbilisi",
+       "thing",
+       "envelope"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c10",
+      "rule": [
+       "link",
+       "job",
+       "pilot",
+       "coat",
+       "coat-green"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c11",
+      "rule": [
+       "is",
+       "neighbor",
+       "job",
+       "jeweler"
+      ]
+     },
+     {
+      "textKey": "mx.l3t1.c12",
+      "rule": [
+       "link",
+       "coat",
+       "coat-grey",
+       "thing",
+       "medallion"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "doctor",
+      "city": "tbilisi",
+      "coat": "coat-burgundy",
+      "thing": "envelope"
+     },
+     "neighbor": {
+      "job": "jeweler",
+      "city": "odessa",
+      "coat": "coat-beige",
+      "thing": "cards"
+     },
+     "hatlady": {
+      "job": "photographer",
+      "city": "prague",
+      "coat": "coat-black",
+      "thing": "cane"
+     },
+     "veil": {
+      "job": "librarian",
+      "city": "riga",
+      "coat": "coat-grey",
+      "thing": "medallion"
+     },
+     "mustache": {
+      "job": "pilot",
+      "city": "vienna",
+      "coat": "coat-green",
+      "thing": "lantern"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-3-002",
+   "level": 3,
+   "payload": {
+    "categories": [
+     {
+      "key": "pet",
+      "labelKey": "mx.l3t2.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       },
+       {
+        "id": "dog",
+        "labelKey": "mx.val.dog"
+       },
+       {
+        "id": "parrot",
+        "labelKey": "mx.val.parrot"
+       }
+      ]
+     },
+     {
+      "key": "ring",
+      "labelKey": "mx.l3t2.cat.ring",
+      "values": [
+       {
+        "id": "amethyst",
+        "labelKey": "mx.val.amethyst"
+       },
+       {
+        "id": "ruby",
+        "labelKey": "mx.val.ruby"
+       },
+       {
+        "id": "emerald",
+        "labelKey": "mx.val.emerald"
+       },
+       {
+        "id": "sapphire",
+        "labelKey": "mx.val.sapphire"
+       },
+       {
+        "id": "pearl",
+        "labelKey": "mx.val.pearl"
+       }
+      ]
+     },
+     {
+      "key": "drink",
+      "labelKey": "mx.l3t2.cat.drink",
+      "values": [
+       {
+        "id": "tea",
+        "labelKey": "mx.val.tea"
+       },
+       {
+        "id": "coffee",
+        "labelKey": "mx.val.coffee"
+       },
+       {
+        "id": "cocoa",
+        "labelKey": "mx.val.cocoa"
+       },
+       {
+        "id": "mulled",
+        "labelKey": "mx.val.mulled"
+       },
+       {
+        "id": "herbal",
+        "labelKey": "mx.val.herbal"
+       }
+      ]
+     },
+     {
+      "key": "row",
+      "labelKey": "mx.l3t2.cat.row",
+      "values": [
+       {
+        "id": "row1",
+        "labelKey": "mx.val.row1"
+       },
+       {
+        "id": "row2",
+        "labelKey": "mx.val.row2"
+       },
+       {
+        "id": "row3",
+        "labelKey": "mx.val.row3"
+       },
+       {
+        "id": "row4",
+        "labelKey": "mx.val.row4"
+       },
+       {
+        "id": "row5",
+        "labelKey": "mx.val.row5"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "redhead",
+      "labelKey": "mx.person.redhead"
+     },
+     {
+      "id": "silent",
+      "labelKey": "mx.person.silent"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l3t2.c1",
+      "rule": [
+       "link",
+       "ring",
+       "sapphire",
+       "row",
+       "row1"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c2",
+      "rule": [
+       "is",
+       "neighbor",
+       "ring",
+       "ruby"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c3",
+      "rule": [
+       "is",
+       "redhead",
+       "drink",
+       "tea"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c4",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "ring",
+       "amethyst"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c5",
+      "rule": [
+       "link",
+       "drink",
+       "herbal",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c6",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "drink",
+       "tea"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c7",
+      "rule": [
+       "is",
+       "silent",
+       "drink",
+       "cocoa"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c8",
+      "rule": [
+       "link",
+       "pet",
+       "owl",
+       "row",
+       "row5"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c9",
+      "rule": [
+       "link",
+       "pet",
+       "raven",
+       "drink",
+       "coffee"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c10",
+      "rule": [
+       "link",
+       "pet",
+       "dog",
+       "ring",
+       "pearl"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c11",
+      "rule": [
+       "is",
+       "hatlady",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l3t2.c12",
+      "rule": [
+       "link",
+       "ring",
+       "pearl",
+       "row",
+       "row4"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "pet": "raven",
+      "ring": "sapphire",
+      "drink": "coffee",
+      "row": "row1"
+     },
+     "redhead": {
+      "pet": "cat",
+      "ring": "amethyst",
+      "drink": "tea",
+      "row": "row2"
+     },
+     "silent": {
+      "pet": "dog",
+      "ring": "pearl",
+      "drink": "cocoa",
+      "row": "row4"
+     },
+     "neighbor": {
+      "pet": "owl",
+      "ring": "ruby",
+      "drink": "mulled",
+      "row": "row5"
+     },
+     "hatlady": {
+      "pet": "parrot",
+      "ring": "emerald",
+      "drink": "herbal",
+      "row": "row3"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-3-003",
+   "level": 3,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l3t3.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       },
+       {
+        "id": "librarian",
+        "labelKey": "mx.val.librarian"
+       },
+       {
+        "id": "jeweler",
+        "labelKey": "mx.val.jeweler"
+       }
+      ]
+     },
+     {
+      "key": "pet",
+      "labelKey": "mx.l3t3.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       },
+       {
+        "id": "dog",
+        "labelKey": "mx.val.dog"
+       },
+       {
+        "id": "parrot",
+        "labelKey": "mx.val.parrot"
+       }
+      ]
+     },
+     {
+      "key": "thing",
+      "labelKey": "mx.l3t3.cat.thing",
+      "values": [
+       {
+        "id": "cane",
+        "labelKey": "mx.val.cane"
+       },
+       {
+        "id": "envelope",
+        "labelKey": "mx.val.envelope"
+       },
+       {
+        "id": "cards",
+        "labelKey": "mx.val.cards"
+       },
+       {
+        "id": "lantern",
+        "labelKey": "mx.val.lantern"
+       },
+       {
+        "id": "medallion",
+        "labelKey": "mx.val.medallion"
+       }
+      ]
+     },
+     {
+      "key": "ring",
+      "labelKey": "mx.l3t3.cat.ring",
+      "values": [
+       {
+        "id": "amethyst",
+        "labelKey": "mx.val.amethyst"
+       },
+       {
+        "id": "ruby",
+        "labelKey": "mx.val.ruby"
+       },
+       {
+        "id": "emerald",
+        "labelKey": "mx.val.emerald"
+       },
+       {
+        "id": "sapphire",
+        "labelKey": "mx.val.sapphire"
+       },
+       {
+        "id": "pearl",
+        "labelKey": "mx.val.pearl"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "veil",
+      "labelKey": "mx.person.veil"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     },
+     {
+      "id": "redhead",
+      "labelKey": "mx.person.redhead"
+     },
+     {
+      "id": "silent",
+      "labelKey": "mx.person.silent"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l3t3.c1",
+      "rule": [
+       "link",
+       "job",
+       "jeweler",
+       "pet",
+       "raven"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c2",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "thing",
+       "medallion"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c3",
+      "rule": [
+       "link",
+       "pet",
+       "parrot",
+       "ring",
+       "amethyst"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c4",
+      "rule": [
+       "is",
+       "silent",
+       "pet",
+       "dog"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c5",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "pet",
+       "cat"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c6",
+      "rule": [
+       "link",
+       "thing",
+       "cane",
+       "ring",
+       "ruby"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c7",
+      "rule": [
+       "is",
+       "veil",
+       "ring",
+       "amethyst"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c8",
+      "rule": [
+       "is",
+       "redhead",
+       "job",
+       "pilot"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c9",
+      "rule": [
+       "link",
+       "pet",
+       "cat",
+       "ring",
+       "sapphire"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c10",
+      "rule": [
+       "link",
+       "job",
+       "pilot",
+       "thing",
+       "cards"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c11",
+      "rule": [
+       "link",
+       "job",
+       "librarian",
+       "thing",
+       "lantern"
+      ]
+     },
+     {
+      "textKey": "mx.l3t3.c12",
+      "rule": [
+       "is",
+       "mustache",
+       "ring",
+       "pearl"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "doctor",
+      "pet": "cat",
+      "thing": "medallion",
+      "ring": "sapphire"
+     },
+     "veil": {
+      "job": "librarian",
+      "pet": "parrot",
+      "thing": "lantern",
+      "ring": "amethyst"
+     },
+     "mustache": {
+      "job": "jeweler",
+      "pet": "raven",
+      "thing": "envelope",
+      "ring": "pearl"
+     },
+     "redhead": {
+      "job": "pilot",
+      "pet": "owl",
+      "thing": "cards",
+      "ring": "emerald"
+     },
+     "silent": {
+      "job": "photographer",
+      "pet": "dog",
+      "thing": "cane",
+      "ring": "ruby"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-3-004",
+   "level": 3,
+   "payload": {
+    "categories": [
+     {
+      "key": "city",
+      "labelKey": "mx.l3t4.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       },
+       {
+        "id": "odessa",
+        "labelKey": "mx.val.odessa"
+       },
+       {
+        "id": "tbilisi",
+        "labelKey": "mx.val.tbilisi"
+       }
+      ]
+     },
+     {
+      "key": "coat",
+      "labelKey": "mx.l3t4.cat.coat",
+      "values": [
+       {
+        "id": "coat-grey",
+        "labelKey": "mx.val.coat-grey"
+       },
+       {
+        "id": "coat-black",
+        "labelKey": "mx.val.coat-black"
+       },
+       {
+        "id": "coat-burgundy",
+        "labelKey": "mx.val.coat-burgundy"
+       },
+       {
+        "id": "coat-green",
+        "labelKey": "mx.val.coat-green"
+       },
+       {
+        "id": "coat-beige",
+        "labelKey": "mx.val.coat-beige"
+       }
+      ]
+     },
+     {
+      "key": "drink",
+      "labelKey": "mx.l3t4.cat.drink",
+      "values": [
+       {
+        "id": "tea",
+        "labelKey": "mx.val.tea"
+       },
+       {
+        "id": "coffee",
+        "labelKey": "mx.val.coffee"
+       },
+       {
+        "id": "cocoa",
+        "labelKey": "mx.val.cocoa"
+       },
+       {
+        "id": "mulled",
+        "labelKey": "mx.val.mulled"
+       },
+       {
+        "id": "herbal",
+        "labelKey": "mx.val.herbal"
+       }
+      ]
+     },
+     {
+      "key": "row",
+      "labelKey": "mx.l3t4.cat.row",
+      "values": [
+       {
+        "id": "row1",
+        "labelKey": "mx.val.row1"
+       },
+       {
+        "id": "row2",
+        "labelKey": "mx.val.row2"
+       },
+       {
+        "id": "row3",
+        "labelKey": "mx.val.row3"
+       },
+       {
+        "id": "row4",
+        "labelKey": "mx.val.row4"
+       },
+       {
+        "id": "row5",
+        "labelKey": "mx.val.row5"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     },
+     {
+      "id": "redhead",
+      "labelKey": "mx.person.redhead"
+     },
+     {
+      "id": "silent",
+      "labelKey": "mx.person.silent"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l3t4.c1",
+      "rule": [
+       "link",
+       "coat",
+       "coat-beige",
+       "row",
+       "row1"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c2",
+      "rule": [
+       "link",
+       "coat",
+       "coat-grey",
+       "drink",
+       "tea"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c3",
+      "rule": [
+       "link",
+       "city",
+       "tbilisi",
+       "drink",
+       "mulled"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c4",
+      "rule": [
+       "link",
+       "drink",
+       "cocoa",
+       "row",
+       "row3"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c5",
+      "rule": [
+       "is",
+       "redhead",
+       "drink",
+       "herbal"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c6",
+      "rule": [
+       "is",
+       "silent",
+       "row",
+       "row5"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c7",
+      "rule": [
+       "is",
+       "neighbor",
+       "city",
+       "vienna"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c8",
+      "rule": [
+       "link",
+       "city",
+       "vienna",
+       "coat",
+       "coat-grey"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c9",
+      "rule": [
+       "link",
+       "city",
+       "riga",
+       "coat",
+       "coat-burgundy"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c10",
+      "rule": [
+       "link",
+       "drink",
+       "herbal",
+       "row",
+       "row2"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c11",
+      "rule": [
+       "link",
+       "city",
+       "odessa",
+       "row",
+       "row5"
+      ]
+     },
+     {
+      "textKey": "mx.l3t4.c12",
+      "rule": [
+       "is",
+       "hatlady",
+       "coat",
+       "coat-black"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "city": "tbilisi",
+      "coat": "coat-beige",
+      "drink": "mulled",
+      "row": "row1"
+     },
+     "neighbor": {
+      "city": "vienna",
+      "coat": "coat-grey",
+      "drink": "tea",
+      "row": "row4"
+     },
+     "hatlady": {
+      "city": "prague",
+      "coat": "coat-black",
+      "drink": "cocoa",
+      "row": "row3"
+     },
+     "redhead": {
+      "city": "riga",
+      "coat": "coat-burgundy",
+      "drink": "herbal",
+      "row": "row2"
+     },
+     "silent": {
+      "city": "odessa",
+      "coat": "coat-green",
+      "drink": "coffee",
+      "row": "row5"
+     }
+    },
+    "ask": "x"
+   }
+  },
+  {
+   "id": "misterx-3-005",
+   "level": 3,
+   "payload": {
+    "categories": [
+     {
+      "key": "job",
+      "labelKey": "mx.l3t5.cat.job",
+      "values": [
+       {
+        "id": "doctor",
+        "labelKey": "mx.val.doctor"
+       },
+       {
+        "id": "pilot",
+        "labelKey": "mx.val.pilot"
+       },
+       {
+        "id": "photographer",
+        "labelKey": "mx.val.photographer"
+       },
+       {
+        "id": "librarian",
+        "labelKey": "mx.val.librarian"
+       },
+       {
+        "id": "jeweler",
+        "labelKey": "mx.val.jeweler"
+       }
+      ]
+     },
+     {
+      "key": "ring",
+      "labelKey": "mx.l3t5.cat.ring",
+      "values": [
+       {
+        "id": "amethyst",
+        "labelKey": "mx.val.amethyst"
+       },
+       {
+        "id": "ruby",
+        "labelKey": "mx.val.ruby"
+       },
+       {
+        "id": "emerald",
+        "labelKey": "mx.val.emerald"
+       },
+       {
+        "id": "sapphire",
+        "labelKey": "mx.val.sapphire"
+       },
+       {
+        "id": "pearl",
+        "labelKey": "mx.val.pearl"
+       }
+      ]
+     },
+     {
+      "key": "city",
+      "labelKey": "mx.l3t5.cat.city",
+      "values": [
+       {
+        "id": "riga",
+        "labelKey": "mx.val.riga"
+       },
+       {
+        "id": "prague",
+        "labelKey": "mx.val.prague"
+       },
+       {
+        "id": "vienna",
+        "labelKey": "mx.val.vienna"
+       },
+       {
+        "id": "odessa",
+        "labelKey": "mx.val.odessa"
+       },
+       {
+        "id": "tbilisi",
+        "labelKey": "mx.val.tbilisi"
+       }
+      ]
+     },
+     {
+      "key": "pet",
+      "labelKey": "mx.l3t5.cat.pet",
+      "values": [
+       {
+        "id": "cat",
+        "labelKey": "mx.val.cat"
+       },
+       {
+        "id": "raven",
+        "labelKey": "mx.val.raven"
+       },
+       {
+        "id": "owl",
+        "labelKey": "mx.val.owl"
+       },
+       {
+        "id": "dog",
+        "labelKey": "mx.val.dog"
+       },
+       {
+        "id": "parrot",
+        "labelKey": "mx.val.parrot"
+       }
+      ]
+     }
+    ],
+    "people": [
+     {
+      "id": "x",
+      "labelKey": "mx.person.x"
+     },
+     {
+      "id": "veil",
+      "labelKey": "mx.person.veil"
+     },
+     {
+      "id": "mustache",
+      "labelKey": "mx.person.mustache"
+     },
+     {
+      "id": "neighbor",
+      "labelKey": "mx.person.neighbor"
+     },
+     {
+      "id": "hatlady",
+      "labelKey": "mx.person.hatlady"
+     }
+    ],
+    "clues": [
+     {
+      "textKey": "mx.l3t5.c1",
+      "rule": [
+       "link",
+       "ring",
+       "sapphire",
+       "city",
+       "odessa"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c2",
+      "rule": [
+       "is",
+       "hatlady",
+       "ring",
+       "emerald"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c3",
+      "rule": [
+       "link",
+       "job",
+       "jeweler",
+       "pet",
+       "cat"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c4",
+      "rule": [
+       "link",
+       "ring",
+       "pearl",
+       "pet",
+       "dog"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c5",
+      "rule": [
+       "link",
+       "city",
+       "tbilisi",
+       "pet",
+       "owl"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c6",
+      "rule": [
+       "is",
+       "neighbor",
+       "pet",
+       "cat"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c7",
+      "rule": [
+       "link",
+       "job",
+       "librarian",
+       "ring",
+       "sapphire"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c8",
+      "rule": [
+       "link",
+       "job",
+       "doctor",
+       "ring",
+       "pearl"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c9",
+      "rule": [
+       "link",
+       "job",
+       "pilot",
+       "pet",
+       "parrot"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c10",
+      "rule": [
+       "link",
+       "ring",
+       "amethyst",
+       "city",
+       "vienna"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c11",
+      "rule": [
+       "is",
+       "veil",
+       "pet",
+       "owl"
+      ]
+     },
+     {
+      "textKey": "mx.l3t5.c12",
+      "rule": [
+       "is",
+       "mustache",
+       "city",
+       "riga"
+      ]
+     }
+    ],
+    "solution": {
+     "x": {
+      "job": "librarian",
+      "ring": "sapphire",
+      "city": "odessa",
+      "pet": "raven"
+     },
+     "veil": {
+      "job": "photographer",
+      "ring": "ruby",
+      "city": "tbilisi",
+      "pet": "owl"
+     },
+     "mustache": {
+      "job": "doctor",
+      "ring": "pearl",
+      "city": "riga",
+      "pet": "dog"
+     },
+     "neighbor": {
+      "job": "jeweler",
+      "ring": "amethyst",
+      "city": "vienna",
+      "pet": "cat"
+     },
+     "hatlady": {
+      "job": "pilot",
+      "ring": "emerald",
+      "city": "prague",
+      "pet": "parrot"
+     }
+    },
+    "ask": "x"
+   }
+  }
+ ]
+}

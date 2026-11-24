@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<rect x="66" y="38" width="16" height="180" fill="#b8862f"/>
+<rect x="174" y="38" width="16" height="180" fill="#b8862f"/>
+<path d="M92,40 L164,40 C164,92 136,108 136,128 C136,148 164,164 164,216 L92,216 C92,164 120,148 120,128 C120,108 92,92 92,40 Z" fill="#fbf1d6"/>
+<path d="M104,86 L152,86 C146,102 132,110 128,124 C124,110 110,102 104,86 Z" fill="#f1c86b" stroke="none"/>
+<path d="M128,124 L128,186" stroke="#f1c86b" stroke-width="3"/>
+<path d="M96,214 C98,190 114,182 128,180 C142,182 158,190 160,214 Z" fill="#f1c86b" stroke="none"/>
+<path d="M92,40 L164,40 C164,92 136,108 136,128 C136,148 164,164 164,216 L92,216 C92,164 120,148 120,128 C120,108 92,92 92,40 Z" fill="none"/>
+<path d="M100,52 L110,52 C110,76 116,90 122,100 C110,92 102,76 100,52 Z" fill="#fff6dc" stroke="none" opacity="0.8"/>
+<rect x="44" y="18" width="168" height="24" rx="8" fill="#f1c86b"/>
+<rect x="44" y="214" width="168" height="24" rx="8" fill="#f1c86b"/>
+<path d="M58,26 L198,26 M58,230 L198,230" stroke="#fff6dc" stroke-width="4" opacity="0.6"/>
+</g>
+</svg>

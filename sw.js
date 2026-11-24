@@ -1,6 +1,6 @@
 // Service worker: всё из precache.json — в кэш, отдача из кэша (работа без сети).
 // Строку VERSION переписывает tools/build-precache.js при каждой выкладке.
-const VERSION = '0.3.0';
+const VERSION = '0.4.0';
 const CACHE = 's6-' + VERSION;
 
 self.addEventListener('install', (e) => {

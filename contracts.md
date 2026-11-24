@@ -1,6 +1,6 @@
 # Контракты модулей — «Шестое чувство»
 
-Версия **2.2** от 24.11.2026. Меняет только оркестратор. Агент, которому нужен другой интерфейс, пишет запрос оркестратору.
+Версия **2.3** от 24.11.2026. Меняет только оркестратор. Агент, которому нужен другой интерфейс, пишет запрос оркестратору.
 Нотация — сигнатуры в стиле TypeScript, без реализации. Код — ES-модули (`export`), классы.
 Для каждого модуля указаны: имя, входы, выходы, что происходит при ошибке.
 
@@ -345,7 +345,7 @@ interface TrialContext {
   rng: Rng; audio: Audio; assets: AssetLoader;
   text(key: string, vars?: object): string;
   balance: TrialBalance;
-  traps: 0 | 1;                                         // ловушки скептика: добавить ложную подсказку или улику
+  traps: 0 | 1;                                         // ловушки скептика: ложная подсказка или улика уже лежит в данных уровня; Мистер Икс ловушки не использует
   power: { get(): number; spend(n: number, reason: string): boolean };   // false — не хватает, ничего не списано
   hint(kind: string): void;
   react(kind: 'correct' | 'mistake'): void;           // 2.1: реакция шоу — похвала голосом или злорадный смех скептика + субтитр
@@ -404,8 +404,8 @@ interface TrialResult {
 | shirma | `{ "answer": "kettle", "options": ["kettle","clock","teapot","lamp"], "hints": [ { "kind": "silhouette\|sound\|warmth\|detail\|smell", "textKey": "…", "fake": false } ] }` | варианты — id предметов (§12.5); 4/5/6 по уровню; 3–5 подсказок; `answer` среди `options`; `fake` только на уровне 3 |
 | bagazhnik | `{ "cars": [ { "id": "c1", "body": "sedan\|hatch\|suv\|van", "color": "#5b3a8c", "clues": [ { "kind": "sag\|fog\|track\|sound\|smell", "textKey": "…", "fake": false } ] } ], "target": "c1" }` | машин 6/10/15; у цели ≥ 2 настоящих улик; ложных 0/1/2 |
 | misterx | `{ "categories": [ { "key": "job", "labelKey": "…", "values": [ { "id": "pilot", "labelKey": "…" } ] } ], "people": [ { "id": "x", "labelKey": "…" }, { "id": "a", "labelKey": "…" } ], "clues": [ { "textKey": "…", "rule": ["is","a","job","pilot"] } ], "solution": { "x": { "job": "pilot" } }, "ask": "x" }` | людей = значений в категории (каждое значение ровно у одного человека); 3×3 / 4×4 / 4×5 (категорий × значений); решение единственное (тест-решатель 2.6); `rule` — машинная форма подсказки для решателя, испытание её не читает: `["is",p,cat,val]`, `["not",p,cat,val]`, `["link",cat1,val1,cat2,val2]` (у кого val1, у того и val2), `["unlink",cat1,val1,cat2,val2]` |
-| foto | `{ "photo": "foto-1-01", "items": ["ring","ticket"], "statements": [ { "textKey": "…", "true": true, "explainKey": "…" } ], "pick": 2 }` | утверждений 5/6/8, верных ровно `pick` = 2/3/4 |
-| komnata | `{ "room": "room-1", "light": 0.14, "objects": [ { "item": "key", "x": 0.31, "y": 0.62, "r": 0.03, "clue": "clue-05" } ], "find": ["key"], "timeLimitSec": null }` | предметов найти 3/5/7; луч 0.14/0.11/0.08; все `find` есть в `objects`; `timeLimitSec` = null в версии 1.0 |
+| foto | `{ "photo": "foto-1-01", "items": [ { "labelKey": "…", "art": "item-key" } ], "statements": [ { "textKey": "…", "true": true, "explainKey": "…" } ], "pick": 2 }` | `photo` — id картинки (foto-<ур>-<nn>); `items` — вещи человека: подпись обязательна, `art` (id из items.json) — по желанию; утверждений 5/6/8, верных ровно `pick` = 2/3/4; утверждения проверяемы по фото и вещам |
+| komnata | `{ "room": "room-1", "light": 0.14, "objects": [ { "id": "jar", "labelKey": "…", "x": 0.31, "y": 0.62, "r": 0.03, "clue": null } ], "find": ["jar"], "timeLimitSec": null }` | `objects` — предметы, реально видимые на картинке комнаты (координаты центра и радиус — доли ширины/высоты картинки); найти 3/5/7; луч 0.14/0.11/0.08; все `find` есть в `objects`; предметы не перекрываются; `clue` — id улики дела или null; `timeLimitSec` = null |
 
 ### 12.3 Персонаж — `data/characters.json`
 `{ "id": "agata", "name": "Агата", "role": "rival|host|skeptic", "color": "#8c2f5b", "portrait": "rival-agata", "skill": 0.75, "spread": 0.15, "lines": "rival.agata" }` — 7 записей (§13.3). `skill` и `spread` только у соперников.
@@ -455,6 +455,7 @@ interface TrialResult {
 
 ## 14. Журнал изменений
 - 1.0 — 24.11.2026 — первая версия.
+- 2.3 — 24.11.2026 — Фото-дело: вещи с подписью (labelKey) вместо id предмета; Тёмная комната: предметы картинки с id и labelKey.
 - 2.2 — 24.11.2026 — формат Мистера Икс: значения и люди с labelKey, поле rule для решателя.
 - 2.1 — 24.11.2026 — базовая озвучка: `ctx.react`, `ctx.item`, голос в Audio (`sayText`, `praise`, `laugh`).
 - 2.0 — 24.11.2026 — по полному ТЗ: жизненный цикл сцены (update/render/onInput), результат сцены (`finish`/`onReturn`), Input, AssetLoader с правилом подмены, DayLock вместо таймера, Updater, раздел «Данные контента», закрытые списки, режим «Гость» в контрактах, ключи хранилища `s6:v2:`.

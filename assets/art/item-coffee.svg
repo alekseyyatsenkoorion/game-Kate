@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<g transform="translate(-14,4)">
+<path d="M84,92 C70,76 98,66 84,46 C76,34 86,24 92,20" fill="none" stroke-width="19"/>
+<path d="M84,92 C70,76 98,66 84,46 C76,34 86,24 92,20" fill="none" stroke="#e9d3a0" stroke-width="7"/>
+<path d="M118,96 C104,78 134,68 118,46 C110,34 120,22 126,16" fill="none" stroke-width="19"/>
+<path d="M118,96 C104,78 134,68 118,46 C110,34 120,22 126,16" fill="none" stroke="#e9d3a0" stroke-width="7"/>
+<path d="M152,92 C140,76 166,66 152,48" fill="none" stroke-width="19"/>
+<path d="M152,92 C140,76 166,66 152,48" fill="none" stroke="#e9d3a0" stroke-width="7"/>
+<path d="M144,160 L232,124" stroke-width="22"/>
+<path d="M144,160 L232,124" stroke="#b8862f" stroke-width="10"/>
+<path d="M194,144 L238,126" stroke-width="28"/>
+<path d="M194,144 L238,126" stroke="#8a5a24" stroke-width="16"/>
+<path d="M60,104 L70,116 C74,130 72,138 66,150 C52,176 44,196 46,214 Q48,230 66,230 L170,230 Q188,230 190,214 C192,196 184,176 170,150 C164,138 162,130 166,116 L176,104 Z" fill="#f1c86b"/>
+<path d="M66,150 L170,150" stroke="#b8862f" stroke-width="5"/>
+<path d="M40,98 L62,106 L180,106 L182,98 Q118,88 40,98 Z" fill="#b8862f"/>
+<ellipse cx="120" cy="104" rx="54" ry="6" fill="#6b3d1e" stroke="none"/>
+<path d="M70,166 C60,186 58,204 62,218 L76,218 C72,200 74,184 82,166 Z" fill="#fff6dc" stroke="none" opacity="0.6"/>
+</g>
+</g>
+</svg>

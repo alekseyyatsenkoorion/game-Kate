@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<g transform="translate(128,128) scale(0.95) translate(-144.5,-124.5)">
+<path d="M112,200 L110,236" fill="none" stroke-width="27"/>
+<path d="M112,200 L110,236" fill="none" stroke="#8a5a24" stroke-width="15"/>
+<path d="M144,200 L146,236" fill="none" stroke-width="27"/>
+<path d="M144,200 L146,236" fill="none" stroke="#8a5a24" stroke-width="15"/>
+<ellipse cx="106" cy="242" rx="12" ry="6" fill="#2a1544" stroke-width="4"/><ellipse cx="150" cy="242" rx="12" ry="6" fill="#2a1544" stroke-width="4"/>
+<path d="M98,80 L158,80 Q172,82 172,100 L168,180 L88,180 L84,100 Q84,82 98,80 Z" fill="#fbf1d6"/>
+<path d="M92,138 L164,138 L170,212 L86,212 Z" fill="#e9d3a0"/>
+<path d="M92,138 L164,138" stroke="#b8862f" stroke-width="5"/>
+<g fill="#b8862f" stroke-width="3"><circle cx="116" cy="98" r="4"/><circle cx="140" cy="98" r="4"/><circle cx="116" cy="118" r="4"/><circle cx="140" cy="118" r="4"/></g>
+<path d="M114,78 L142,78 L128,94 Z" fill="#c0392b" stroke-width="4"/>
+<path d="M88,96 L54,130 L90,150" fill="none" stroke-width="26"/>
+<path d="M88,96 L54,130 L90,150" fill="none" stroke="#fbf1d6" stroke-width="14"/>
+<path d="M168,96 L202,108 L206,70" fill="none" stroke-width="26"/>
+<path d="M168,96 L202,108 L206,70" fill="none" stroke="#fbf1d6" stroke-width="14"/>
+<path d="M212,84 L226,22" stroke-width="14"/>
+<path d="M212,84 L226,22" stroke="#b8862f" stroke-width="5"/>
+<path d="M206,22 A20,20 0 0 0 246,22 Z" fill="#b8862f"/>
+<circle cx="208" cy="70" r="9" fill="#f1c86b" stroke-width="4"/>
+<circle cx="128" cy="62" r="20" fill="#f1c86b"/>
+<circle cx="108" cy="26" r="16" fill="#fbf1d6"/>
+<circle cx="148" cy="26" r="16" fill="#fbf1d6"/>
+<circle cx="128" cy="18" r="18" fill="#fbf1d6"/>
+<path d="M108,24 Q128,14 148,24" fill="none" stroke="#fbf1d6" stroke-width="20"/>
+<rect x="106" y="32" width="44" height="18" rx="3" fill="#fbf1d6"/>
+<path d="M114,32 L114,48 M128,32 L128,48 M142,32 L142,48" stroke="#e9d3a0" stroke-width="3"/>
+</g>
+</g>
+</svg>

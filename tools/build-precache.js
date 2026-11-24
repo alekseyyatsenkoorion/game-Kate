@@ -8,6 +8,9 @@ const SKIP_FILE = new Set(['sw.js', 'precache.json', 'package.json', 'package-lo
 const LIMIT = 15 * 1024 * 1024;
 
 const files = []; let bytes = 0;
+// Если проект под git — берём только отслеживаемые/добавленные файлы (незаконченная работа агентов не попадёт в кэш).
+let tracked = null;
+try { tracked = new Set(require('child_process').execSync('git ls-files', { cwd: ROOT }).toString().split('\n').filter(Boolean)); } catch (e) { tracked = null; }
 (function walk(dir) {
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name), rel = path.relative(ROOT, full).split(path.sep).join('/');
@@ -15,6 +18,7 @@ const files = []; let bytes = 0;
     if (st.isDirectory()) { if (!SKIP_DIR.has(name)) walk(full); continue; }
     if (SKIP_FILE.has(rel) || name.endsWith('.md') || name.startsWith('.')) continue;
     if (rel.startsWith('assets/gpt/') && !(name.endsWith('.webp') || name === 'index.json')) continue;
+    if (tracked && !tracked.has(rel)) continue;
     files.push(rel); bytes += st.size;
   }
 })(ROOT);

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<rect x="40" y="52" width="38" height="20" rx="5" fill="#b8862f"/>
+<rect x="178" y="52" width="28" height="18" rx="5" fill="#b8862f"/>
+<path d="M92,72 L104,34 L152,34 L164,72 Z" fill="#f1c86b"/>
+<rect x="114" y="44" width="28" height="14" rx="3" fill="#2a1544"/>
+<path d="M36,70 L220,70 Q236,70 236,86 L236,196 Q236,212 220,212 L36,212 Q20,212 20,196 L20,86 Q20,70 36,70 Z M94,144 A34,34 0 1 0 162,144 A34,34 0 1 0 94,144 Z" fill="#f1c86b" fill-rule="evenodd"/>
+<path d="M22,96 L234,96 M22,186 L234,186" stroke="#2a1544" stroke-width="4"/>
+<rect x="24" y="98" width="208" height="86" fill="#8a5a24" stroke="none" opacity="0.55"/>
+<path d="M72,144 A56,56 0 1 0 184,144 A56,56 0 1 0 72,144 Z M94,144 A34,34 0 1 0 162,144 A34,34 0 1 0 94,144 Z" fill="#b8862f" fill-rule="evenodd"/>
+<path d="M82,144 A46,46 0 1 0 174,144 A46,46 0 1 0 82,144 Z" fill="none" stroke="#2a1544" stroke-width="4"/>
+<path d="M108,132 Q114,120 128,118" fill="none" stroke="#fff6dc" stroke-width="6" opacity="0.8"/>
+<rect x="196" y="80" width="24" height="12" rx="3" fill="#fbf1d6" stroke-width="4"/>
+<path d="M34,80 L60,80 L54,90 L30,90 Z" fill="#fff6dc" stroke="none" opacity="0.6"/>
+</g>
+</svg>

@@ -176,6 +176,391 @@
      }
     ]
    }
+  },
+  {
+   "id": "shirma-2-001",
+   "level": 2,
+   "payload": {
+    "answer": "coffee",
+    "options": [
+     "coffee",
+     "teapot",
+     "kettle",
+     "cup",
+     "cinnamon"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l2t1.h1",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.l2t1.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l2t1.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l2t1.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-2-002",
+   "level": 2,
+   "payload": {
+    "answer": "perfume",
+    "options": [
+     "perfume",
+     "bottle",
+     "vase",
+     "soap",
+     "candle"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l2t2.h1",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.l2t2.h2",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.l2t2.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l2t2.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-2-003",
+   "level": 2,
+   "payload": {
+    "answer": "orange",
+    "options": [
+     "orange",
+     "lemon",
+     "globe",
+     "bread",
+     "soap"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l2t3.h1",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.l2t3.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l2t3.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l2t3.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-2-004",
+   "level": 2,
+   "payload": {
+    "answer": "bread",
+    "options": [
+     "bread",
+     "soap",
+     "book",
+     "hat",
+     "cinnamon"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l2t4.h1",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.l2t4.h2",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.l2t4.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l2t4.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-2-005",
+   "level": 2,
+   "payload": {
+    "answer": "rose",
+    "options": [
+     "rose",
+     "vase",
+     "candle",
+     "perfume",
+     "fan"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l2t5.h1",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.l2t5.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l2t5.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l2t5.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-3-001",
+   "level": 3,
+   "payload": {
+    "answer": "person-violinist",
+    "options": [
+     "person-violinist",
+     "violin",
+     "person-ballerina",
+     "person-magician",
+     "gramophone",
+     "guitar"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l3t1.h1",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.l3t1.h2",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l3t1.h3",
+      "fake": true
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l3t1.h4",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l3t1.h5",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-3-002",
+   "level": 3,
+   "payload": {
+    "answer": "person-chef",
+    "options": [
+     "person-chef",
+     "person-doctor",
+     "teapot",
+     "bread",
+     "person-magician",
+     "coffee"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l3t2.h1",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.l3t2.h2",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.l3t2.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l3t2.h4",
+      "fake": true
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l3t2.h5",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-3-003",
+   "level": 3,
+   "payload": {
+    "answer": "hourglass",
+    "options": [
+     "hourglass",
+     "clock",
+     "vase",
+     "bottle",
+     "candle",
+     "person-magician"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l3t3.h1",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.l3t3.h2",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l3t3.h3",
+      "fake": true
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l3t3.h4",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l3t3.h5",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-3-004",
+   "level": 3,
+   "payload": {
+    "answer": "person-magician",
+    "options": [
+     "person-magician",
+     "person-detective",
+     "hat",
+     "person-ballerina",
+     "fan",
+     "person-chef"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l3t4.h1",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.l3t4.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l3t4.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l3t4.h4",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.l3t4.h5",
+      "fake": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-3-005",
+   "level": 3,
+   "payload": {
+    "answer": "gramophone",
+    "options": [
+     "gramophone",
+     "telephone",
+     "typewriter",
+     "person-violinist",
+     "bell",
+     "globe"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.l3t5.h1",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.l3t5.h2",
+      "fake": true
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.l3t5.h3",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.l3t5.h4",
+      "fake": false
+     }
+    ]
+   }
   }
  ]
 }

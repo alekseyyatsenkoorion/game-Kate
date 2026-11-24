@@ -1,5 +1,5 @@
 // Стенд зоны B: запускает испытание с мок-ctx. Параметры URL:
-// ?type=shirma|bagazhnik&task=0&power=3&traps=0&texts=1&level=1
+// ?type=shirma|bagazhnik|misterx&task=0&power=3&traps=0&texts=1&level=1
 // Всё, что делает испытание, пишется в window.__log.
 
 const q = new URLSearchParams(location.search);
@@ -27,7 +27,8 @@ window.requestAnimationFrame = function (fn) {
 window.cancelAnimationFrame = function (id) { active.rafs.delete(id); orig.caf(id); };
 let trackListeners = false;
 EventTarget.prototype.addEventListener = function (type, fn, opt) {
-  if (trackListeners) active.listeners.push({ t: this, type, fn });
+  // считаем только слушатели, которые ставит код игры (src/): служебные слушатели Playwright не в счёт
+  if (trackListeners && String(new Error().stack || '').indexOf('/src/') >= 0) active.listeners.push({ t: this, type, fn });
   return orig.add.call(this, type, fn, opt);
 };
 EventTarget.prototype.removeEventListener = function (type, fn, opt) {
@@ -67,10 +68,16 @@ async function main() {
 
   const { TRIALS } = await import('../../src/trials/index.js');
   const data = await (await fetch('fixtures/' + type + '.json')).json();
-  const dict = useTexts ? (await (await fetch('fixtures/texts-sample.json')).json()).texts : null;
+  let dict = useTexts ? (await (await fetch('fixtures/texts-sample.json')).json()).texts : null;
+  // Мистер Икс: свои ключи mx.* (плоский файл) и тексты заданий-фикстур
+  if (dict && type === 'misterx') {
+    const ui = await (await fetch('fixtures/texts-misterx.json')).json();
+    const tt = (await (await fetch('fixtures/texts-misterx-tasks.json')).json()).texts;
+    dict = Object.assign({}, dict, ui, tt);
+  }
   let task = data.tasks[taskIdx];
   // ?bad=1 — испорченное задание для проверки ctx.fail
-  if (q.get('bad') === '1') task = Object.assign({}, task, { payload: Object.assign({}, task.payload, { answer: 'zzz', target: 'zzz' }) });
+  if (q.get('bad') === '1') task = Object.assign({}, task, { payload: Object.assign({}, task.payload, { answer: 'zzz', target: 'zzz', ask: 'zzz' }) });
 
   const text = (k, v) => {
     if (!dict) return k;
@@ -140,6 +147,7 @@ async function main() {
     getPower: () => power,
     destroy() { alive = false; inst.destroy(); },
     counters: () => ({ timeouts: active.timeouts.size, intervals: active.intervals.size, rafs: active.rafs.size, listeners: active.listeners.length }),
+    listenerInfo: () => active.listeners.map((r) => r.type + '@' + ((r.t && r.t.constructor && r.t.constructor.name) || '?')),
     tick(ms) { inst.update(ms); }
   };
   window.__ready = true;
