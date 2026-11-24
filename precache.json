@@ -1,5 +1,5 @@
 {
- "version": "0.4.0",
+ "version": "0.5.0",
  "files": [
   "./",
   "assets/art/item-bell.svg",
@@ -85,6 +85,7 @@
   "data/season.json",
   "data/texts.json",
   "data/trials/bagazhnik.json",
+  "data/trials/komnata.json",
   "data/trials/misterx.json",
   "data/trials/shirma.json",
   "index.html",
@@ -117,6 +118,8 @@
   "src/trials/bagazhnik/bagazhnik.css",
   "src/trials/bagazhnik/bagazhnik.js",
   "src/trials/index.js",
+  "src/trials/komnata/komnata.css",
+  "src/trials/komnata/komnata.js",
   "src/trials/misterx/misterx.css",
   "src/trials/misterx/misterx.js",
   "src/trials/shirma/shirma.css",

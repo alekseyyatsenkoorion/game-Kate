@@ -1,0 +1,166 @@
+{ "schema": 1, "type": "komnata", "tasks": [
+  { "id": "komnata-1-001", "level": 1, "payload": { "room": "room-1", "light": 0.14, "objects": [
+    {"id": "kettle", "labelKey": "km.r1.kettle", "x": 0.115, "y": 0.427, "r": 0.035, "clue": null},
+    {"id": "ship", "labelKey": "km.r1.ship", "x": 0.375, "y": 0.187, "r": 0.04, "clue": null},
+    {"id": "flowerbox", "labelKey": "km.r1.flowerbox", "x": 0.442, "y": 0.407, "r": 0.025, "clue": "clue-07"},
+    {"id": "coffeepot", "labelKey": "km.r1.coffeepot", "x": 0.575, "y": 0.433, "r": 0.022, "clue": null},
+    {"id": "hatbox", "labelKey": "km.r1.hatbox", "x": 0.45, "y": 0.06, "r": 0.03, "clue": null}
+   ],
+   "find": ["kettle", "ship", "flowerbox"], "timeLimitSec": null } },
+  { "id": "komnata-1-002", "level": 1, "payload": { "room": "room-2", "light": 0.14, "objects": [
+    {"id": "globe", "labelKey": "km.r2.globe", "x": 0.603, "y": 0.347, "r": 0.045, "clue": null},
+    {"id": "owl", "labelKey": "km.r2.owl", "x": 0.845, "y": 0.33, "r": 0.018, "clue": null},
+    {"id": "inkwell", "labelKey": "km.r2.inkwell", "x": 0.633, "y": 0.59, "r": 0.022, "clue": "clue-06"},
+    {"id": "sphere", "labelKey": "km.r2.sphere", "x": 0.89, "y": 0.28, "r": 0.028, "clue": null},
+    {"id": "turtle", "labelKey": "km.r2.turtle", "x": 0.65, "y": 0.687, "r": 0.02, "clue": null}
+   ],
+   "find": ["globe", "owl", "inkwell"], "timeLimitSec": null } },
+  { "id": "komnata-1-003", "level": 1, "payload": { "room": "room-3", "light": 0.14, "objects": [
+    {"id": "bear", "labelKey": "km.r3.bear", "x": 0.173, "y": 0.79, "r": 0.038, "clue": null},
+    {"id": "horse", "labelKey": "km.r3.horse", "x": 0.508, "y": 0.43, "r": 0.055, "clue": null},
+    {"id": "hat", "labelKey": "km.r3.hat", "x": 0.75, "y": 0.163, "r": 0.028, "clue": null},
+    {"id": "top", "labelKey": "km.r3.top", "x": 0.423, "y": 0.597, "r": 0.018, "clue": null},
+    {"id": "basket", "labelKey": "km.r3.basket", "x": 0.755, "y": 0.44, "r": 0.032, "clue": null}
+   ],
+   "find": ["bear", "horse", "hat"], "timeLimitSec": null } },
+  { "id": "komnata-1-004", "level": 1, "payload": { "room": "room-1", "light": 0.14, "objects": [
+    {"id": "cage", "labelKey": "km.r1.cage", "x": 0.818, "y": 0.1, "r": 0.035, "clue": null},
+    {"id": "chest", "labelKey": "km.r1.chest", "x": 0.51, "y": 0.735, "r": 0.06, "clue": "clue-06"},
+    {"id": "umbrella", "labelKey": "km.r1.umbrella", "x": 0.76, "y": 0.653, "r": 0.025, "clue": null},
+    {"id": "lamp", "labelKey": "km.r1.lamp", "x": 0.978, "y": 0.093, "r": 0.02, "clue": null},
+    {"id": "stand", "labelKey": "km.r1.stand", "x": 0.763, "y": 0.8, "r": 0.025, "clue": null}
+   ],
+   "find": ["cage", "chest", "umbrella"], "timeLimitSec": null } },
+  { "id": "komnata-1-005", "level": 1, "payload": { "room": "room-2", "light": 0.14, "objects": [
+    {"id": "cat", "labelKey": "km.r2.cat", "x": 0.083, "y": 0.347, "r": 0.022, "clue": null},
+    {"id": "lamp", "labelKey": "km.r2.lamp", "x": 0.252, "y": 0.47, "r": 0.038, "clue": null},
+    {"id": "box", "labelKey": "km.r2.box", "x": 0.208, "y": 0.553, "r": 0.016, "clue": "clue-07"},
+    {"id": "sleepcat", "labelKey": "km.r2.sleepcat", "x": 0.905, "y": 0.537, "r": 0.028, "clue": null},
+    {"id": "greenbox", "labelKey": "km.r2.greenbox", "x": 0.593, "y": 0.55, "r": 0.024, "clue": null},
+    {"id": "telescope", "labelKey": "km.r2.telescope", "x": 0.263, "y": 0.207, "r": 0.028, "clue": null}
+   ],
+   "find": ["cat", "lamp", "box"], "timeLimitSec": null } },
+  { "id": "komnata-2-001", "level": 2, "payload": { "room": "room-2", "light": 0.11, "objects": [
+    {"id": "oval", "labelKey": "km.r2.oval", "x": 0.8, "y": 0.257, "r": 0.028, "clue": "clue-13"},
+    {"id": "clock", "labelKey": "km.r2.clock", "x": 0.98, "y": 0.11, "r": 0.02, "clue": "clue-14"},
+    {"id": "ship", "labelKey": "km.r2.ship", "x": 0.537, "y": 0.035, "r": 0.028, "clue": null},
+    {"id": "butterfly", "labelKey": "km.r2.butterfly", "x": 0.45, "y": 0.233, "r": 0.022, "clue": null},
+    {"id": "keys", "labelKey": "km.r2.keys", "x": 0.755, "y": 0.7, "r": 0.02, "clue": null},
+    {"id": "roses", "labelKey": "km.r2.roses", "x": 0.698, "y": 0.26, "r": 0.035, "clue": null},
+    {"id": "compass", "labelKey": "km.r2.compass", "x": 0.8, "y": 0.61, "r": 0.024, "clue": null},
+    {"id": "coral", "labelKey": "km.r2.coral", "x": 0.388, "y": 0.22, "r": 0.022, "clue": null}
+   ],
+   "find": ["oval", "clock", "ship", "butterfly", "keys"], "timeLimitSec": null } },
+  { "id": "komnata-2-002", "level": 2, "payload": { "room": "room-3", "light": 0.11, "objects": [
+    {"id": "mannequin", "labelKey": "km.r3.mannequin", "x": 0.688, "y": 0.28, "r": 0.038, "clue": null},
+    {"id": "mirror", "labelKey": "km.r3.mirror", "x": 0.94, "y": 0.2, "r": 0.035, "clue": null},
+    {"id": "spyglass", "labelKey": "km.r3.spyglass", "x": 0.25, "y": 0.39, "r": 0.024, "clue": null},
+    {"id": "books", "labelKey": "km.r3.books", "x": 0.088, "y": 0.873, "r": 0.035, "clue": "clue-15"},
+    {"id": "cage", "labelKey": "km.r3.cage", "x": 0.043, "y": 0.127, "r": 0.033, "clue": null},
+    {"id": "letters", "labelKey": "km.r3.letters", "x": 0.275, "y": 0.693, "r": 0.024, "clue": null},
+    {"id": "binoculars", "labelKey": "km.r3.binoculars", "x": 0.683, "y": 0.847, "r": 0.026, "clue": null},
+    {"id": "painting", "labelKey": "km.r3.painting", "x": 0.868, "y": 0.293, "r": 0.032, "clue": null}
+   ],
+   "find": ["mannequin", "mirror", "spyglass", "books", "cage"], "timeLimitSec": null } },
+  { "id": "komnata-2-003", "level": 2, "payload": { "room": "room-1", "light": 0.11, "objects": [
+    {"id": "hourglass", "labelKey": "km.r1.hourglass", "x": 0.455, "y": 0.193, "r": 0.02, "clue": "clue-14"},
+    {"id": "lavender", "labelKey": "km.r1.lavender", "x": 0.29, "y": 0.225, "r": 0.028, "clue": null},
+    {"id": "decanter", "labelKey": "km.r1.decanter", "x": 0.635, "y": 0.313, "r": 0.022, "clue": null},
+    {"id": "sack", "labelKey": "km.r1.sack", "x": 0.68, "y": 0.567, "r": 0.032, "clue": null},
+    {"id": "horse", "labelKey": "km.r1.horse", "x": 0.955, "y": 0.393, "r": 0.032, "clue": null},
+    {"id": "sphere", "labelKey": "km.r1.sphere", "x": 0.52, "y": 0.187, "r": 0.028, "clue": null},
+    {"id": "cinnamon", "labelKey": "km.r1.cinnamon", "x": 0.587, "y": 0.32, "r": 0.018, "clue": null},
+    {"id": "lantern", "labelKey": "km.r1.lantern", "x": 0.908, "y": 0.677, "r": 0.022, "clue": null}
+   ],
+   "find": ["hourglass", "lavender", "decanter", "sack", "horse"], "timeLimitSec": null } },
+  { "id": "komnata-2-004", "level": 2, "payload": { "room": "room-2", "light": 0.11, "objects": [
+    {"id": "telescope", "labelKey": "km.r2.telescope", "x": 0.263, "y": 0.207, "r": 0.028, "clue": null},
+    {"id": "shell", "labelKey": "km.r2.shell", "x": 0.298, "y": 0.327, "r": 0.024, "clue": null},
+    {"id": "chest", "labelKey": "km.r2.chest", "x": 0.059, "y": 0.53, "r": 0.028, "clue": null},
+    {"id": "teapot", "labelKey": "km.r2.teapot", "x": 0.058, "y": 0.605, "r": 0.02, "clue": null},
+    {"id": "compass", "labelKey": "km.r2.compass", "x": 0.8, "y": 0.61, "r": 0.024, "clue": null},
+    {"id": "binoculars", "labelKey": "km.r2.binoculars", "x": 0.383, "y": 0.563, "r": 0.024, "clue": null},
+    {"id": "coral", "labelKey": "km.r2.coral", "x": 0.388, "y": 0.22, "r": 0.022, "clue": null},
+    {"id": "bluebox", "labelKey": "km.r2.bluebox", "x": 0.725, "y": 0.65, "r": 0.022, "clue": null}
+   ],
+   "find": ["telescope", "shell", "chest", "teapot", "compass"], "timeLimitSec": null } },
+  { "id": "komnata-2-005", "level": 2, "payload": { "room": "room-3", "light": 0.11, "objects": [
+    {"id": "ballerina", "labelKey": "km.r3.ballerina", "x": 0.968, "y": 0.36, "r": 0.018, "clue": null},
+    {"id": "umbrella", "labelKey": "km.r3.umbrella", "x": 0.808, "y": 0.33, "r": 0.018, "clue": null},
+    {"id": "top", "labelKey": "km.r3.top", "x": 0.423, "y": 0.597, "r": 0.018, "clue": null},
+    {"id": "musicbox", "labelKey": "km.r3.musicbox", "x": 0.38, "y": 0.687, "r": 0.024, "clue": null},
+    {"id": "frame", "labelKey": "km.r3.frame", "x": 0.178, "y": 0.347, "r": 0.024, "clue": "clue-13"},
+    {"id": "angel", "labelKey": "km.r3.angel", "x": 0.32, "y": 0.207, "r": 0.02, "clue": null},
+    {"id": "jewelbox", "labelKey": "km.r3.jewelbox", "x": 0.923, "y": 0.38, "r": 0.018, "clue": null},
+    {"id": "painting", "labelKey": "km.r3.painting", "x": 0.868, "y": 0.293, "r": 0.032, "clue": null}
+   ],
+   "find": ["ballerina", "umbrella", "top", "musicbox", "frame"], "timeLimitSec": null } },
+  { "id": "komnata-3-001", "level": 3, "payload": { "room": "room-3", "light": 0.08, "objects": [
+    {"id": "key", "labelKey": "km.r3.key", "x": 0.435, "y": 0.907, "r": 0.02, "clue": null},
+    {"id": "compass", "labelKey": "km.r3.compass", "x": 0.818, "y": 0.897, "r": 0.02, "clue": null},
+    {"id": "feather", "labelKey": "km.r3.feather", "x": 0.915, "y": 0.677, "r": 0.024, "clue": null},
+    {"id": "gloves", "labelKey": "km.r3.gloves", "x": 0.725, "y": 0.747, "r": 0.024, "clue": null},
+    {"id": "angel", "labelKey": "km.r3.angel", "x": 0.32, "y": 0.207, "r": 0.02, "clue": null},
+    {"id": "loupe", "labelKey": "km.r3.loupe", "x": 0.151, "y": 0.473, "r": 0.016, "clue": null},
+    {"id": "photos", "labelKey": "km.r3.photos", "x": 0.84, "y": 0.687, "r": 0.024, "clue": "clue-21"},
+    {"id": "bell", "labelKey": "km.r3.bell", "x": 0.623, "y": 0.81, "r": 0.018, "clue": null},
+    {"id": "pearls", "labelKey": "km.r3.pearls", "x": 0.885, "y": 0.767, "r": 0.016, "clue": null},
+    {"id": "casket", "labelKey": "km.r3.casket", "x": 0.09, "y": 0.463, "r": 0.018, "clue": null},
+    {"id": "bottle", "labelKey": "km.r3.bottle", "x": 0.778, "y": 0.693, "r": 0.016, "clue": null}
+   ],
+   "find": ["key", "compass", "feather", "gloves", "angel", "loupe", "photos"], "timeLimitSec": null } },
+  { "id": "komnata-3-002", "level": 3, "payload": { "room": "room-1", "light": 0.08, "objects": [
+    {"id": "bell", "labelKey": "km.r1.bell", "x": 0.057, "y": 0.41, "r": 0.016, "clue": null},
+    {"id": "perfume", "labelKey": "km.r1.perfume", "x": 0.05, "y": 0.543, "r": 0.016, "clue": null},
+    {"id": "binoculars", "labelKey": "km.r1.binoculars", "x": 0.197, "y": 0.75, "r": 0.022, "clue": null},
+    {"id": "cinnamon", "labelKey": "km.r1.cinnamon", "x": 0.587, "y": 0.32, "r": 0.018, "clue": null},
+    {"id": "scrolls", "labelKey": "km.r1.scrolls", "x": 0.693, "y": 0.057, "r": 0.025, "clue": null},
+    {"id": "brushes", "labelKey": "km.r1.brushes", "x": 0.228, "y": 0.41, "r": 0.022, "clue": null},
+    {"id": "casket", "labelKey": "km.r1.casket", "x": 0.145, "y": 0.527, "r": 0.022, "clue": "clue-22"},
+    {"id": "goblet", "labelKey": "km.r1.goblet", "x": 0.09, "y": 0.097, "r": 0.02, "clue": null},
+    {"id": "decanter", "labelKey": "km.r1.decanter", "x": 0.635, "y": 0.313, "r": 0.022, "clue": null},
+    {"id": "sugar", "labelKey": "km.r1.sugar", "x": 0.22, "y": 0.653, "r": 0.018, "clue": null},
+    {"id": "pasta", "labelKey": "km.r1.pasta", "x": 0.452, "y": 0.32, "r": 0.022, "clue": null}
+   ],
+   "find": ["bell", "perfume", "binoculars", "cinnamon", "scrolls", "brushes", "casket"], "timeLimitSec": null } },
+  { "id": "komnata-3-003", "level": 3, "payload": { "room": "room-2", "light": 0.08, "objects": [
+    {"id": "stamp", "labelKey": "km.r2.stamp", "x": 0.675, "y": 0.613, "r": 0.014, "clue": null},
+    {"id": "watch", "labelKey": "km.r2.watch", "x": 0.253, "y": 0.613, "r": 0.016, "clue": "clue-20"},
+    {"id": "urn", "labelKey": "km.r2.urn", "x": 0.393, "y": 0.127, "r": 0.016, "clue": null},
+    {"id": "bottles", "labelKey": "km.r2.bottles", "x": 0.313, "y": 0.227, "r": 0.016, "clue": null},
+    {"id": "candles", "labelKey": "km.r2.candles", "x": 0.745, "y": 0.35, "r": 0.022, "clue": null},
+    {"id": "knife", "labelKey": "km.r2.knife", "x": 0.578, "y": 0.66, "r": 0.018, "clue": null},
+    {"id": "sleepcat", "labelKey": "km.r2.sleepcat", "x": 0.905, "y": 0.537, "r": 0.028, "clue": null},
+    {"id": "crystal", "labelKey": "km.r2.crystal", "x": 0.71, "y": 0.38, "r": 0.014, "clue": null},
+    {"id": "bell", "labelKey": "km.r2.bell", "x": 0.328, "y": 0.593, "r": 0.018, "clue": null},
+    {"id": "keys", "labelKey": "km.r2.keys", "x": 0.755, "y": 0.7, "r": 0.02, "clue": null},
+    {"id": "owl", "labelKey": "km.r2.owl", "x": 0.845, "y": 0.33, "r": 0.018, "clue": null}
+   ],
+   "find": ["stamp", "watch", "urn", "bottles", "candles", "knife", "sleepcat"], "timeLimitSec": null } },
+  { "id": "komnata-3-004", "level": 3, "payload": { "room": "room-3", "light": 0.08, "objects": [
+    {"id": "globe", "labelKey": "km.r3.globe", "x": 0.303, "y": 0.1, "r": 0.017, "clue": null},
+    {"id": "hourglass", "labelKey": "km.r3.hourglass", "x": 0.333, "y": 0.32, "r": 0.017, "clue": null},
+    {"id": "candle", "labelKey": "km.r3.candle", "x": 0.125, "y": 0.4, "r": 0.018, "clue": null},
+    {"id": "roses", "labelKey": "km.r3.roses", "x": 0.325, "y": 0.747, "r": 0.02, "clue": null},
+    {"id": "bottle", "labelKey": "km.r3.bottle", "x": 0.778, "y": 0.693, "r": 0.016, "clue": null},
+    {"id": "bell", "labelKey": "km.r3.bell", "x": 0.623, "y": 0.81, "r": 0.018, "clue": null},
+    {"id": "tin", "labelKey": "km.r3.tin", "x": 0.955, "y": 0.833, "r": 0.028, "clue": null},
+    {"id": "sphere", "labelKey": "km.r3.sphere", "x": 0.28, "y": 0.31, "r": 0.024, "clue": null},
+    {"id": "cup", "labelKey": "km.r3.cup", "x": 0.18, "y": 0.43, "r": 0.02, "clue": null},
+    {"id": "casket", "labelKey": "km.r3.casket", "x": 0.09, "y": 0.463, "r": 0.018, "clue": null}
+   ],
+   "find": ["globe", "hourglass", "candle", "roses", "bottle", "bell", "tin"], "timeLimitSec": null } },
+  { "id": "komnata-3-005", "level": 3, "payload": { "room": "room-1", "light": 0.08, "objects": [
+    {"id": "goblet", "labelKey": "km.r1.goblet", "x": 0.09, "y": 0.097, "r": 0.02, "clue": null},
+    {"id": "jug", "labelKey": "km.r1.jug", "x": 0.21, "y": 0.14, "r": 0.022, "clue": null},
+    {"id": "oranges", "labelKey": "km.r1.oranges", "x": 0.098, "y": 0.247, "r": 0.025, "clue": null},
+    {"id": "nuts", "labelKey": "km.r1.nuts", "x": 0.22, "y": 0.28, "r": 0.022, "clue": null},
+    {"id": "sugar", "labelKey": "km.r1.sugar", "x": 0.22, "y": 0.653, "r": 0.018, "clue": null},
+    {"id": "towel", "labelKey": "km.r1.towel", "x": 0.535, "y": 0.57, "r": 0.022, "clue": null},
+    {"id": "vase", "labelKey": "km.r1.vase", "x": 0.94, "y": 0.547, "r": 0.025, "clue": null},
+    {"id": "pitcher", "labelKey": "km.r1.pitcher", "x": 0.632, "y": 0.433, "r": 0.028, "clue": null},
+    {"id": "beans", "labelKey": "km.r1.beans", "x": 0.357, "y": 0.32, "r": 0.022, "clue": null},
+    {"id": "bowl", "labelKey": "km.r1.bowl", "x": 0.69, "y": 0.437, "r": 0.022, "clue": null}
+   ],
+   "find": ["goblet", "jug", "oranges", "nuts", "sugar", "towel", "vase"], "timeLimitSec": null } }
+] }

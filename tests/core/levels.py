@@ -28,6 +28,16 @@ try:
   def solve_sh(level):
     tid=pg.evaluate('__s6.progress.run().taskIds[__s6.progress.run().idx]'); pl=pool(pg,'shirma',level,tid)
     pg.click('[data-opt="%s"]'%pl['answer']); pg.wait_for_timeout(4500)
+  def solve_km(level):
+    tid=pg.evaluate('__s6.progress.run().taskIds[__s6.progress.run().idx]'); pl=pool(pg,'komnata',level,tid)
+    objs={o['id']:o for o in pl['objects']}
+    for f in pl['find']:
+      o=objs[f]; x=32+o['x']*800; y=132+o['y']*600
+      pg.mouse.click(x,y); pg.wait_for_timeout(150); pg.mouse.click(x,y); pg.wait_for_timeout(250)
+    pg.wait_for_timeout(5000)
+  jump(5); pg.mouse.click(432,432); pg.wait_for_timeout(400); pg.screenshot(path=OUT+'lv-komnata1.png'); solve_km(1)
+  ck(pg.query_selector('.big-stars') is not None,'выпуск 5 (Тёмная комната 1) пройден'); pg.screenshot(path=OUT+'lv-result5.png')
+  jump(9); solve_km(2); ck(pg.query_selector('.big-stars') is not None,'выпуск 9 (Тёмная комната 2) пройден')
   jump(3); pg.wait_for_timeout(300); pg.screenshot(path=OUT+'lv-misterx1.png'); solve_mx(1)
   ck(pg.query_selector('.big-stars') is not None,'выпуск 3 (Мистер Икс 1) пройден'); pg.screenshot(path=OUT+'lv-result3.png')
   jump(7); pg.screenshot(path=OUT+'lv-bag2.png'); solve_bag(2); ck(pg.query_selector('.big-stars') is not None,'выпуск 7 (Багажник 2) пройден')

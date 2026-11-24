@@ -1,0 +1,109 @@
+/* Испытание «Тёмная комната». Поле 960×600: комната 800×600 слева, список 160 px справа.
+   Анимации — только transform и opacity. Без filter, blur и теней на больших площадях. */
+.km-root {
+  position: relative; width: 960px; height: 600px; overflow: hidden;
+  font-family: Georgia, 'Times New Roman', serif; color: #e9e0f5;
+  background: #0d0716;
+  -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.km-root * { box-sizing: border-box; }
+.km-root.is-paused * { animation-play-state: paused !important; }
+
+/* ---------- комната ---------- */
+.km-room {
+  position: absolute; left: 0; top: 0; width: 800px; height: 600px; overflow: hidden;
+  background: #120a18; border-radius: 6px;
+}
+.km-pic { position: absolute; left: 0; top: 0; width: 800px; height: 600px; }
+.km-img { display: block; width: 800px; height: 600px; pointer-events: none; }
+.km-pic svg { display: block; }
+
+.km-dark {
+  position: absolute; left: 0; top: 0; width: 800px; height: 600px; overflow: hidden;
+  pointer-events: none; transition: opacity 1.4s ease-in;
+}
+.km-dark.is-off { opacity: 0; }
+.km-hole {
+  position: absolute; left: 0; top: 0;
+  will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+}
+
+.km-fx { position: absolute; left: 0; top: 0; width: 800px; height: 600px; pointer-events: none; }
+.km-lit {
+  position: absolute; border-radius: 50%;
+  border: 2px solid rgba(241,200,107,.85);
+  background-color: rgba(241,200,107,.10); background-repeat: no-repeat;
+}
+.km-root.is-done .km-lit { border-color: rgba(241,200,107,.95); }
+.km-ring {
+  position: absolute; border-radius: 50%; border: 4px solid #f1c86b; opacity: 0;
+  animation: km-ring .75s ease-out forwards;
+}
+.km-ring.is-bad { border-color: #ff6b5b; }
+@keyframes km-ring {
+  0% { opacity: 1; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+.km-glow {
+  position: absolute; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,226,150,.25) 0%, rgba(255,220,140,.7) 42%, rgba(255,214,120,0) 70%);
+  animation: km-glow .5s ease-in-out infinite alternate;
+}
+@keyframes km-glow {
+  0% { opacity: .4; transform: scale(.92); }
+  100% { opacity: 1; transform: scale(1.06); }
+}
+
+.km-caption {
+  position: absolute; left: 40px; right: 40px; bottom: 26px; padding: 12px 18px;
+  border-radius: 14px; background: rgba(13,7,22,.82); border: 2px solid #f1c86b;
+  text-align: center; font-size: 26px; color: #f1c86b;
+  opacity: 0; transform: translateY(16px); transition: opacity .6s .6s, transform .6s .6s;
+}
+.km-caption.is-on { opacity: 1; transform: translateY(0); }
+
+/* ---------- список ---------- */
+.km-side {
+  position: absolute; left: 808px; top: 0; width: 152px; height: 600px;
+  display: flex; flex-direction: column; padding: 4px 0 0 4px;
+}
+.km-title { flex: 0 0 auto; font-size: 22px; color: #f1c86b; padding: 6px 0 8px; }
+.km-list { flex: 1 1 auto; margin: 0; padding: 0; list-style: none; overflow: hidden; }
+.km-item {
+  position: relative; padding: 5px 0 5px 22px; font-size: 17px; line-height: 20px; color: #e9e0f5;
+  border-bottom: 1px solid rgba(185,166,214,.18);
+}
+.km-mark {
+  position: absolute; left: 0; top: 8px; width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid rgba(241,200,107,.7);
+}
+.km-item.is-found { color: rgba(233,224,245,.5); }
+.km-item.is-found .km-label { text-decoration: line-through; text-decoration-color: #f1c86b; }
+.km-item.is-found .km-mark { background: #f1c86b; border-color: #f1c86b; }
+.km-count { flex: 0 0 auto; padding: 6px 0 2px; font-size: 18px; color: #b9a6d6; text-align: center; }
+.km-msg {
+  flex: 0 0 64px; padding: 4px 2px; font-size: 16px; line-height: 19px; color: #f1c86b; text-align: center;
+  opacity: 0; transition: opacity .25s;
+}
+.km-msg.is-bad { color: #ff8a65; }
+.km-msg.is-on { opacity: 1; }
+.km-hintbtn {
+  flex: 0 0 auto; margin: 0 0 6px; padding: 8px 6px; border-radius: 18px; border: 2px solid #f1c86b;
+  background: linear-gradient(180deg, #4a2774, #2a1544); color: #f1c86b;
+  font-size: 20px; text-align: center; box-shadow: 0 4px 0 #120821;
+}
+.km-hintbtn-label { display: block; }
+.km-hintbtn.is-off, .km-hintbtn.is-busy {
+  border-color: rgba(185,166,214,.45); color: #b9a6d6; background: #1d0f33; box-shadow: none; opacity: .55;
+}
+.km-price {
+  display: inline-flex; align-items: center; margin-top: 4px; padding: 2px 9px 2px 6px;
+  border-radius: 12px; background: #f1c86b; color: #160b26; font-size: 16px;
+}
+.km-price svg { width: 18px; height: 18px; margin-right: 4px; fill: none; stroke: #160b26; stroke-width: 2; }
+.km-hintbtn.is-off .km-price { display: none; }
+.km-root .is-shake { animation: km-shake .4s ease-in-out; }
+@keyframes km-shake {
+  0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(2px); }
+}

@@ -19,7 +19,7 @@ const TASK_CHECK = {
   bagazhnik: (p) => Array.isArray(p.cars) && p.cars.some((c) => c.id === p.target),
   misterx: (p) => !!p.solution && Array.isArray(p.categories),
   foto: (p) => Array.isArray(p.statements) && p.statements.filter((s) => s.true).length === p.pick,
-  komnata: (p) => Array.isArray(p.objects) && (p.find || []).every((f) => p.objects.some((o) => o.item === f))
+  komnata: (p) => Array.isArray(p.objects) && (p.find || []).every((f) => p.objects.some((o) => o.id === f))
 };
 
 export class ContentLoader {
