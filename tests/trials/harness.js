@@ -1,5 +1,6 @@
 // Стенд зоны B: запускает испытание с мок-ctx. Параметры URL:
 // ?type=shirma|bagazhnik|misterx&task=0&power=3&traps=0&texts=1&level=1
+// traps=0|1 — ловушка скептика; с texts=1 подгружает тексты ловушек; seed=N — свой seed для ctx.rng
 // Всё, что делает испытание, пишется в window.__log.
 
 const q = new URLSearchParams(location.search);
@@ -75,6 +76,12 @@ async function main() {
     const tt = (await (await fetch('fixtures/texts-misterx-tasks.json')).json()).texts;
     dict = Object.assign({}, dict, ui, tt);
   }
+  // Ловушки скептика: тексты шаблонов (fixtures/texts-traps.json) и существующие bag.clue.* из data/texts.json
+  if (dict && q.get('traps') === '1') {
+    const base = (await (await fetch('../../data/texts.json')).json()).texts;
+    const tr = (await (await fetch('fixtures/texts-traps.json')).json()).texts;
+    dict = Object.assign({}, base, dict, tr);
+  }
   let task = data.tasks[taskIdx];
   // ?bad=1 — испорченное задание для проверки ctx.fail
   if (q.get('bad') === '1') task = Object.assign({}, task, { payload: Object.assign({}, task.payload, { answer: 'zzz', target: 'zzz', ask: 'zzz' }) });
@@ -90,7 +97,7 @@ async function main() {
   showPower();
 
   const ctx = {
-    rng: lcgRng(12345 + taskIdx),
+    rng: lcgRng(q.has('seed') ? +q.get('seed') : 12345 + taskIdx),
     audio: { sfx: (id) => log.push({ ev: 'sfx', id }), music() {}, say: () => Promise.resolve(), stopAll() {} },
     assets: { url: (art) => 'fixtures/art/' + art + '.svg' },
     text,
@@ -142,7 +149,7 @@ async function main() {
   });
 
   window.__h = {
-    inst, ctx, field, task,
+    inst, ctx, field, task, TRIALS,
     setPower(n) { power = n; showPower(); },
     getPower: () => power,
     destroy() { alive = false; inst.destroy(); },

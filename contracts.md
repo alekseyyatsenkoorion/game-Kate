@@ -1,6 +1,6 @@
 # Контракты модулей — «Шестое чувство»
 
-Версия **2.3** от 24.11.2026. Меняет только оркестратор. Агент, которому нужен другой интерфейс, пишет запрос оркестратору.
+Версия **2.5** от 24.11.2026. Меняет только оркестратор. Агент, которому нужен другой интерфейс, пишет запрос оркестратору.
 Нотация — сигнатуры в стиле TypeScript, без реализации. Код — ES-модули (`export`), классы.
 Для каждого модуля указаны: имя, входы, выходы, что происходит при ошибке.
 
@@ -147,7 +147,7 @@ interface ProgressData {
   achievements: string[];
   openedOn: Record<number, DateKey>;                    // когда выпуск стал доступен (для DayLock)
 }
-interface Settings { music: boolean; sfx: boolean; voice: boolean; test: boolean }
+interface Settings { music: boolean; sfx: boolean; voice: boolean; test: boolean; musicVolume?: number }   // 2.5: громкость музыки 0..1, по умолчанию 1
 interface DrawState { [poolKey: string]: { bag: string[]; recent: string[] } }   // poolKey = 'shirma:1'
 interface RunState { n: number; attempt: number; seed: number; idx: number; taskIds: string[]; results: TrialResult[] }
 ```
@@ -345,7 +345,7 @@ interface TrialContext {
   rng: Rng; audio: Audio; assets: AssetLoader;
   text(key: string, vars?: object): string;
   balance: TrialBalance;
-  traps: 0 | 1;                                         // ловушки скептика: ложная подсказка или улика уже лежит в данных уровня; Мистер Икс ловушки не использует
+  traps: 0 | 1;                                         // ловушки скептика (2.4): Ширма добавляет 1 ложную подсказку (признак обманки, item.<id>.trait), Багажник — 1 ложную улику обманке; остальные испытания не используют
   power: { get(): number; spend(n: number, reason: string): boolean };   // false — не хватает, ничего не списано
   hint(kind: string): void;
   react(kind: 'correct' | 'mistake'): void;           // 2.1: реакция шоу — похвала голосом или злорадный смех скептика + субтитр
@@ -455,6 +455,8 @@ interface TrialResult {
 
 ## 14. Журнал изменений
 - 1.0 — 24.11.2026 — первая версия.
+- 2.5 — 24.11.2026 — достижения: data/achievements.json (id, titleKey, descKey, icon, rule; виды правил episodes, starEpisodes, cleanRun, trial, survived, title, season, caseSolved), ContentLoader.achievements(); Settings.musicVolume, Audio.setMusicVolume(v).
+- 2.4 — 24.11.2026 — ловушки скептика добавляет само испытание (сверх данных уровня: ложных может стать на 1 больше, чем в §12.2); признаки предметов item.<id>.trait / traitKind в texts.json.
 - 2.3 — 24.11.2026 — Фото-дело: вещи с подписью (labelKey) вместо id предмета; Тёмная комната: предметы картинки с id и labelKey.
 - 2.2 — 24.11.2026 — формат Мистера Икс: значения и люди с labelKey, поле rule для решателя.
 - 2.1 — 24.11.2026 — базовая озвучка: `ctx.react`, `ctx.item`, голос в Audio (`sayText`, `praise`, `laugh`).

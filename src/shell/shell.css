@@ -96,3 +96,38 @@ td.nm .portrait.medal { line-height: 28px !important; }
 
 .clue { text-align: left; height: 136px; }
 .clue-t { font-size: 15px; }
+
+/* настройки: громкость музыки */
+.vol { display: flex; align-items: center; justify-content: center; margin: 6px 0; }
+.vol-l { font-size: 20px; color: #d8cbea; margin-right: 12px; }
+.vol .btn.vstep { min-width: 72px; min-height: 48px; margin: 0 4px; padding: 10px 8px; }
+.settings .menu .btn { margin: 7px 0; }
+
+/* достижения: тосты на итогах */
+/* стопка внизу, над кнопкой «В сезон»: первый ряд снизу, лишние ряды растут вверх */
+.ach-toasts { position: absolute; left: 52px; bottom: 162px; width: 920px; z-index: 20; display: flex; flex-wrap: wrap-reverse; justify-content: center; pointer-events: none; }
+.ach-toast { pointer-events: auto; display: flex; align-items: center; width: 440px; min-height: 68px; margin: 5px; padding: 8px 20px 8px 10px;
+  border-radius: 40px; border: 2px solid #f7dc98; background: linear-gradient(#f6d684, #c08d34); color: #1d0f2e;
+  box-shadow: 0 0 14px rgba(241, 200, 107, 0.45); animation: ach-in 0.5s ease-out; transition: opacity 0.5s, transform 0.5s; }
+.ach-toast.out { opacity: 0; transform: translateY(20px); }
+@keyframes ach-in { from { opacity: 0; transform: translateY(30px) scale(0.9); } to { opacity: 1; transform: none; } }
+.ach-toast .ach-ico { flex: none; width: 50px; height: 50px; line-height: 48px; border-radius: 50%; text-align: center; font-size: 28px;
+  background: #1d0f2e; color: #f1c86b; border: 2px solid #f7dc98; margin-right: 14px; }
+.ach-txt { display: flex; flex-direction: column; text-align: left; }
+.ach-toast .ach-new { font-size: 16px; letter-spacing: 2px; text-transform: uppercase; color: #4a2a10; }
+.ach-toast .ach-name { font-size: 22px; }
+
+/* достижения: список в настройках */
+.ach-panel { position: absolute; left: 0; top: 0; width: 1024px; height: 768px; z-index: 20; background: rgba(5, 2, 10, 0.88); display: flex; align-items: center; justify-content: center; }
+.ach-box { width: 940px; background: #1d0f2e; border: 2px solid #f1c86b; border-radius: 16px; padding: 18px 24px; display: flex; flex-direction: column; align-items: center; }
+.ach-box h2 { margin: 0 0 2px; }
+.ach-grid { display: flex; flex-wrap: wrap; justify-content: space-between; width: 100%; margin-bottom: 10px; }
+.ach-item { display: flex; align-items: center; width: 440px; height: 78px; margin: 4px 0; padding: 6px 12px; border-radius: 12px;
+  border: 1px solid rgba(185, 166, 214, 0.25); background: rgba(40, 20, 64, 0.5); opacity: 0.5; }
+.ach-item .ach-ico { flex: none; width: 50px; height: 50px; line-height: 48px; border-radius: 50%; text-align: center; font-size: 28px; color: #8a7aa3; border: 2px solid #5a4a73; margin-right: 14px; }
+.ach-item .ach-name { font-size: 20px; color: #d8cbea; }
+.ach-item .ach-desc { font-size: 16px; color: #b9a6d6; line-height: 1.2; }
+.ach-item.got { opacity: 1; border-color: #f1c86b; background: rgba(241, 200, 107, 0.12); }
+.ach-item.got .ach-ico { color: #1d0f2e; background: linear-gradient(#f6d684, #c08d34); border-color: #f7dc98; }
+.ach-item.got .ach-name { color: #f1c86b; }
+.result.has-case .ach-toasts { bottom: 230px; }   /* над кнопкой «Разгадка дела» */

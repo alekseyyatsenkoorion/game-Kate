@@ -36,7 +36,7 @@ export class Audio {
   setMuted(ch, on) {
     if (ch === 'all') this.progress.setSettings({ music: !on, sfx: !on, voice: !on });
     else this.progress.setSettings({ [ch]: !on });
-    if (this.isMuted('music')) this.music(null); else if (this.wantMusic) this.music(this.wantMusic);
+    if (this.isMuted('music')) this._stopMusic(); else if (this.wantMusic && !this.musicNode) this.music(this.wantMusic);
     if (this.isMuted('voice') && this.speech) this.speech.cancel();
   }
   async unlock() {
@@ -91,10 +91,10 @@ export class Audio {
   music(id) {
     this.wantMusic = id;
     this._stopMusic();
-    if (!id || !this.ctx || this.isMuted('music')) return;
+    if (!id || !this.ctx || this.isMuted('music') || this._musicVol() === 0) return;
     try {
       const c = this.ctx;
-      const out = c.createGain(); out.gain.value = 0; out.gain.setTargetAtTime(MUSIC_VOL, c.currentTime, 2);
+      const out = c.createGain(); out.gain.value = 0; out.gain.setTargetAtTime(MUSIC_VOL * this._musicVol(), c.currentTime, 2);
       const duck = c.createGain(); duck.gain.value = 1;
       const rev = c.createConvolver(); rev.buffer = this._impulse();
       const wet = c.createGain(); wet.gain.value = 0.55;
@@ -108,6 +108,16 @@ export class Audio {
       this.musicNode = m;
       this._schedule(m);
     } catch (e) { log.warn('MUSIC', String(e)); }
+  }
+  // Громкость музыки 0..1 из settings.musicVolume (нет поля — 100%). 0 — музыка выключена.
+  _musicVol() { const v = this._s().musicVolume; return typeof v === 'number' && v >= 0 && v <= 1 ? v : 1; }
+  setMusicVolume(v) {
+    v = Math.max(0, Math.min(1, Number(v) || 0));
+    this.progress.setSettings({ musicVolume: v });
+    const m = this.musicNode;
+    if (v === 0) { this._stopMusic(); return; }
+    if (m) { try { m.out.gain.setTargetAtTime(MUSIC_VOL * v, this.ctx.currentTime, 0.2); } catch (e) {} }
+    else if (this.wantMusic && !this.isMuted('music')) this.music(this.wantMusic);
   }
   _stopMusic() {
     const m = this.musicNode; if (!m) return;

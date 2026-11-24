@@ -1,5 +1,5 @@
 {
- "version": "1.0.1",
+ "version": "1.1.0",
  "files": [
   "./",
   "assets/art/item-bell.svg",
@@ -77,6 +77,7 @@
   "assets/icons/icon-180.png",
   "assets/icons/icon-512.png",
   "assets/icons/icon.svg",
+  "data/achievements.json",
   "data/audio.json",
   "data/balance.json",
   "data/case.json",
@@ -107,6 +108,7 @@
   "src/core/scoring.js",
   "src/core/trial-host.js",
   "src/core/updater.js",
+  "src/shell/achievements.js",
   "src/shell/diary.js",
   "src/shell/intro.js",
   "src/shell/register.js",

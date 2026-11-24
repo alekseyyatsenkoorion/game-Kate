@@ -1,7 +1,8 @@
 # Проверка зоны B (испытания shirma, bagazhnik, misterx) на стенде tests/trials/harness.html.
 # Запуск: сервер `python3 -m http.server 8765` из корня проекта, затем
 #   python3 tests/trials/run_trials.py [base_url] [тип ...]
-# Без списка типов проверяются все.
+# Без списка типов проверяются все. Тип traps — ловушки скептика (Ширма, Багажник).
+# TRAPS_REBASELINE=1 — перезаписать эталон traps=0 (fixtures/traps0-baseline.json), только если вид машин меняли намеренно.
 # Снимки — в tests/snapshots/B/.
 import itertools, json, os, random, sys
 from playwright.sync_api import sync_playwright
@@ -53,8 +54,8 @@ class Page:
     def finishes(self):
         return [e['result'] for e in self.ev('finish')]
 
-    def js(self, code):
-        return self.pg.evaluate(code)
+    def js(self, code, arg=None):
+        return self.pg.evaluate(code) if arg is None else self.pg.evaluate(code, arg)
 
     def shot(self, name):
         self.pg.screenshot(path=os.path.join(SNAP, name))
@@ -503,9 +504,207 @@ def test_misterx(b):
     p.close()
 
 
+# ---------- Ловушки скептика (ctx.traps, Т-08, тест 3.2) ----------
+TR_BASE = os.path.join(ROOT, 'tests', 'trials', 'fixtures', 'traps0-baseline.json')
+FIX = lambda n: json.load(open(os.path.join(ROOT, 'tests', 'trials', 'fixtures', n), encoding='utf-8'))
+NOTHING = 'Ничего необычного'
+TRAP_MARK = {'sag': 'rotate(-2 ', 'fog': '#d6dde8', 'track': '#b59a74'}
+
+
+def shirma_hints(b, params):
+    p = Page(b, 'type=shirma&texts=1&power=20&' + params)
+    for _ in range(8):
+        p.click('[data-sh="hint"]', 30)
+    hints = p.js("[...document.querySelectorAll('.sh-hint')].map(li => li.textContent)")
+    return p, hints
+
+
+def bag_state(b, params):
+    p = Page(b, 'type=bagazhnik&texts=1&power=99&' + params)
+    order = p.js("[...document.querySelectorAll('.bz-spot')].map(s => s.getAttribute('data-car'))")
+    svg = p.js("Object.fromEntries([...document.querySelectorAll('.bz-spot')].map(s => [s.getAttribute('data-car'), s.querySelector('.bz-carwrap').innerHTML]))")
+    info = {}
+    for c in order:
+        p.click('[data-car="%s"]' % c, 20)
+        p.click('[data-bz="inspect"]', 20)
+        info[c] = p.js("document.querySelector('.bz-info').textContent")
+    return p, {'order': order, 'svg': svg, 'info': info}
+
+
+# Прогон испытания в той же странице с другим seed: [{trap, hints|cars}] для проверки свойств.
+# Генератор — игровой createRng (mulberry32) из src/core/rng.js, seed как в trial-host: hashSeed(seed выпуска, id задания)
+SEED_LOOP = """async ([type, n, mutate]) => {
+  const h = window.__h, out = [];
+  const { createRng, hashSeed } = await import('/src/core/rng.js');
+  for (let s = 1; s <= n; s++) {
+    const ctx = Object.assign({}, h.ctx, { rng: createRng(hashSeed(s, h.task.id)), traps: 1, finish() {}, fail(e) { out.push({ fail: e }); } });
+    // подмена текстов признака: notrait — ключа нет ('[key]', как ContentLoader); trait — есть, вид smell; badkind — вид silhouette
+    if (mutate === 'notrait' || mutate === 'trait' || mutate === 'badkind') ctx.text = (k, v) => {
+      if (/\.trait$/.test(k)) return mutate === 'notrait' ? '[' + k + ']' : 'trait-text';
+      if (/\.traitKind$/.test(k)) return mutate === 'trait' ? 'smell' : 'silhouette';
+      return h.ctx.text(k, v);
+    };
+    const task = JSON.parse(JSON.stringify(h.task));
+    if (mutate === 'fake') task.payload.hints[2].fake = true;
+    const before = JSON.stringify(task);
+    const inst = h.TRIALS[type].create(ctx), div = document.createElement('div');
+    inst.start(div, task, 1);
+    out.push({ trap: inst.trap, hints: inst.hints, cars: inst.cars, same: JSON.stringify(task) === before });
+    inst.destroy();
+  }
+  return out;
+}"""
+
+
+def test_traps(b):
+    base = json.load(open(TR_BASE, encoding='utf-8'))
+    if os.environ.get('TRAPS_REBASELINE') == '1':
+        print('TRAPS_REBASELINE=1: эталон traps=0 перезаписывается')
+    rebase = {'shirma': {}, 'bagazhnik': {}}
+    texts = json.load(open(os.path.join(ROOT, 'data', 'texts.json'), encoding='utf-8'))['texts']
+    sample = FIX('texts-sample.json')['texts']
+    trap_texts = FIX('texts-traps.json')['texts']
+    check('traps: тексты ловушек — 8 ключей trap.shirma.1…8 с {item}',
+          sorted(trap_texts) == sorted('trap.shirma.%d' % i for i in range(1, 9)) and all('{item}' in v for v in trap_texts.values()))
+
+    # --- Ширма ---
+    sh = FIX('shirma.json')['tasks']
+    for i, t in enumerate(sh):
+        pl = t['payload']
+        p, h0 = shirma_hints(b, 'task=%d&traps=0' % i)
+        rebase['shirma'][str(i)] = h0
+        check('traps-shirma[%d]: traps=0 — подсказки как до изменений' % i, h0 == base['shirma'][str(i)], h0)
+        p.close()
+        p, h1 = shirma_hints(b, 'task=%d&traps=1' % i)
+        tr = p.js('window.__h.inst.trap')
+        check('traps-shirma[%d]: traps=1 — подсказок на 1 больше' % i, len(h1) == len(h0) + 1, (len(h0), len(h1)))
+        check('traps-shirma[%d]: первая (бесплатная) подсказка прежняя' % i, h1[:1] == h0[:1], h1[:1])
+        pos = (tr or {}).get('pos', -1)
+        rest = h1[:pos] + h1[pos + 1:] if pos >= 0 else None
+        check('traps-shirma[%d]: ровно одна новая подсказка, остальные по порядку прежние' % i, pos >= 1 and rest == h0, (pos, h1))
+        decoy = (tr or {}).get('decoy')
+        label = sample.get('item.' + str(decoy), '?')
+        new = h1[pos] if 0 <= pos < len(h1) else ''
+        trait = texts.get('item.%s.trait' % decoy)
+        check('traps-shirma[%d]: ложная — о неверном варианте (%s), не об ответе %s' % (i, decoy, pl['answer']),
+              decoy in pl['options'] and decoy != pl['answer'] and sample['item.' + pl['answer']].lower() not in new.lower(), new)
+        if trait:      # основной путь: признак обманки без названия, вид из traitKind
+            kind = texts.get('item.%s.traitKind' % decoy)
+            check('traps-shirma[%d]: текст — признак item.%s.trait, без названия, вид %s' % (i, decoy, kind),
+                  tr.get('source') == 'trait' and new == sample['shirma.kind.' + kind] + trait and label.lower() not in new.lower(), new)
+        else:          # запасной путь: шаблон trap.shirma.N
+            check('traps-shirma[%d]: признака нет — запасной шаблон с названием' % i,
+                  tr.get('source') == 'template' and label in new and '[' not in new, new)
+        check('traps-shirma[%d]: ловушка выглядит как подсказка (тот же класс, иконка)' % i,
+              p.js("(() => { const li = document.querySelectorAll('.sh-hint')[%d]; return li.className === 'sh-hint' && !!li.querySelector('.sh-hint-ic svg'); })()" % pos))
+        check('traps-shirma[%d]: задание из пула не изменено' % i, p.js('window.__h.task.payload.hints.length') == len(pl['hints']))
+        if i == 0:
+            # снимок: ловушка видна в списке (прокрутка к ней)
+            p.js("(() => { const ul = document.querySelector('.sh-hints'), li = ul.querySelectorAll('.sh-hint')[%d]; ul.scrollTop = li.offsetTop - ul.offsetTop - 70; })()" % pos)
+            p.wait(100)
+            p.shot('trap-shirma.png')
+        p.click('[data-opt="%s"]' % pl['answer'], 1900)
+        r = (p.finishes() or [{}])[0]
+        check('traps-shirma[%d]: решается, hintsUsed = число платных подсказок' % i,
+              r.get('solved') is True and r.get('hintsUsed') == len(h1) - 1, r)
+        check('traps-shirma[%d]: нет ошибок' % i, not p.errors, p.errors)
+        p.close()
+        p, h2 = shirma_hints(b, 'task=%d&traps=1' % i)
+        check('traps-shirma[%d]: тот же seed — та же ловушка' % i, h2 == h1 and p.js('window.__h.inst.trap') == tr)
+        p.close()
+
+    # свойства на 60 seed: позиция ≥ 1, обманка ≠ ответ, вид не silhouette; ловушка поверх fake уровня
+    p = Page(b, 'type=shirma&task=0')
+    pl = sh[0]['payload']
+    runs = p.js(SEED_LOOP, ['shirma', 60, ''])
+    okk = all(r['trap'] and 1 <= r['trap']['pos'] <= len(pl['hints']) and r['trap']['decoy'] != pl['answer'] and r['trap']['decoy'] in pl['options']
+              and len(r['hints']) == len(pl['hints']) + 1 and r['hints'][0] == pl['hints'][0] and r['hints'][r['trap']['pos']]['kind'] != 'silhouette'
+              and r['same'] for r in runs)
+    check('traps-shirma(60 seed): позиция после первой, обманка ≠ ответ, не silhouette, задание не тронуто', okk)
+    check('traps-shirma(60 seed): ловушка ложится на разные места и обманки',
+          len(set(r['trap']['pos'] for r in runs)) > 1 and len(set(r['trap']['decoy'] for r in runs)) == len(pl['options']) - 1)
+    # оба пути текста при любом наличии ключей в data: признака нет → шаблон; есть → признак и его вид
+    runs = p.js(SEED_LOOP, ['shirma', 60, 'notrait'])
+    check('traps-shirma(нет признака): запасные шаблоны trap.shirma.N с {item}',
+          all(r['trap']['source'] == 'template' and r['trap']['textKey'].startswith('trap.shirma.')
+              and r['hints'][r['trap']['pos']]['vars']['item'] for r in runs)
+          and len(set(r['trap']['textKey'] for r in runs)) == 8)
+    runs = p.js(SEED_LOOP, ['shirma', 30, 'trait'])
+    check('traps-shirma(есть признак): ключ item.<обманка>.trait, вид из traitKind, без подстановки',
+          all(r['trap']['source'] == 'trait' and r['trap']['textKey'] == 'item.%s.trait' % r['trap']['decoy']
+              and r['trap']['kind'] == 'smell' and 'vars' not in r['hints'][r['trap']['pos']] for r in runs))
+    runs = p.js(SEED_LOOP, ['shirma', 30, 'badkind'])
+    check('traps-shirma(вид silhouette/неизвестный): берётся вид шаблона, не silhouette',
+          all(r['trap']['source'] == 'trait' and r['trap']['kind'] in ('sound', 'warmth', 'detail', 'smell') for r in runs))
+    runs = p.js(SEED_LOOP, ['shirma', 20, 'fake'])
+    check('traps-shirma(fake уровня): ловушка добавляется поверх — ложных 2',
+          all(len(r['hints']) == len(pl['hints']) + 1 and sum(1 for x in r['hints'] if x.get('fake')) == 2 for r in runs))
+    p.close()
+
+    # --- Багажник ---
+    bz = FIX('bagazhnik.json')['tasks']
+    for i, t in enumerate(bz):
+        pl = t['payload']
+        tgt = pl['target']
+        p, s0 = bag_state(b, 'task=%d&traps=0' % i)
+        rebase['bagazhnik'][str(i)] = s0
+        check('traps-bag[%d]: traps=0 — раскладка, машины и улики как до изменений' % i, s0 == base['bagazhnik'][str(i)])
+        p.close()
+        p, s1 = bag_state(b, 'task=%d&traps=1' % i)
+        tr = p.js('window.__h.inst.trap') or {}
+        diff = [c for c in s0['order'] if s0['svg'][c] != s1['svg'].get(c) or s0['info'][c] != s1['info'].get(c)]
+        car, kind = tr.get('car'), tr.get('kind')
+        check('traps-bag[%d]: раскладка мест прежняя' % i, s1['order'] == s0['order'], s1['order'])
+        check('traps-bag[%d]: изменилась ровно одна машина — обманка %s' % (i, car), diff == [car] and car != tgt, diff)
+        check('traps-bag[%d]: у обманки раньше улик не было' % i, s0['info'].get(car) == NOTHING, s0['info'].get(car))
+        check('traps-bag[%d]: ровно одна ложная улика, текст bag.clue.%s' % (i, kind),
+              kind in TRAP_MARK and s1['info'].get(car) == texts['bag.clue.' + str(kind)], s1['info'].get(car))
+        check('traps-bag[%d]: улика видна на машине (как настоящая %s)' % (i, kind),
+              TRAP_MARK.get(kind, '#') in s1['svg'].get(car, '') and TRAP_MARK.get(kind, '#') not in s0['svg'].get(car, ''))
+        check('traps-bag[%d]: цель %s не изменилась' % (i, tgt), s1['svg'][tgt] == s0['svg'][tgt] and s1['info'][tgt] == s0['info'][tgt])
+        check('traps-bag[%d]: задание из пула не изменено' % i,
+              p.js('window.__h.task.payload.cars.map(c => (c.clues || []).length)') == [len(c.get('clues') or []) for c in pl['cars']])
+        if i == 0:
+            p.click('[data-car="%s"]' % car, 300)
+            p.shot('trap-bagazhnik.png')
+        p.click('[data-car="%s"]' % car)
+        p.click('[data-bz="choose"]', 300)
+        p.click('[data-car="%s"]' % tgt)
+        p.click('[data-bz="choose"]', 1900)
+        r = (p.finishes() or [{}])[0]
+        check('traps-bag[%d]: обманка пустая (ошибка), цель находится' % i, r.get('solved') is True and r.get('mistakes') == 1, r)
+        check('traps-bag[%d]: нет ошибок' % i, not p.errors, p.errors)
+        p.close()
+        p, s2 = bag_state(b, 'task=%d&traps=1' % i)
+        check('traps-bag[%d]: тот же seed — та же ловушка' % i, s2 == s1 and p.js('window.__h.inst.trap') == tr)
+        p.close()
+
+    p = Page(b, 'type=bagazhnik&task=2&level=3')
+    pl = bz[2]['payload']
+    empty = [c['id'] for c in pl['cars'] if c['id'] != pl['target'] and not c.get('clues')]
+    runs = p.js(SEED_LOOP, ['bagazhnik', 60, ''])
+    def one_ok(r):
+        t = r['trap']
+        if not t or t['car'] not in empty or t['kind'] not in TRAP_MARK or not r['same']:
+            return False
+        for c in pl['cars']:
+            got = r['cars'][c['id']]['clues']
+            want = len(c.get('clues') or []) + (1 if c['id'] == t['car'] else 0)
+            if len(got) != want:
+                return False
+        return r['cars'][t['car']]['clues'] == [{'kind': t['kind'], 'textKey': 'bag.clue.' + t['kind'], 'fake': True}]
+    check('traps-bag(60 seed): одна улика у пустой обманки, остальное как в задании', all(one_ok(r) for r in runs))
+    check('traps-bag(60 seed): разные обманки и все 3 вида улик',
+          len(set(r['trap']['car'] for r in runs)) > 3 and len(set(r['trap']['kind'] for r in runs)) == 3)
+    p.close()
+
+    if os.environ.get('TRAPS_REBASELINE') == '1':
+        json.dump(rebase, open(TR_BASE, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+
+
 with sync_playwright() as pw:
     br = pw.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
-    for name, fn in [('shirma', test_shirma), ('bagazhnik', test_bagazhnik), ('misterx', test_misterx)]:
+    for name, fn in [('shirma', test_shirma), ('bagazhnik', test_bagazhnik), ('misterx', test_misterx), ('traps', test_traps)]:
         if not ONLY or name in ONLY:
             fn(br)
     br.close()

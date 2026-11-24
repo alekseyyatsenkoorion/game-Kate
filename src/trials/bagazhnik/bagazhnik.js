@@ -53,6 +53,9 @@ const BODIES = {
   }
 };
 const WHEELS = [72, 200];
+// Ловушка скептика (ctx.traps = 1): виды ложной улики — только видимые, рисуются как настоящие.
+// Текст при осмотре — существующий ключ bag.clue.<kind>.
+const TRAP_KINDS = ['sag', 'fog', 'track'];
 
 // Иконки видов улик (24×24, обводка)
 const ICONS = {
@@ -185,8 +188,14 @@ class BagazhnikTrial {
       return;
     }
     this.p = p;
+    // Свои копии машин: задание из пула не меняем (ловушка добавляет улику)
+    const cars = p.cars.map((c) => Object.assign({}, c, { clues: (c.clues || []).slice() }));
     this.cars = {};
-    p.cars.forEach((c) => { this.cars[c.id] = c; });
+    cars.forEach((c) => { this.cars[c.id] = c; });
+    // Порядок мест — первым вызовом ctx.rng, как и раньше: при traps = 0 раскладка прежняя
+    this.order = this.ctx.rng.shuffle(cars.slice());
+    this.trap = null;
+    if (this.ctx.traps === 1) this._plantTrap(cars);
     this.price = (this.ctx.balance && this.ctx.balance.hintPrice) || 1;
     this._build();
     this._showPick();
@@ -270,8 +279,8 @@ class BagazhnikTrial {
     const ask = el('div', 'bz-ask', t('bag.ask'));
     root.appendChild(ask);
 
-    // Места: 2 ряда до 10 машин, 3 ряда — больше. Порядок перемешан.
-    const order = this.ctx.rng.shuffle(this.p.cars.slice());
+    // Места: 2 ряда до 10 машин, 3 ряда — больше. Порядок перемешан в start.
+    const order = this.order;
     const n = order.length;
     const rows = n <= 10 ? 2 : 3;
     const cols = Math.ceil(n / rows);
@@ -326,6 +335,18 @@ class BagazhnikTrial {
     root.appendChild(panel);
 
     this.field.appendChild(root);
+  }
+
+  // ---------- ловушка скептика ----------
+  // Одной машине-обманке без улик — одна ложная видимая улика. Внешне не отличается от настоящей.
+  _plantTrap(cars) {
+    const rng = this.ctx.rng;
+    const free = cars.filter((c) => c.id !== this.p.target && !c.clues.length);
+    if (!free.length) return;
+    const car = rng.pick(free);
+    const kind = rng.pick(TRAP_KINDS);
+    car.clues.push({ kind: kind, textKey: 'bag.clue.' + kind, fake: true });
+    this.trap = { car: car.id, kind: kind };
   }
 
   // ---------- панель ----------

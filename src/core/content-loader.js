@@ -29,6 +29,8 @@ export class ContentLoader {
     const [season, balance, texts, chars, cs, items] = await Promise.all([
       getJson('season.json'), getJson('balance.json'), getJson('texts.json'),
       getJson('characters.json'), getJson('case.json'), getJson('items.json')]);
+    try { const a = await getJson('achievements.json'); this.achList = a.schema === 1 ? a.achievements : []; }
+    catch (e) { log.warn('ACH_FILE', String(e.message)); this.achList = []; }
     need(season.schema === 1 && season.episodes && season.episodes.length === 12, 'season.json', 'episodes');
     need(balance.schema === 1 && balance.trials, 'balance.json', 'trials');
     need(texts.schema === 1 && texts.texts, 'texts.json', 'texts');
@@ -36,6 +38,7 @@ export class ContentLoader {
     this.chars = chars.characters; this.caseData = cs; this.itemList = items.items;
     this.itemMap = {}; this.itemList.forEach((i) => { this.itemMap[i.id] = i; });
   }
+  achievements() { return this.achList || []; }
   episode(n) { return this.seasonData.episodes[n - 1]; }
   episodes() { return this.seasonData.episodes; }
   balance() { return this.bal; }

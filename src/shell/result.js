@@ -2,6 +2,7 @@ import { Scene } from '../core/scene-manager.js';
 import { createRng, hashSeed } from '../core/rng.js';
 import { candles, stars, esc, actionOf, bgAttr, portrait } from './ui.js';
 import { confirmBox } from '../core/overlay.js';
+import { awardAchievements, showToasts } from './achievements.js';
 
 export class ResultScene extends Scene {
   static get id() { return 'result'; }
@@ -22,6 +23,7 @@ export class ResultScene extends Scene {
     this.mustReplay = !!(riv && riv.playerMustReplay);
     if (!this.mustReplay) app.progress.recordEpisode(n, epScore, riv, clues, app.dayLock.today());
     app.progress.clearRun();
+    const newAch = this.mustReplay ? [] : await awardAchievements(app, { results: run.results });
 
     const prng = createRng(hashSeed('praise', n, run.attempt, Date.now()));
     const hostLine = epScore.stars >= 2 ? c.pickText('host.praise', prng) : this.t('host.lowScore');
@@ -36,7 +38,7 @@ export class ResultScene extends Scene {
     }
     const gotClues = !this.mustReplay && first && clues.length ? '<p class="gain">' + this.t('ui.newClues', { k: clues.length }) + '</p>' : '';
     root.innerHTML =
-      '<div class="screen result"' + bgAttr(app, 'bg-studio') + '>' + candles() +
+      '<div class="screen result' + (n === 12 && !this.mustReplay ? ' has-case' : '') + '"' + bgAttr(app, 'bg-studio') + '>' + candles() +
         '<div class="ep-label">' + this.t('ui.resultsOf', { n }) + '</div>' +
         '<h2>' + esc(ep.title) + '</h2>' +
         '<div class="res-row"><div class="res-left">' +
@@ -54,9 +56,12 @@ export class ResultScene extends Scene {
       '</div>';
     app.audio.sfx('star');
     if (epScore.stars >= 2) app.audio.praise(hostLine); else app.audio.laugh(skLine);
+    showToasts(this, newAch, 1200);
   }
+  async exit() { this.gone = true; await super.exit(); }
   onInput(e) {
     const a = actionOf(e); if (!a) return;
+    if (a.act === 'ach-toast') { a.el.classList.add('out'); return; }
     this.app.audio.sfx('tap');
     if (a.act === 'season') this.app.scenes.replace('season');
     if (a.act === 'replay') this.app.scenes.replace('intro', { n: this.n });
@@ -65,7 +70,10 @@ export class ResultScene extends Scene {
       const right = c.caseData.links.filter((l) => p.case.links.some((m) => (m[0] === l[0] && m[1] === l[1]) || (m[0] === l[1] && m[1] === l[0]))).length;
       const txt = c.text(c.caseData.solutionKey) + '\n\n' + this.t('ui.caseLinks', { k: right, n: c.caseData.links.length });
       this.app.audio.sayText(c.text(c.caseData.solutionKey));
-      confirmBox(txt, this.t('ui.close'));
+      const solved = right === c.caseData.links.length && p.case.links.length === right;
+      confirmBox(txt, this.t('ui.close'))
+        .then(() => awardAchievements(this.app, { caseSolved: solved }))
+        .then((list) => showToasts(this, list, 200));
     }
   }
 }

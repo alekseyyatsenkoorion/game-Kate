@@ -1,6 +1,7 @@
 // Испытание «Ширма» (shirma): угадать предмет за ширмой по подсказкам.
 // Контракт — contracts.md §11, формат задания — §12.2.
-// Все тексты — через ctx.text, случайность не нужна. Таймеры — только свои, на update(dt).
+// Все тексты — через ctx.text. Случайность (только ловушка скептика) — через ctx.rng.
+// Таймеры — только свои, на update(dt).
 
 // Иконки видов подсказок (24×24, рисуются обводкой золотом)
 const ICONS = {
@@ -10,6 +11,16 @@ const ICONS = {
   detail: '<circle cx="10" cy="10" r="6"/><path d="M14.5 14.5L21 21"/>',
   smell: '<path d="M7 21c-2-3 2-5 0-8s2-5 0-8"/><path d="M12 21c-2-3 2-5 0-8s2-5 0-8"/><path d="M17 21c-2-3 2-5 0-8s2-5 0-8"/>'
 };
+// Ловушка скептика (ctx.traps = 1): запасные шаблоны ложной подсказки о неверном варианте,
+// если у предмета нет признака item.<id>.trait.
+// Тексты — в data/texts.json (trap.shirma.N, подстановка {item}). Вида silhouette нет:
+// он рисует тень ответа и выдал бы ловушку.
+const TRAPS = [
+  { kind: 'sound', key: 'trap.shirma.1' }, { kind: 'sound', key: 'trap.shirma.2' },
+  { kind: 'warmth', key: 'trap.shirma.3' }, { kind: 'warmth', key: 'trap.shirma.4' },
+  { kind: 'detail', key: 'trap.shirma.5' }, { kind: 'detail', key: 'trap.shirma.6' },
+  { kind: 'smell', key: 'trap.shirma.7' }, { kind: 'smell', key: 'trap.shirma.8' }
+];
 const POWER_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3.2"/></svg>';
 
 function el(tag, cls, text) {
@@ -71,10 +82,13 @@ class ShirmaTrial {
       return;
     }
     this.p = p;
+    this.hints = p.hints.slice();            // своя копия: задание из пула не меняем
+    this.trap = null;
+    if (this.ctx.traps === 1) this._plantTrap();
     this.price = (this.ctx.balance && this.ctx.balance.hintPrice) || 1;
     this._build();
     // Первая подсказка открыта бесплатно и не считается в hintsUsed
-    if (p.hints.length) this._openHint(p.hints[0], true);
+    if (this.hints.length) this._openHint(this.hints[0], true);
     this._syncHintBtn();
     this.t0 = performance.now();
   }
@@ -247,6 +261,34 @@ class ShirmaTrial {
     this.shadowHost.appendChild(layer);
   }
 
+  // ---------- ловушка скептика ----------
+  // Одна ложная подсказка о неверном варианте на случайное место после первой (бесплатной).
+  // Вставляется поверх fake-подсказок уровня. Внешне не отличается от настоящей.
+  // Текст — признак обманки без названия (item.<id>.trait, вид — item.<id>.traitKind);
+  // нет ключа — запасной шаблон trap.shirma.N с названием. Порядок вызовов rng один для обоих путей.
+  _plantTrap() {
+    const rng = this.ctx.rng;
+    const decoys = this.p.options.filter((o) => o !== this.p.answer);
+    if (!rng || !decoys.length || !this.hints.length) return;
+    const decoy = rng.pick(decoys);
+    const tpl = rng.pick(TRAPS);
+    const pos = rng.int(1, this.hints.length);
+    const traitKey = 'item.' + decoy + '.trait';
+    const trait = this.ctx.text(traitKey);
+    let hint;
+    if (trait && trait.charAt(0) !== '[') {
+      const k = this.ctx.text('item.' + decoy + '.traitKind');
+      const kind = ICONS[k] && k !== 'silhouette' ? k : tpl.kind;
+      hint = { kind: kind, textKey: traitKey, fake: true };
+    } else {
+      const name = this._label(decoy);
+      const item = name.charAt(0).toLowerCase() + name.slice(1);
+      hint = { kind: tpl.kind, textKey: tpl.key, vars: { item: item }, fake: true };
+    }
+    this.hints.splice(pos, 0, hint);
+    this.trap = { decoy: decoy, pos: pos, textKey: hint.textKey, kind: hint.kind, source: hint.vars ? 'template' : 'trait' };
+  }
+
   // ---------- подсказки ----------
   _openHint(h, free) {
     const kind = ICONS[h.kind] ? h.kind : 'detail';
@@ -255,7 +297,7 @@ class ShirmaTrial {
     ic.innerHTML = iconSvg(kind);
     const tx = el('div', 'sh-hint-tx');
     tx.appendChild(el('b', 'sh-hint-kind', this.ctx.text('shirma.kind.' + kind)));
-    tx.appendChild(el('span', null, this.ctx.text(h.textKey)));
+    tx.appendChild(el('span', null, this.ctx.text(h.textKey, h.vars)));
     li.appendChild(ic);
     li.appendChild(tx);
     this.list.appendChild(li);
@@ -265,7 +307,7 @@ class ShirmaTrial {
   }
 
   _askHint() {
-    const hints = this.p.hints;
+    const hints = this.hints;
     if (this.opened >= hints.length) return;            // подсказки кончились
     if (!this.ctx.power.spend(this.price, 'shirma.hint')) {
       this._flash(this.ctx.text('shirma.noPower'));
@@ -282,7 +324,7 @@ class ShirmaTrial {
   }
 
   _syncHintBtn() {
-    const left = this.p.hints.length - this.opened;
+    const left = this.hints.length - this.opened;
     if (left > 0) return;
     this.btn.classList.add('is-off');
     this.btnLabel.textContent = this.ctx.text('shirma.noMoreHints');

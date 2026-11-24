@@ -1,0 +1,17 @@
+{
+ "schema": 1,
+ "achievements": [
+  { "id": "first-win", "titleKey": "ach.first-win.title", "descKey": "ach.first-win.desc", "icon": "★", "rule": { "kind": "episodes", "min": 1 } },
+  { "id": "three-stars", "titleKey": "ach.three-stars.title", "descKey": "ach.three-stars.desc", "icon": "✦", "rule": { "kind": "starEpisodes", "stars": 3, "min": 1 } },
+  { "id": "no-hints", "titleKey": "ach.no-hints.title", "descKey": "ach.no-hints.desc", "icon": "☾", "rule": { "kind": "cleanRun", "zero": "hintsUsed" } },
+  { "id": "no-mistakes", "titleKey": "ach.no-mistakes.title", "descKey": "ach.no-mistakes.desc", "icon": "✧", "rule": { "kind": "cleanRun", "zero": "mistakes" } },
+  { "id": "five-perfect", "titleKey": "ach.five-perfect.title", "descKey": "ach.five-perfect.desc", "icon": "♛", "rule": { "kind": "starEpisodes", "stars": 3, "min": 5 } },
+  { "id": "bag-blind", "titleKey": "ach.bag-blind.title", "descKey": "ach.bag-blind.desc", "icon": "✪", "rule": { "kind": "trial", "type": "bagazhnik", "level": null, "zero": "hintsUsed" } },
+  { "id": "misterx-master", "titleKey": "ach.misterx-master.title", "descKey": "ach.misterx-master.desc", "icon": "❖", "rule": { "kind": "trial", "type": "misterx", "level": 3, "zero": "hintsUsed" } },
+  { "id": "dark-room", "titleKey": "ach.dark-room.title", "descKey": "ach.dark-room.desc", "icon": "✺", "rule": { "kind": "trial", "type": "komnata", "level": null, "zero": "hintsUsed" } },
+  { "id": "survivor", "titleKey": "ach.survivor.title", "descKey": "ach.survivor.desc", "icon": "♞", "rule": { "kind": "survived" } },
+  { "id": "seer", "titleKey": "ach.seer.title", "descKey": "ach.seer.desc", "icon": "◉", "rule": { "kind": "title", "id": "t4" } },
+  { "id": "season-done", "titleKey": "ach.season-done.title", "descKey": "ach.season-done.desc", "icon": "♕", "rule": { "kind": "season" } },
+  { "id": "case-solved", "titleKey": "ach.case-solved.title", "descKey": "ach.case-solved.desc", "icon": "❦", "rule": { "kind": "caseSolved" } }
+ ]
+}
