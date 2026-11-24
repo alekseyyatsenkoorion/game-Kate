@@ -1,0 +1,221 @@
+{
+ "schema": 1,
+ "startPower": 3,
+ "daily": {
+  "weekday": 1,
+  "saturday": 2
+ },
+ "noRepeatLast": 3,
+ "eliminateAfter": [
+  3,
+  6,
+  9,
+  11
+ ],
+ "lowFx": false,
+ "hintPrice": 1,
+ "trials": {
+  "shirma": {
+   "1": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 90000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "2": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 90000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "3": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 90000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   }
+  },
+  "bagazhnik": {
+   "1": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 150000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "2": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 150000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "3": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 150000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   }
+  },
+  "misterx": {
+   "1": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 600000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "2": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 600000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "3": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 600000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   }
+  },
+  "foto": {
+   "1": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 600000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "2": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 600000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "3": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 600000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   }
+  },
+  "komnata": {
+   "1": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 150000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "2": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 150000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   },
+   "3": {
+    "base": 100,
+    "hintCost": 15,
+    "mistakeCost": 20,
+    "par": 150000,
+    "timeBonus": 10,
+    "unsolvedFactor": 0.3,
+    "stars2": 50,
+    "stars3": 80,
+    "hintPrice": 1
+   }
+  }
+ },
+ "titles": [
+  {
+   "id": "t1",
+   "labelKey": "title.t1",
+   "from": 0
+  },
+  {
+   "id": "t2",
+   "labelKey": "title.t2",
+   "from": 200
+  },
+  {
+   "id": "t3",
+   "labelKey": "title.t3",
+   "from": 450
+  },
+  {
+   "id": "t4",
+   "labelKey": "title.t4",
+   "from": 800
+  },
+  {
+   "id": "t5",
+   "labelKey": "title.t5",
+   "from": 1100
+  }
+ ]
+}

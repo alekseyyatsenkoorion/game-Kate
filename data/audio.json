@@ -1,0 +1,41 @@
+{
+ "schema": 1,
+ "sounds": {
+  "tap": {
+   "synth": "tap",
+   "file": null
+  },
+  "cloth": {
+   "synth": "cloth",
+   "file": null
+  },
+  "chime": {
+   "synth": "chime",
+   "file": null
+  },
+  "wrong": {
+   "synth": "wrong",
+   "file": null
+  },
+  "knock": {
+   "synth": "knock",
+   "file": null
+  },
+  "trunk": {
+   "synth": "trunk",
+   "file": null
+  },
+  "power": {
+   "synth": "power",
+   "file": null
+  },
+  "star": {
+   "synth": "star",
+   "file": null
+  },
+  "laugh": {
+   "synth": "laugh",
+   "file": null
+  }
+ }
+}

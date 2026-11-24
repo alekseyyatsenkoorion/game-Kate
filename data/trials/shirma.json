@@ -1,0 +1,181 @@
+{
+ "schema": 1,
+ "type": "shirma",
+ "tasks": [
+  {
+   "id": "shirma-1-001",
+   "level": 1,
+   "payload": {
+    "answer": "clock",
+    "options": [
+     "clock",
+     "kettle",
+     "lamp",
+     "book"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.t1.h1",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.t1.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.t1.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.t1.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-1-002",
+   "level": 1,
+   "payload": {
+    "answer": "kettle",
+    "options": [
+     "kettle",
+     "cup",
+     "bottle",
+     "bell"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.t2.h1",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.t2.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.t2.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.t2.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-1-003",
+   "level": 1,
+   "payload": {
+    "answer": "umbrella",
+    "options": [
+     "umbrella",
+     "guitar",
+     "hat",
+     "candle"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.t3.h1",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.t3.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.t3.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.t3.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-1-004",
+   "level": 1,
+   "payload": {
+    "answer": "bell",
+    "options": [
+     "bell",
+     "cup",
+     "lamp",
+     "hat"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.t4.h1",
+      "fake": false
+     },
+     {
+      "kind": "sound",
+      "textKey": "shirma.t4.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.t4.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.t4.h4",
+      "fake": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "shirma-1-005",
+   "level": 1,
+   "payload": {
+    "answer": "candle",
+    "options": [
+     "candle",
+     "bottle",
+     "key",
+     "glasses"
+    ],
+    "hints": [
+     {
+      "kind": "silhouette",
+      "textKey": "shirma.t5.h1",
+      "fake": false
+     },
+     {
+      "kind": "smell",
+      "textKey": "shirma.t5.h2",
+      "fake": false
+     },
+     {
+      "kind": "warmth",
+      "textKey": "shirma.t5.h3",
+      "fake": false
+     },
+     {
+      "kind": "detail",
+      "textKey": "shirma.t5.h4",
+      "fake": false
+     }
+    ]
+   }
+  }
+ ]
+}

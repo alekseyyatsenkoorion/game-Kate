@@ -1,0 +1,10 @@
+{
+  "name": "game-kate",
+  "private": true,
+  "description": "Шестое чувство — мистическое шоу испытаний (PWA для iPad)",
+  "scripts": {
+    "serve": "python3 -m http.server 8080",
+    "build": "node tools/build-precache.js",
+    "size": "node tools/build-precache.js --check"
+  }
+}

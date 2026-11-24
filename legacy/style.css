@@ -1,0 +1,119 @@
+/* «Шестое чувство» — тёмная мистика: фиолетовый + золото. Совместимо с Safari 15. */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: #0d0716;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(120, 60, 180, 0.35), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(200, 120, 40, 0.18), transparent 55%);
+  color: #e9e0f5;
+  font-family: Georgia, 'Times New Roman', serif;
+  -webkit-user-select: none; user-select: none;
+  touch-action: manipulation;
+}
+#app { height: 100%; }
+.hidden { display: none !important; }
+
+.screen {
+  position: relative; height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 24px 40px; display: flex; flex-direction: column; align-items: center;
+  animation: fade 0.35s ease;
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+h1 { font-size: 64px; color: #f1c86b; letter-spacing: 2px; text-shadow: 0 0 24px rgba(241, 200, 107, 0.45); font-weight: normal; }
+h2 { font-size: 40px; color: #f1c86b; font-weight: normal; margin: 6px 0 12px; }
+.sub { font-size: 22px; color: #b9a6d6; font-style: italic; margin-bottom: 40px; }
+.info { color: #b9a6d6; font-size: 18px; margin: 4px 0 16px; text-align: center; }
+
+/* кнопки */
+.btn {
+  font-family: inherit; font-size: 24px; color: #e9e0f5; cursor: pointer;
+  padding: 16px 40px; border-radius: 40px; min-width: 280px;
+  border: 2px solid rgba(241, 200, 107, 0.55); background: rgba(40, 20, 64, 0.7);
+}
+.btn:active { transform: scale(0.97); }
+.btn.gold { background: linear-gradient(#f1c86b, #b8862f); color: #1d0f2e; border-color: #f7dc98; box-shadow: 0 0 22px rgba(241, 200, 107, 0.35); }
+.btn.ghost { background: rgba(40, 20, 64, 0.55); }
+.btn.small { font-size: 18px; padding: 10px 22px; min-width: 0; }
+.menu { display: flex; flex-direction: column; align-items: center; }
+.menu .btn { margin: 10px 0; }
+
+/* титульный */
+.title-screen { justify-content: center; }
+.eye { color: #f1c86b; width: 140px; margin-bottom: 18px; filter: drop-shadow(0 0 14px rgba(241, 200, 107, 0.6)); animation: pulse 4s ease-in-out infinite; }
+.eye-svg { width: 100%; display: block; }
+@keyframes pulse { 0%, 100% { opacity: 0.85; } 50% { opacity: 1; } }
+
+/* свечи */
+.candles { position: absolute; bottom: 0; display: flex; align-items: flex-end; pointer-events: none; }
+.candles.left { left: 30px; } .candles.right { right: 30px; }
+.c { position: relative; display: block; width: 22px; margin: 0 10px; background: linear-gradient(#efe4d0, #b9a98d); border-radius: 4px 4px 0 0; }
+.c1 { height: 110px; } .c2 { height: 70px; } .c3 { height: 140px; }
+.c::before {
+  content: ''; position: absolute; left: 50%; top: -30px; width: 14px; height: 26px; margin-left: -7px;
+  background: radial-gradient(ellipse at 50% 70%, #fff6c2 0%, #ffb63a 45%, rgba(255, 120, 0, 0) 75%);
+  border-radius: 50% 50% 40% 40%; animation: flicker 1.6s ease-in-out infinite alternate;
+}
+.c::after { content: ''; position: absolute; left: 50%; top: -60px; width: 90px; height: 90px; margin-left: -45px; background: radial-gradient(rgba(255, 170, 60, 0.25), transparent 70%); border-radius: 50%; }
+.c2::before { animation-duration: 1.2s; } .c3::before { animation-duration: 2s; }
+@keyframes flicker { 0% { transform: scale(1, 1) rotate(-2deg); } 50% { transform: scale(0.92, 1.08) rotate(2deg); } 100% { transform: scale(1.05, 0.95) rotate(-1deg); } }
+
+/* верхняя панель */
+.topbar { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.power { font-size: 20px; color: #f1c86b; }
+
+/* сезон */
+.grid { display: flex; flex-wrap: wrap; justify-content: center; max-width: 960px; }
+.card {
+  width: 140px; height: 200px; margin: 7px; padding: 12px 8px; border-radius: 12px; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  border: 2px solid rgba(241, 200, 107, 0.35); background: linear-gradient(#2a1544, #160b26);
+}
+.card .num { font-size: 34px; color: #f1c86b; }
+.card .ctitle { font-size: 17px; margin-top: 6px; min-height: 42px; }
+.card .ctrial { font-size: 13px; color: #b9a6d6; font-style: italic; }
+.card .cfoot { margin-top: auto; font-size: 16px; }
+.card.open { border-color: #f1c86b; box-shadow: 0 0 18px rgba(241, 200, 107, 0.45); animation: glow 2.5s ease-in-out infinite; }
+@keyframes glow { 50% { box-shadow: 0 0 6px rgba(241, 200, 107, 0.2); } }
+.card.locked, .card.wait { opacity: 0.45; }
+.card .play { color: #f1c86b; } .card .stars { color: #f1c86b; letter-spacing: 2px; } .card .wait { color: #b9a6d6; font-size: 13px; }
+
+/* выпуск */
+.ep-label { color: #b9a6d6; font-size: 18px; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; }
+.host { max-width: 680px; background: rgba(40, 20, 64, 0.65); border-left: 3px solid #f1c86b; border-radius: 8px; padding: 16px 22px; margin: 10px 0 18px; }
+.host-name { color: #f1c86b; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.host p { font-size: 21px; line-height: 1.45; }
+.trial-list { font-size: 20px; margin-bottom: 20px; color: #d8cbea; }
+
+/* испытание */
+.rules { max-width: 700px; text-align: center; font-size: 19px; color: #d8cbea; line-height: 1.4; }
+.stage {
+  width: 100%; max-width: 860px; flex: 1; min-height: 260px; margin: 16px 0;
+  border: 2px dashed rgba(241, 200, 107, 0.35); border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; color: #8d7aa8; font-size: 22px; font-style: italic;
+}
+.stub { display: flex; align-items: center; font-size: 17px; color: #b9a6d6; }
+.stub .btn { margin-left: 10px; }
+
+/* итоги */
+.result { justify-content: center; }
+.big-stars { font-size: 72px; color: #f1c86b; letter-spacing: 8px; text-shadow: 0 0 22px rgba(241, 200, 107, 0.5); }
+.gain { font-size: 22px; color: #f1c86b; margin-bottom: 16px; }
+
+/* тест */
+.test-badge { position: absolute; top: 10px; left: 50%; margin-left: -40px; width: 80px; text-align: center; font: bold 14px sans-serif; color: #1d0f2e; background: #ff8a65; border-radius: 10px; padding: 3px 0; z-index: 5; }
+.test-panel { display: flex; margin-top: 14px; padding-bottom: 20px; }
+.test-panel .btn { margin: 0 6px; border-color: #ff8a65; }
+
+/* модальное окно */
+#modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5, 2, 10, 0.75); display: flex; align-items: center; justify-content: center; z-index: 20; }
+#modal .box { background: #1d0f2e; border: 2px solid #f1c86b; border-radius: 16px; padding: 28px 36px; max-width: 520px; text-align: center; }
+#modal p { font-size: 22px; margin-bottom: 20px; }
+#modal .row .btn { margin: 0 8px; }
+
+/* портретная ориентация */
+#rotate { display: none; }
+@media (orientation: portrait) {
+  #rotate { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 50; background: #0d0716; color: #f1c86b; font-size: 28px; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+}

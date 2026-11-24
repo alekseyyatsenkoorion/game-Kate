@@ -1,0 +1,207 @@
+{
+ "schema": 1,
+ "episodes": [
+  {
+   "n": 1,
+   "title": "Отбор",
+   "introKey": "host.ep1.intro",
+   "outroKey": "host.ep1.outro",
+   "trials": [
+    {
+     "type": "shirma",
+     "level": 1
+    }
+   ],
+   "clues": [
+    "clue-01"
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Парковка",
+   "introKey": "host.ep2.intro",
+   "outroKey": "host.ep2.outro",
+   "trials": [
+    {
+     "type": "bagazhnik",
+     "level": 1
+    }
+   ],
+   "clues": [
+    "clue-02"
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Незнакомец",
+   "introKey": "host.ep3.intro",
+   "outroKey": "host.ep3.outro",
+   "trials": [
+    {
+     "type": "misterx",
+     "level": 1
+    }
+   ],
+   "clues": [
+    "clue-03"
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Чужая жизнь",
+   "introKey": "host.ep4.intro",
+   "outroKey": "host.ep4.outro",
+   "trials": [
+    {
+     "type": "foto",
+     "level": 1
+    }
+   ],
+   "clues": [
+    "clue-04",
+    "clue-05"
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Без света",
+   "introKey": "host.ep5.intro",
+   "outroKey": "host.ep5.outro",
+   "trials": [
+    {
+     "type": "komnata",
+     "level": 1
+    }
+   ],
+   "clues": [
+    "clue-06",
+    "clue-07"
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Шорохи",
+   "introKey": "host.ep6.intro",
+   "outroKey": "host.ep6.outro",
+   "trials": [
+    {
+     "type": "shirma",
+     "level": 2
+    }
+   ],
+   "clues": [
+    "clue-08"
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Ложный след",
+   "introKey": "host.ep7.intro",
+   "outroKey": "host.ep7.outro",
+   "trials": [
+    {
+     "type": "bagazhnik",
+     "level": 2
+    }
+   ],
+   "clues": [
+    "clue-09",
+    "clue-10"
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Двойник",
+   "introKey": "host.ep8.intro",
+   "outroKey": "host.ep8.outro",
+   "trials": [
+    {
+     "type": "misterx",
+     "level": 2
+    }
+   ],
+   "clues": [
+    "clue-11",
+    "clue-12"
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Старый дом",
+   "introKey": "host.ep9.intro",
+   "outroKey": "host.ep9.outro",
+   "trials": [
+    {
+     "type": "komnata",
+     "level": 2
+    }
+   ],
+   "clues": [
+    "clue-13",
+    "clue-14",
+    "clue-15"
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Семейный альбом",
+   "introKey": "host.ep10.intro",
+   "outroKey": "host.ep10.outro",
+   "trials": [
+    {
+     "type": "foto",
+     "level": 2
+    }
+   ],
+   "clues": [
+    "clue-16",
+    "clue-17"
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Полуфинал",
+   "introKey": "host.ep11.intro",
+   "outroKey": "host.ep11.outro",
+   "trials": [
+    {
+     "type": "bagazhnik",
+     "level": 3
+    },
+    {
+     "type": "shirma",
+     "level": 3
+    }
+   ],
+   "clues": [
+    "clue-18",
+    "clue-19"
+   ]
+  },
+  {
+   "n": 12,
+   "title": "Финал",
+   "introKey": "host.ep12.intro",
+   "outroKey": "host.ep12.outro",
+   "trials": [
+    {
+     "type": "misterx",
+     "level": 3
+    },
+    {
+     "type": "foto",
+     "level": 3
+    },
+    {
+     "type": "komnata",
+     "level": 3
+    }
+   ],
+   "clues": [
+    "clue-20",
+    "clue-21",
+    "clue-22"
+   ]
+  }
+ ]
+}

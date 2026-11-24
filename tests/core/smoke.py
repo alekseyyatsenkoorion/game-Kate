@@ -1,0 +1,63 @@
+# Сквозной smoke-тест приложения (зона A): выпуск 1 и 2, режим теста, перезагрузка, без сети. Снимки — tests/snapshots/A/.
+import subprocess, time, os, json
+from playwright.sync_api import sync_playwright
+ROOT='/home/claude/gk'; OUT=ROOT+'/tests/snapshots/A/'; os.makedirs(OUT, exist_ok=True)
+srv = subprocess.Popen(['python3','-m','http.server','8771'], cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+time.sleep(1); errs=[]; ok=[]
+def check(c, msg): ok.append(('PASS ' if c else 'FAIL ')+msg)
+def shot(pg, name): pg.wait_for_timeout(500); pg.screenshot(path=OUT+name+'.png')
+try:
+  with sync_playwright() as p:
+    b = p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
+    ctx = b.new_context(viewport={'width':1024,'height':768}, has_touch=True)
+    pg = ctx.new_page()
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.on('console', lambda m: errs.append(m.text) if m.type=='error' and '404' not in m.text else None)
+    pg.goto('http://localhost:8771/'); pg.wait_for_timeout(1500)
+    shot(pg,'title')
+    pg.click('[data-action=season]'); pg.wait_for_timeout(700); shot(pg,'season-new')
+    pg.click('.card.open[data-action=ep]'); pg.wait_for_timeout(700); shot(pg,'intro-1')
+    pg.click('[data-action=start]'); pg.wait_for_timeout(1200); shot(pg,'trial-shirma')
+    tid = pg.evaluate('__s6.progress.run().taskIds[0]')
+    ans = pg.evaluate("(async (id) => (await __s6.content.pool('shirma',1)).find(t => t.id===id).payload.answer)('%s')" % tid)
+    opts = pg.evaluate("(async (id) => (await __s6.content.pool('shirma',1)).find(t => t.id===id).payload.options)('%s')" % tid)
+    wrong = [o for o in opts if o != ans][0]
+    pg.click('[data-opt="%s"]' % wrong); pg.wait_for_timeout(600)
+    pg.click('[data-opt="%s"]' % ans); pg.wait_for_timeout(1000); shot(pg,'trial-shirma-solved')
+    pg.wait_for_timeout(2600); shot(pg,'result-1')
+    check(pg.query_selector('.big-stars') is not None, 'итоги выпуска 1 показаны')
+    pg.click('[data-action=season]'); pg.wait_for_timeout(700); shot(pg,'season-after-1')
+    cls = pg.eval_on_selector_all('.card', 'e => e.map(x => x.className)')
+    check('done' in cls[0] and 'wait' in cls[1], 'выпуск 1 пройден, выпуск 2 ждёт завтра: %s / %s' % (cls[0], cls[1]))
+    pg.reload(); pg.wait_for_timeout(1500); pg.click('[data-action=season]'); pg.wait_for_timeout(700)
+    check('done' in pg.get_attribute('.card','class'), 'после перезагрузки выпуск 1 пройден')
+    # режим теста
+    pg.click('[data-action=title]'); pg.wait_for_timeout(600)
+    for i in range(7): pg.click('[data-action=eye]'); pg.wait_for_timeout(60)
+    pg.wait_for_timeout(300); pg.click('.modal .btn'); pg.click('[data-action=season]'); pg.wait_for_timeout(700)
+    cls = pg.eval_on_selector_all('.card', 'e => e.map(x => x.className)')
+    check('open' in cls[1], 'режим теста открыл выпуск 2')
+    pg.click('.card.open[data-action=ep]'); pg.wait_for_timeout(700); pg.click('[data-action=start]'); pg.wait_for_timeout(1200)
+    shot(pg,'trial-bagazhnik')
+    tid = pg.evaluate('__s6.progress.run().taskIds[0]')
+    tgt = pg.evaluate("(async (id) => (await __s6.content.pool('bagazhnik',1)).find(t => t.id===id).payload.target)('%s')" % tid)
+    other = 'c1' if tgt != 'c1' else 'c2'
+    pg.click('[data-car="%s"]' % other); pg.wait_for_timeout(300); pg.click('[data-bz=choose]'); pg.wait_for_timeout(1500)
+    pg.click('[data-car="%s"]' % tgt); pg.wait_for_timeout(300); pg.click('[data-bz=inspect]'); pg.wait_for_timeout(500); shot(pg,'trial-bagazhnik-inspect')
+    pg.click('[data-bz=choose]'); pg.wait_for_timeout(1500); shot(pg,'trial-bagazhnik-found')
+    pg.wait_for_timeout(2600); shot(pg,'result-2')
+    check(pg.query_selector('table.rivals') is not None, 'таблица соперников на итогах')
+    pg.click('[data-action=season]'); pg.wait_for_timeout(600)
+    pg.click('[data-action=diary]'); pg.wait_for_timeout(600); shot(pg,'diary')
+    n = len(pg.query_selector_all('.clue')); check(n == 2, 'в дневнике 2 улики: %d' % n)
+    # без сети
+    pg.wait_for_timeout(1500)
+    sw = pg.evaluate('navigator.serviceWorker.controller !== null')
+    ctx.set_offline(True); pg.reload(); pg.wait_for_timeout(2000)
+    check(pg.query_selector('h1') is not None, 'без сети игра стартует (sw=%s)' % sw); shot(pg,'offline-title')
+    ctx.set_offline(False)
+    pg.set_viewport_size({'width':768,'height':1024}); pg.wait_for_timeout(300); shot(pg,'portrait')
+    b.close()
+finally:
+    srv.terminate()
+print('\n'.join(ok)); print('ERRORS:', errs)

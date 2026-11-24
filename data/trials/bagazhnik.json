@@ -1,0 +1,286 @@
+{
+ "schema": 1,
+ "type": "bagazhnik",
+ "tasks": [
+  {
+   "id": "bagazhnik-1-001",
+   "level": 1,
+   "payload": {
+    "cars": [
+     {
+      "id": "c1",
+      "body": "hatch",
+      "color": "#8c2f3a",
+      "clues": []
+     },
+     {
+      "id": "c2",
+      "body": "suv",
+      "color": "#8c7a2f",
+      "clues": []
+     },
+     {
+      "id": "c3",
+      "body": "van",
+      "color": "#2a2a3a",
+      "clues": [
+       {
+        "kind": "sag",
+        "textKey": "bag.clue.sag",
+        "fake": false
+       },
+       {
+        "kind": "fog",
+        "textKey": "bag.clue.fog",
+        "fake": false
+       }
+      ]
+     },
+     {
+      "id": "c4",
+      "body": "sedan",
+      "color": "#2f5b8c",
+      "clues": []
+     },
+     {
+      "id": "c5",
+      "body": "hatch",
+      "color": "#6b6b78",
+      "clues": []
+     },
+     {
+      "id": "c6",
+      "body": "suv",
+      "color": "#5b3a8c",
+      "clues": []
+     }
+    ],
+    "target": "c3"
+   }
+  },
+  {
+   "id": "bagazhnik-1-002",
+   "level": 1,
+   "payload": {
+    "cars": [
+     {
+      "id": "c1",
+      "body": "suv",
+      "color": "#2f5b8c",
+      "clues": []
+     },
+     {
+      "id": "c2",
+      "body": "van",
+      "color": "#6b6b78",
+      "clues": []
+     },
+     {
+      "id": "c3",
+      "body": "sedan",
+      "color": "#5b3a8c",
+      "clues": []
+     },
+     {
+      "id": "c4",
+      "body": "hatch",
+      "color": "#3a7a5b",
+      "clues": []
+     },
+     {
+      "id": "c5",
+      "body": "suv",
+      "color": "#a35a2a",
+      "clues": []
+     },
+     {
+      "id": "c6",
+      "body": "van",
+      "color": "#8c2f3a",
+      "clues": [
+       {
+        "kind": "track",
+        "textKey": "bag.clue.track",
+        "fake": false
+       },
+       {
+        "kind": "sound",
+        "textKey": "bag.clue.sound",
+        "fake": false
+       }
+      ]
+     }
+    ],
+    "target": "c6"
+   }
+  },
+  {
+   "id": "bagazhnik-1-003",
+   "level": 1,
+   "payload": {
+    "cars": [
+     {
+      "id": "c1",
+      "body": "van",
+      "color": "#3a7a5b",
+      "clues": [
+       {
+        "kind": "fog",
+        "textKey": "bag.clue.fog",
+        "fake": false
+       },
+       {
+        "kind": "smell",
+        "textKey": "bag.clue.smell",
+        "fake": false
+       }
+      ]
+     },
+     {
+      "id": "c2",
+      "body": "sedan",
+      "color": "#a35a2a",
+      "clues": []
+     },
+     {
+      "id": "c3",
+      "body": "hatch",
+      "color": "#8c2f3a",
+      "clues": []
+     },
+     {
+      "id": "c4",
+      "body": "suv",
+      "color": "#8c7a2f",
+      "clues": []
+     },
+     {
+      "id": "c5",
+      "body": "van",
+      "color": "#2a2a3a",
+      "clues": []
+     },
+     {
+      "id": "c6",
+      "body": "sedan",
+      "color": "#2f5b8c",
+      "clues": []
+     }
+    ],
+    "target": "c1"
+   }
+  },
+  {
+   "id": "bagazhnik-1-004",
+   "level": 1,
+   "payload": {
+    "cars": [
+     {
+      "id": "c1",
+      "body": "sedan",
+      "color": "#8c7a2f",
+      "clues": []
+     },
+     {
+      "id": "c2",
+      "body": "hatch",
+      "color": "#2a2a3a",
+      "clues": []
+     },
+     {
+      "id": "c3",
+      "body": "suv",
+      "color": "#2f5b8c",
+      "clues": []
+     },
+     {
+      "id": "c4",
+      "body": "van",
+      "color": "#6b6b78",
+      "clues": [
+       {
+        "kind": "sag",
+        "textKey": "bag.clue.sag",
+        "fake": false
+       },
+       {
+        "kind": "track",
+        "textKey": "bag.clue.track",
+        "fake": false
+       }
+      ]
+     },
+     {
+      "id": "c5",
+      "body": "sedan",
+      "color": "#5b3a8c",
+      "clues": []
+     },
+     {
+      "id": "c6",
+      "body": "hatch",
+      "color": "#3a7a5b",
+      "clues": []
+     }
+    ],
+    "target": "c4"
+   }
+  },
+  {
+   "id": "bagazhnik-1-005",
+   "level": 1,
+   "payload": {
+    "cars": [
+     {
+      "id": "c1",
+      "body": "hatch",
+      "color": "#6b6b78",
+      "clues": []
+     },
+     {
+      "id": "c2",
+      "body": "suv",
+      "color": "#5b3a8c",
+      "clues": []
+     },
+     {
+      "id": "c3",
+      "body": "van",
+      "color": "#3a7a5b",
+      "clues": []
+     },
+     {
+      "id": "c4",
+      "body": "sedan",
+      "color": "#a35a2a",
+      "clues": []
+     },
+     {
+      "id": "c5",
+      "body": "hatch",
+      "color": "#8c2f3a",
+      "clues": [
+       {
+        "kind": "sound",
+        "textKey": "bag.clue.sound",
+        "fake": false
+       },
+       {
+        "kind": "fog",
+        "textKey": "bag.clue.fog",
+        "fake": false
+       }
+      ]
+     },
+     {
+      "id": "c6",
+      "body": "suv",
+      "color": "#8c7a2f",
+      "clues": []
+     }
+    ],
+    "target": "c5"
+   }
+  }
+ ]
+}

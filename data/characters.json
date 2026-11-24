@@ -1,0 +1,71 @@
+{
+ "schema": 1,
+ "characters": [
+  {
+   "id": "host",
+   "name": "Ведущий",
+   "role": "host",
+   "color": "#f1c86b",
+   "portrait": "char-host",
+   "lines": "host"
+  },
+  {
+   "id": "skeptic",
+   "name": "Профессор Сомов",
+   "role": "skeptic",
+   "color": "#ff8a65",
+   "portrait": "char-skeptic",
+   "lines": "skeptic"
+  },
+  {
+   "id": "agata",
+   "name": "Агата",
+   "role": "rival",
+   "color": "#8c2f5b",
+   "portrait": "rival-agata",
+   "skill": 0.72,
+   "spread": 0.2,
+   "lines": "rival.agata"
+  },
+  {
+   "id": "elisey",
+   "name": "Елисей",
+   "role": "rival",
+   "color": "#5b8c3a",
+   "portrait": "rival-elisey",
+   "skill": 0.6,
+   "spread": 0.08,
+   "lines": "rival.elisey"
+  },
+  {
+   "id": "baron",
+   "name": "Барон",
+   "role": "rival",
+   "color": "#8c6a2f",
+   "portrait": "rival-baron",
+   "skill": 0.42,
+   "spread": 0.15,
+   "lines": "rival.baron"
+  },
+  {
+   "id": "miroslava",
+   "name": "Мирослава",
+   "role": "rival",
+   "color": "#3a5b8c",
+   "portrait": "rival-miroslava",
+   "skill": 0.68,
+   "spread": 0.1,
+   "lines": "rival.miroslava"
+  },
+  {
+   "id": "timur",
+   "name": "Тимур",
+   "role": "rival",
+   "color": "#6a3a8c",
+   "portrait": "rival-timur",
+   "skill": 0.55,
+   "spread": 0.22,
+   "lines": "rival.timur"
+  }
+ ]
+}

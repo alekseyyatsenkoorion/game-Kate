@@ -1,0 +1,172 @@
+/* Испытание «Ширма». Поле 960×600. Анимации — только transform и opacity. */
+.sh-root {
+  position: relative; width: 960px; height: 600px; overflow: hidden;
+  font-family: Georgia, 'Times New Roman', serif; color: #e9e0f5;
+  background: radial-gradient(ellipse 640px 420px at 30% 45%, #2a1544 0%, #160b26 62%, #0d0716 100%);
+  -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.sh-root * { box-sizing: border-box; }
+.sh-root.is-paused * { animation-play-state: paused !important; }
+
+.sh-ask {
+  position: absolute; left: 20px; top: 6px; width: 560px; height: 46px;
+  text-align: center; font-size: 26px; line-height: 46px; color: #f1c86b;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ---------- ширма ---------- */
+.sh-screen { position: absolute; left: 20px; top: 54px; width: 560px; height: 380px; }
+.sh-stage { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.sh-light {
+  position: absolute; left: 0; top: 0; right: 0; bottom: 0; opacity: 0; transition: opacity .8s ease-out;
+  background:
+    radial-gradient(ellipse 150px 26px at 50% 86%, rgba(0,0,0,.55), rgba(0,0,0,0) 100%),
+    radial-gradient(ellipse 240px 200px at 50% 45%, rgba(241,200,107,.30), rgba(241,200,107,0) 72%);
+}
+.sh-light.is-on { opacity: 1; }
+.sh-prize {
+  position: absolute; left: 50%; top: 40px; width: 230px; height: 230px; margin-left: -115px;
+  opacity: 0; transform: scale(.6);
+}
+.sh-prize.is-on { animation: sh-pop .65s .35s cubic-bezier(.2,1.5,.4,1) forwards; }
+@keyframes sh-pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: scale(1); } }
+
+.sh-cloth { position: absolute; left: 10px; top: 0; width: 540px; height: 352px; }
+.sh-leaf {
+  position: absolute; bottom: 22px; overflow: hidden;
+  border: 9px solid #6a4020; border-bottom-width: 11px;
+  border-radius: 90px 90px 6px 6px / 46px 46px 6px 6px;
+  background: #24112f;
+  box-shadow: inset 0 0 0 2px rgba(241,200,107,.45), 0 10px 22px rgba(0,0,0,.55);
+  transition: transform .85s cubic-bezier(.5,0,.75,.4), opacity .85s ease-in;
+}
+.sh-leaf-l { left: 0; width: 162px; height: 300px; }
+.sh-leaf-m { left: 170px; width: 200px; height: 330px; }
+.sh-leaf-r { left: 378px; width: 162px; height: 300px; }
+.sh-fabric {
+  position: absolute; left: -10px; right: -10px; top: -6px; bottom: -6px;
+  transform-origin: 50% 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(241,200,107,.13) 0, rgba(241,200,107,.13) 1.6px, rgba(241,200,107,0) 2.6px) 0 0 / 26px 30px,
+    repeating-linear-gradient(90deg, rgba(0,0,0,.30) 0, rgba(0,0,0,0) 13px, rgba(255,255,255,.06) 21px, rgba(0,0,0,.24) 33px),
+    radial-gradient(ellipse at 50% 28%, #51287f 0%, #331a55 55%, #1c0d30 100%);
+  animation: sh-sway 4.6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.sh-leaf-l .sh-fabric { animation-delay: -1.6s; }
+.sh-leaf-r .sh-fabric { animation-delay: -3.1s; }
+@keyframes sh-sway {
+  0%   { transform: skewX(-1deg) scaleX(1.01); }
+  100% { transform: skewX(1deg) scaleX(.995); }
+}
+/* боковые створки повёрнуты — затемнение к внешнему краю */
+.sh-leaf-shade { position: absolute; left: 0; top: 0; right: 0; bottom: 0; pointer-events: none; }
+.sh-leaf-l .sh-leaf-shade { background: linear-gradient(90deg, rgba(0,0,0,.45), rgba(0,0,0,0) 70%); }
+.sh-leaf-r .sh-leaf-shade { background: linear-gradient(270deg, rgba(0,0,0,.45), rgba(0,0,0,0) 70%); }
+.sh-leaf-m .sh-leaf-shade { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.25)); }
+.sh-hinge { position: absolute; width: 10px; height: 26px; border-radius: 3px; background: #c99a45; box-shadow: inset 0 0 0 2px #8a6326; }
+.sh-hinge-a { left: 160px; top: 110px; } .sh-hinge-b { left: 160px; top: 250px; }
+.sh-hinge-c { left: 368px; top: 110px; } .sh-hinge-d { left: 368px; top: 250px; }
+.sh-cloth.is-off .sh-hinge { opacity: 0; transition: opacity .3s; }
+.sh-cloth.is-off .sh-leaf-l { transform: translate(-190px, -70px) rotate(-16deg); opacity: 0; }
+.sh-cloth.is-off .sh-leaf-m { transform: translate(30px, -260px) rotate(7deg); opacity: 0; }
+.sh-cloth.is-off .sh-leaf-r { transform: translate(200px, -60px) rotate(15deg); opacity: 0; }
+
+/* тень предмета на ткани */
+.sh-shadows { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.sh-shadow {
+  position: absolute; left: 50%; top: 52%; width: 190px; height: 190px; margin: -95px 0 0 -95px;
+  display: flex; align-items: center; justify-content: center;
+  opacity: .55; animation: sh-fade-55 1.2s ease-out both;
+}
+.sh-shadow.is-sharp { opacity: .62; animation-name: sh-fade-62; }
+@keyframes sh-fade-55 { from { opacity: 0; } to { opacity: .55; } }
+@keyframes sh-fade-62 { from { opacity: 0; } to { opacity: .62; } }
+.sh-sil { width: 100%; height: 100%; object-fit: contain; -webkit-filter: brightness(0) blur(6px); filter: brightness(0) blur(6px); }
+.sh-shadow.is-sharp .sh-sil { -webkit-filter: brightness(0) blur(2px); filter: brightness(0) blur(2px); }
+.sh-sil-blob { width: 64%; height: 64%; border-radius: 50%; background: #000; -webkit-filter: blur(6px); filter: blur(6px); }
+.sh-shadow.is-sharp .sh-sil-blob { -webkit-filter: blur(2px); filter: blur(2px); }
+
+.sh-caption {
+  position: absolute; left: 0; right: 0; bottom: 14px; text-align: center;
+  font-size: 28px; color: #f1c86b; opacity: 0; transform: translateY(10px);
+  transition: opacity .5s .7s, transform .5s .7s;
+}
+.sh-caption.is-on { opacity: 1; transform: translateY(0); }
+
+/* ---------- колонка подсказок ---------- */
+.sh-side {
+  position: absolute; left: 600px; top: 8px; width: 340px; height: 426px;
+  padding: 14px 16px 16px; border-radius: 18px;
+  background: rgba(22,11,38,.88); border: 1px solid rgba(241,200,107,.28);
+  display: flex; flex-direction: column;
+}
+.sh-side-title { font-size: 22px; color: #f1c86b; padding-bottom: 8px; border-bottom: 1px solid rgba(241,200,107,.25); }
+.sh-hints { flex: 1 1 auto; margin: 0; padding: 0; list-style: none; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.sh-hint {
+  display: flex; align-items: flex-start; padding: 10px 0;
+  border-bottom: 1px solid rgba(185,166,214,.15);
+  font-size: 20px; line-height: 1.28; animation: sh-in .45s ease-out both;
+}
+@keyframes sh-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.sh-hint-ic {
+  flex: 0 0 36px; height: 36px; margin-right: 10px; border-radius: 50%;
+  background: #2a1544; border: 1px solid rgba(241,200,107,.55);
+  display: flex; align-items: center; justify-content: center;
+}
+.sh-hint-ic svg { width: 22px; height: 22px; fill: none; stroke: #f1c86b; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sh-hint-tx { flex: 1 1 auto; }
+.sh-hint-kind { display: block; font-size: 18px; color: #b9a6d6; font-weight: normal; font-style: italic; }
+.sh-msg { min-height: 30px; padding: 4px 0; font-size: 20px; color: #ff8a65; text-align: center; opacity: 0; transition: opacity .25s; }
+.sh-msg.is-on { opacity: 1; }
+.sh-hintbtn {
+  flex: 0 0 60px; height: 60px; border-radius: 30px; border: 2px solid #f1c86b;
+  background: linear-gradient(180deg, #4a2774, #2a1544); color: #f1c86b;
+  font-size: 23px; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 0 #120821;
+}
+.sh-hintbtn.is-off { border-color: rgba(185,166,214,.45); color: #b9a6d6; background: #1d0f33; box-shadow: none; font-size: 20px; }
+.sh-price {
+  display: inline-flex; align-items: center; margin-left: 12px; padding: 3px 10px 3px 7px;
+  border-radius: 14px; background: #f1c86b; color: #160b26; font-size: 18px;
+}
+.sh-price svg { width: 18px; height: 18px; margin-right: 4px; fill: none; stroke: #160b26; stroke-width: 2.2; }
+.sh-price b { font-weight: bold; }
+
+.sh-root.is-done .sh-hintbtn { opacity: .4; }
+
+/* ---------- варианты ---------- */
+.sh-options {
+  position: absolute; left: 20px; right: 20px; top: 446px; height: 146px;
+  display: flex; justify-content: center;
+}
+.sh-opt {
+  position: relative; flex: 0 0 auto; height: 146px; margin: 0 6px; padding: 8px 6px;
+  border-radius: 16px; border: 2px solid rgba(241,200,107,.4);
+  background: linear-gradient(180deg, #2f1850, #1b0e30);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity .3s;
+}
+.sh-opt-label { margin-top: 6px; font-size: 20px; line-height: 1.12; text-align: center; max-height: 46px; overflow: hidden; }
+.sh-opt.is-wrong { opacity: .45; }
+.sh-opt.is-wrong::before, .sh-opt.is-wrong::after {
+  content: ''; position: absolute; left: 10%; top: 50%; width: 80%; height: 5px; margin-top: -2px;
+  border-radius: 3px; background: #ff8a65; transform: rotate(35deg);
+}
+.sh-opt.is-wrong::after { transform: rotate(-35deg); }
+.sh-opt.is-right { border-color: #f1c86b; background: linear-gradient(180deg, #5a3a7e, #2f1850); box-shadow: 0 0 0 3px rgba(241,200,107,.45); }
+.is-shake { animation: sh-shake .4s ease-in-out; }
+@keyframes sh-shake {
+  0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); }
+  40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(3px); }
+}
+
+/* картинка предмета и заглушка */
+.sh-art { position: relative; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.sh-img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.sh-letter {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #5a3590, #2a1544 75%);
+  border: 2px solid rgba(241,200,107,.6); color: #f1c86b;
+  display: flex; align-items: center; justify-content: center; line-height: 1;
+}

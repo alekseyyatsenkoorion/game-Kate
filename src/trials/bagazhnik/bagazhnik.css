@@ -1,0 +1,123 @@
+/* Испытание «Багажник». Поле 960×600, ночная парковка. Анимации — только transform и opacity. */
+.bz-root {
+  position: relative; width: 960px; height: 600px; overflow: hidden;
+  font-family: Georgia, 'Times New Roman', serif; color: #e9e0f5;
+  background:
+    radial-gradient(ellipse 330px 260px at 24% 24%, rgba(241,200,107,.15), rgba(241,200,107,0) 72%),
+    radial-gradient(ellipse 330px 260px at 76% 58%, rgba(241,200,107,.12), rgba(241,200,107,0) 72%),
+    repeating-linear-gradient(115deg, rgba(255,255,255,.018) 0, rgba(255,255,255,.018) 2px, rgba(0,0,0,0) 2px, rgba(0,0,0,0) 7px),
+    linear-gradient(180deg, #110c19 0%, #1c1923 50%, #16131c 100%);
+  -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.bz-root * { box-sizing: border-box; }
+.bz-root.is-paused * { animation-play-state: paused !important; }
+.bz-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* фонари: светящиеся головы сверху, свет — в фоне */
+.bz-lamp {
+  position: absolute; top: -10px; width: 120px; height: 34px; margin-left: -60px; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255,240,200,.95) 0, rgba(241,200,107,.55) 30%, rgba(241,200,107,0) 70%);
+}
+.bz-lamp-a { left: 24%; animation: bz-flicker 6s steps(1, end) infinite; }
+.bz-lamp-b { left: 76%; }
+@keyframes bz-flicker { 0%, 100% { opacity: 1; } 71% { opacity: .55; } 72% { opacity: 1; } 74% { opacity: .7; } 75% { opacity: 1; } }
+
+.bz-ask {
+  position: absolute; left: 0; top: 0; width: 960px; height: 46px; z-index: 2;
+  text-align: center; font-size: 25px; line-height: 44px; color: #f1c86b;
+  background: linear-gradient(180deg, rgba(13,7,22,.9), rgba(13,7,22,.55) 70%, rgba(13,7,22,0));
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* асфальт ряда: полоса, на которой стоят машины */
+.bz-ground {
+  position: absolute; left: 0; width: 960px; height: 34px;
+  background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.08));
+  border-top: 2px solid rgba(225,220,205,.14);
+}
+
+/* место парковки */
+.bz-spot { position: absolute; }
+.bz-bay { position: absolute; left: 0; right: 0; bottom: 0; height: 34px; }
+.bz-bay::before, .bz-bay::after {
+  content: ''; position: absolute; top: 2px; bottom: 0; width: 5px;
+  background: rgba(235,228,210,.32); transform: skewX(-38deg);
+}
+.bz-bay::before { left: 4px; } .bz-bay::after { right: 4px; }
+.bz-sel {
+  position: absolute; left: 6px; right: 6px; top: 6px; bottom: 2px; border-radius: 16px;
+  border: 3px solid #f1c86b; background: rgba(241,200,107,.08);
+  box-shadow: 0 0 18px rgba(241,200,107,.35);
+  opacity: 0; transition: opacity .2s;
+}
+.bz-spot.is-sel .bz-sel { opacity: 1; }
+.bz-carwrap { position: absolute; left: 50%; bottom: 6px; line-height: 0; transition: opacity .6s .5s; }
+.bz-car { display: block; overflow: visible; }
+.bz-spot.is-checked .bz-carwrap { opacity: .42; }
+
+/* значок «осмотрено» и крест «пусто» */
+.bz-badge {
+  position: absolute; left: 12px; top: 10px; width: 34px; height: 34px; border-radius: 50%;
+  background: #2a1544; border: 2px solid #f1c86b; display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: scale(.5); transition: opacity .25s, transform .25s;
+}
+.bz-badge svg { width: 20px; height: 20px; fill: none; stroke: #f1c86b; stroke-width: 2; }
+.bz-spot.is-inspected .bz-badge { opacity: 1; transform: scale(1); }
+.bz-cross { position: absolute; right: 14px; top: 10px; width: 34px; height: 34px; opacity: 0; transition: opacity .3s .5s; }
+.bz-cross::before, .bz-cross::after {
+  content: ''; position: absolute; left: 2px; top: 15px; width: 30px; height: 5px; border-radius: 3px;
+  background: #ff8a65; transform: rotate(45deg);
+}
+.bz-cross::after { transform: rotate(-45deg); }
+.bz-spot.is-checked .bz-cross { opacity: 1; }
+.bz-spot.is-found .bz-sel { opacity: 1; border-color: #f1c86b; background: rgba(241,200,107,.18); }
+
+/* ---------- панель ---------- */
+.bz-panel {
+  position: absolute; left: 0; bottom: 0; width: 960px; height: 128px; z-index: 3;
+  padding: 10px 14px; display: flex; align-items: center;
+  background: linear-gradient(180deg, #1f1036, #160b26); border-top: 2px solid rgba(241,200,107,.35);
+}
+.bz-mini { flex: 0 0 120px; height: 64px; display: flex; align-items: center; justify-content: center; line-height: 0; }
+.bz-mini .bz-car { width: 112px; height: 56px; }
+.bz-info {
+  flex: 1 1 auto; height: 108px; padding: 0 14px; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  font-size: 20px; line-height: 1.25;
+}
+.bz-info.is-pick { color: #b9a6d6; font-size: 22px; font-style: italic; }
+.bz-info.is-msg { font-size: 24px; animation: bz-in .3s ease-out both; }
+.bz-info.is-bad { color: #ff8a65; }
+.bz-info.is-good { color: #f1c86b; font-size: 26px; }
+@keyframes bz-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.bz-clue { display: flex; align-items: center; padding: 3px 0; animation: bz-in .35s ease-out both; }
+.bz-clue.is-none { color: #b9a6d6; font-style: italic; }
+.bz-clue-ic {
+  flex: 0 0 30px; height: 30px; margin-right: 10px; border-radius: 50%;
+  background: #2a1544; border: 1px solid rgba(241,200,107,.55);
+  display: flex; align-items: center; justify-content: center;
+}
+.bz-clue-ic svg { width: 18px; height: 18px; fill: none; stroke: #f1c86b; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.bz-btns { flex: 0 0 270px; display: flex; flex-direction: column; justify-content: center; }
+.bz-btn {
+  height: 50px; margin: 3px 0; border-radius: 25px; padding: 0 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 21px; border: 2px solid #f1c86b; color: #f1c86b;
+  background: linear-gradient(180deg, #4a2774, #2a1544); box-shadow: 0 3px 0 #0d0716;
+  opacity: .35; transition: opacity .2s;
+}
+.bz-btn-choose { background: linear-gradient(180deg, #f6d68a, #d9a944); color: #2a1544; font-weight: bold; }
+.bz-panel.has-car .bz-btn { opacity: 1; }
+.bz-panel.has-car .bz-btn-inspect.is-done { opacity: .45; }
+.bz-panel.has-car .bz-btn-inspect.is-done .bz-price { display: none; }
+.bz-price {
+  display: inline-flex; align-items: center; margin-left: 10px; padding: 2px 9px 2px 6px;
+  border-radius: 13px; background: #f1c86b; color: #160b26; font-size: 17px;
+}
+.bz-price svg { width: 17px; height: 17px; margin-right: 3px; fill: none; stroke: #160b26; stroke-width: 2.2; }
+.is-shake { animation: bz-shake .4s ease-in-out; }
+@keyframes bz-shake {
+  0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(2px); }
+}

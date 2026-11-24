@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<g transform="translate(0,6)">
+<g transform="rotate(20 128 140)">
+<path d="M134,146 L140,150 Q114,172 118,180 L106,186 Q118,160 116,140 Z" fill="#b8862f"/>
+<path d="M72,208 A32,32 0 1 0 136,208 A32,32 0 1 0 72,208 Z M87,208 A17,17 0 1 1 121,208 A17,17 0 1 1 87,208 Z" fill="#f1c86b" fill-rule="evenodd"/>
+<path d="M116,148 L116,60 Q120,24 128,12 Q138,60 138,140 Z" fill="#fbf1d6"/>
+<path d="M124,130 L124,60 Q125,38 128,26 Z" fill="#e9d3a0" stroke="none"/>
+</g>
+<g transform="rotate(-20 128 140)">
+<path d="M122,146 L116,150 Q142,172 138,180 L150,186 Q138,160 140,140 Z" fill="#b8862f"/>
+<path d="M120,208 A32,32 0 1 0 184,208 A32,32 0 1 0 120,208 Z M135,208 A17,17 0 1 1 169,208 A17,17 0 1 1 135,208 Z" fill="#f1c86b" fill-rule="evenodd"/>
+<path d="M140,148 L140,60 Q136,24 128,12 Q118,60 118,140 Z" fill="#fbf1d6"/>
+<path d="M132,130 L132,60 Q131,38 128,26 Z" fill="#e9d3a0" stroke="none"/>
+</g>
+<circle cx="128" cy="140" r="9" fill="#b8862f"/>
+</g>
+</g>
+</svg>

@@ -1,0 +1,20 @@
+{ "schema": 1, "type": "shirma", "tasks": [
+  { "id": "shirma-1-001", "level": 1, "payload": {
+    "answer": "kettle",
+    "options": ["clock", "kettle", "teapot", "lamp"],
+    "hints": [
+      { "kind": "silhouette", "textKey": "shirma.t001.h1", "fake": false },
+      { "kind": "sound", "textKey": "shirma.t001.h2", "fake": false },
+      { "kind": "warmth", "textKey": "shirma.t001.h3", "fake": false },
+      { "kind": "detail", "textKey": "shirma.t001.h4", "fake": false },
+      { "kind": "silhouette", "textKey": "shirma.t001.h5", "fake": false }
+    ] } },
+  { "id": "shirma-1-002", "level": 1, "payload": {
+    "answer": "candle",
+    "options": ["umbrella", "key", "candle", "book"],
+    "hints": [
+      { "kind": "smell", "textKey": "shirma.t002.h1", "fake": false },
+      { "kind": "warmth", "textKey": "shirma.t002.h2", "fake": false },
+      { "kind": "silhouette", "textKey": "shirma.t002.h3", "fake": false }
+    ] } }
+] }

@@ -1,0 +1,60 @@
+/* База: сцена 1024×768, цвета, кнопки, наложения. Совместимо с Safari 15.6. */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; background: #05020a; }
+body { color: #e9e0f5; font-family: Georgia, 'Times New Roman', serif; -webkit-user-select: none; user-select: none; touch-action: manipulation; -webkit-touch-callout: none; }
+#stage {
+  position: absolute; left: 50%; top: 50%; width: 1024px; height: 768px; overflow: hidden; transform-origin: 50% 50%;
+  background: #0d0716;
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(120, 60, 180, 0.35), transparent 60%),
+                    radial-gradient(ellipse at 50% 110%, rgba(200, 120, 40, 0.18), transparent 55%);
+}
+#scene-host { position: absolute; left: 0; top: 0; width: 1024px; height: 768px; transition: opacity 0.15s; }
+#scene-host.fading { opacity: 0; }
+.scene { position: absolute; left: 0; top: 0; width: 1024px; height: 768px; }
+
+h1 { font-size: 64px; color: #f1c86b; letter-spacing: 2px; text-shadow: 0 0 24px rgba(241, 200, 107, 0.45); font-weight: normal; }
+h2 { font-size: 38px; color: #f1c86b; font-weight: normal; margin: 4px 0 10px; }
+h3 { font-size: 22px; color: #f1c86b; font-weight: normal; margin-bottom: 8px; }
+
+.btn {
+  font-family: inherit; font-size: 24px; color: #e9e0f5; cursor: pointer; min-height: 48px;
+  padding: 14px 38px; border-radius: 40px; min-width: 260px;
+  border: 2px solid rgba(241, 200, 107, 0.55); background: rgba(40, 20, 64, 0.75);
+}
+.btn:active { transform: scale(0.97); }
+.btn.gold { background: linear-gradient(#f1c86b, #b8862f); color: #1d0f2e; border-color: #f7dc98; box-shadow: 0 0 22px rgba(241, 200, 107, 0.35); }
+.btn.small { font-size: 18px; padding: 10px 20px; min-width: 0; min-height: 44px; }
+.btn[disabled] { opacity: 0.4; }
+
+.overlay-layer { position: absolute; left: 0; top: 0; width: 1024px; height: 768px; pointer-events: none; z-index: 30; }
+.overlay-layer > * { pointer-events: auto; }
+.subtitle {
+  position: absolute; left: 50%; bottom: 22px; width: 760px; margin-left: -380px; padding: 12px 22px;
+  background: rgba(13, 7, 22, 0.92); border: 1px solid rgba(241, 200, 107, 0.45); border-radius: 12px;
+  opacity: 0; transform: translateY(20px); transition: opacity 0.3s, transform 0.3s; pointer-events: none !important;
+}
+.subtitle.show { opacity: 1; transform: translateY(0); }
+.sub-who { font-size: 15px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+.sub-text { font-size: 22px; line-height: 1.35; }
+.modal { position: absolute; left: 0; top: 0; width: 1024px; height: 768px; background: rgba(5, 2, 10, 0.75); display: flex; align-items: center; justify-content: center; }
+.modal .box { background: #1d0f2e; border: 2px solid #f1c86b; border-radius: 16px; padding: 28px 36px; max-width: 560px; text-align: center; }
+.modal p { font-size: 22px; margin-bottom: 20px; }
+.modal .row .btn { margin: 0 8px; }
+.banner { position: absolute; top: 10px; left: 50%; width: 600px; margin-left: -300px; display: flex; align-items: center; justify-content: space-between;
+  background: #1d0f2e; border: 2px solid #f1c86b; border-radius: 14px; padding: 8px 8px 8px 20px; font-size: 19px; }
+
+#rotate { display: none; }
+@media (orientation: portrait) {
+  #rotate { display: flex; position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 100; background: #0d0716; color: #f1c86b;
+    font: 28px Georgia, serif; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+}
+
+/* рамка испытания (сцена trial) */
+.trial-frame { position: absolute; left: 0; top: 0; width: 1024px; height: 768px; }
+.trial-top { position: absolute; left: 32px; top: 16px; width: 960px; height: 100px; display: flex; justify-content: space-between; align-items: center; }
+.trial-name { text-align: center; } .trial-name b { display: block; font-size: 34px; color: #f1c86b; font-weight: normal; }
+.trial-field { position: absolute; left: 32px; top: 132px; width: 960px; height: 600px; }
+.wip { display: flex; height: 100%; align-items: center; justify-content: center; font-size: 26px; color: #b9a6d6; font-style: italic; border: 2px dashed rgba(241, 200, 107, 0.3); border-radius: 14px; }
+.topbar { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+.power { font-size: 20px; color: #f1c86b; }
+.ep-label { color: #b9a6d6; font-size: 17px; letter-spacing: 3px; text-transform: uppercase; }

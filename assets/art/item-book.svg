@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<g stroke="#2a1544" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(-10 128 128) translate(-12,2)">
+<path d="M150,206 L150,246 L161,236 L172,246 L172,206 Z" fill="#c0392b"/>
+<path d="M62,30 L214,30 L242,52 L242,234 L90,234 L62,212 Z" fill="#b8862f"/>
+<path d="M204,38 L230,56 Q224,140 230,224 L92,224 L72,208 L204,208 Z" fill="#fbf1d6"/>
+<path d="M214,60 Q209,140 214,214 M222,64 Q217,140 222,218" stroke="#e9d3a0" stroke-width="3" fill="none"/>
+<path d="M66,30 L206,30 L206,208 L66,208 Q40,208 40,188 L40,50 Q40,30 66,30 Z" fill="#b8862f"/>
+<path d="M66,32 L66,206" stroke-width="5"/>
+<rect x="86" y="54" width="100" height="130" rx="6" fill="none" stroke="#f1c86b" stroke-width="6"/>
+<rect x="108" y="88" width="56" height="30" rx="4" fill="#f1c86b" stroke-width="4"/>
+<path d="M136,136 l9,15 -9,15 -9,-15 Z" fill="#f1c86b" stroke-width="3"/>
+<path d="M48,52 Q50,38 58,36 L58,202 Q50,200 48,188 Z" fill="#fff6dc" stroke="none" opacity="0.45"/>
+</g>
+</g>
+</svg>

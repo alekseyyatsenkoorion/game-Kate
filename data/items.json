@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "items": [
+    {
+      "id": "clock",
+      "labelKey": "item.clock",
+      "art": "item-clock"
+    },
+    {
+      "id": "kettle",
+      "labelKey": "item.kettle",
+      "art": "item-kettle"
+    },
+    {
+      "id": "lamp",
+      "labelKey": "item.lamp",
+      "art": "item-lamp"
+    },
+    {
+      "id": "book",
+      "labelKey": "item.book",
+      "art": "item-book"
+    },
+    {
+      "id": "key",
+      "labelKey": "item.key",
+      "art": "item-key"
+    },
+    {
+      "id": "umbrella",
+      "labelKey": "item.umbrella",
+      "art": "item-umbrella"
+    },
+    {
+      "id": "scissors",
+      "labelKey": "item.scissors",
+      "art": "item-scissors"
+    },
+    {
+      "id": "guitar",
+      "labelKey": "item.guitar",
+      "art": "item-guitar"
+    },
+    {
+      "id": "bottle",
+      "labelKey": "item.bottle",
+      "art": "item-bottle"
+    },
+    {
+      "id": "cup",
+      "labelKey": "item.cup",
+      "art": "item-cup"
+    },
+    {
+      "id": "candle",
+      "labelKey": "item.candle",
+      "art": "item-candle"
+    },
+    {
+      "id": "glasses",
+      "labelKey": "item.glasses",
+      "art": "item-glasses"
+    },
+    {
+      "id": "bell",
+      "labelKey": "item.bell",
+      "art": "item-bell"
+    },
+    {
+      "id": "hat",
+      "labelKey": "item.hat",
+      "art": "item-hat"
+    }
+  ]
+}
