@@ -132,7 +132,7 @@
 | Фото-дело (15 фото) | «Полароид» из SVG-предметов и подписи | `foto-*.webp` |
 | Предметы Ширмы, вещи Фото-дела, машины, улики | SVG (векторные файлы) в `assets/art/`, не меньше 40 предметов | остаются SVG |
 
-- **Т-17. Правило подмены:** AssetLoader (contracts.md §6) сначала ищет `assets/gpt/<id>.webp` в списке `assets/gpt/index.json`, иначе берёт нарисованное кодом. ChatGPT сам сохраняет `<id>.webp` в `assets/gpt/` (фоны и комнаты 2048×1536, портреты и фото 1024×1024, качество 80). При выкладке `tools/gpt-index` пересобирает index.json.
+- **Т-17. Правило подмены:** AssetLoader (contracts.md §6) сначала ищет `assets/gpt/<id>.webp` в списке `assets/gpt/index.json`, иначе берёт нарисованное кодом. ChatGPT отдаёт ZIP с PNG, Alex кладёт его в `assets/gpt/`; `tools/import-gpt.py` делает `<id>.webp` (фоны и комнаты 2048×1536, портреты и фото 1024×1024, качество 80), `tools/gpt-index` пересобирает index.json. Статус 24.11: все 31 картинка подключены, 4,3 МБ.
 - Стиль: тёмная мистика, фиолетовый `#2a1544` + золото `#f1c86b`, свечи, дым, карты Таро как интерфейс. Без надписей и логотипов на картинках.
 - Запасной ход: если картинка из ChatGPT не вышла — остаётся нарисованная кодом, игра от картинок не зависит.
 
@@ -192,7 +192,7 @@ game-Kate/
 ├─ src/shell/{title,season,intro,result,diary,settings}.js, shell.css   [D оболочка]
 ├─ data/*.json, data/trials/<type>.json                          [C контент]
 ├─ assets/art/*.svg, assets/icons/*                              [C контент]
-├─ assets/gpt/*.webp     (кладёт ChatGPT), index.json (генерирует tools/gpt-index)          [C контент]
+├─ assets/gpt/*.webp     (делает tools/import-gpt.py), index.json (tools/gpt-index)         [C контент]
 ├─ tests/core/ | tests/trials/ | tests/shell/ | tests/content/   [A | B | D | C]
 ├─ tests/snapshots/<зона>/                                       [та же зона]
 └─ legacy/               (прототип от 24.11: index.html, game.js, data.js, style.css)            [A каркас, удаляется в конце этапа 1]

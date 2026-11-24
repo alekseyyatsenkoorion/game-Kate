@@ -1,3 +1,35 @@
 {
- "images": []
+ "images": [
+  "bg-misterx",
+  "bg-parking",
+  "bg-season",
+  "bg-shirma",
+  "bg-studio",
+  "bg-title",
+  "char-host",
+  "char-skeptic",
+  "foto-1-01",
+  "foto-1-02",
+  "foto-1-03",
+  "foto-1-04",
+  "foto-1-05",
+  "foto-2-01",
+  "foto-2-02",
+  "foto-2-03",
+  "foto-2-04",
+  "foto-2-05",
+  "foto-3-01",
+  "foto-3-02",
+  "foto-3-03",
+  "foto-3-04",
+  "foto-3-05",
+  "rival-agata",
+  "rival-baron",
+  "rival-elisey",
+  "rival-miroslava",
+  "rival-timur",
+  "room-1",
+  "room-2",
+  "room-3"
+ ]
 }

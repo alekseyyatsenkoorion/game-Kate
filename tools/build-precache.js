@@ -14,7 +14,7 @@ const files = []; let bytes = 0;
     const st = fs.statSync(full);
     if (st.isDirectory()) { if (!SKIP_DIR.has(name)) walk(full); continue; }
     if (SKIP_FILE.has(rel) || name.endsWith('.md') || name.startsWith('.')) continue;
-    if (rel.startsWith('assets/gpt/') && name.endsWith('.png')) continue;
+    if (rel.startsWith('assets/gpt/') && !(name.endsWith('.webp') || name === 'index.json')) continue;
     files.push(rel); bytes += st.size;
   }
 })(ROOT);

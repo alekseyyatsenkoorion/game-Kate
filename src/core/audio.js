@@ -1,6 +1,13 @@
 // Audio — синтез звуков (Web Audio) и голос (синтез речи iOS, русский) — contracts.md §5.
 // Никогда не бросает исключений и не задерживает игру.
 import { log } from './log.js';
+import { createRng, randomSeed } from './rng.js';
+
+const MUSIC_VOL = 0.5;
+const midi = (n) => 440 * Math.pow(2, (n - 69) / 12);
+// ре минор: Dm — B♭ — Gm — A (гармонический минор даёт «загадочную» доминанту)
+const CHORDS = [[50, 53, 57], [46, 50, 53], [43, 46, 50], [45, 49, 52], [50, 53, 57], [46, 50, 53], [48, 52, 55], [45, 49, 52]];
+const SCALE = [50, 52, 53, 55, 57, 58, 61, 62];
 
 export class Audio {
   constructor(progress) {
@@ -56,7 +63,8 @@ export class Audio {
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'ru-RU'; if (this.voice) u.voice = this.voice;
         u.pitch = (opts && opts.pitch) || 1; u.rate = (opts && opts.rate) || 1;
-        let done = false; const fin = () => { if (!done) { done = true; resolve(); } };
+        let done = false; const fin = () => { if (!done) { done = true; this.duckMusic(false); resolve(); } };
+        this.duckMusic(true);
         u.onend = fin; u.onerror = fin;
         setTimeout(fin, 8000);
         this.speech.speak(u);
@@ -75,26 +83,90 @@ export class Audio {
   }
   stopAll() { if (this.speech) this.speech.cancel(); this.music(null); }
   pauseAll() { this.paused = true; try { if (this.ctx) this.ctx.suspend(); if (this.speech) this.speech.cancel(); } catch (e) {} }
-  resumeAll() { this.paused = false; try { if (this.ctx) this.ctx.resume(); } catch (e) {} }
+  resumeAll() { this.paused = false; try { if (this.ctx) this.ctx.resume(); } catch (e) {} if (this.musicNode) this.musicNode.next = 0; }
 
-  // ---------- музыка: тихий мистический гул ----------
+  // ---------- музыка: генеративная мистическая (Web Audio, без файлов) ----------
+  // Медленные аккорды гармонического ре минора (пэд), «музыкальная шкатулка» сверху,
+  // редкий низкий колокол; всё через синтезированную реверберацию. Голос приглушает музыку.
   music(id) {
     this.wantMusic = id;
-    if (this.musicNode) { const m = this.musicNode; this.musicNode = null; try { m.gain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.4); setTimeout(() => m.stop(), 1500); } catch (e) {} }
+    this._stopMusic();
     if (!id || !this.ctx || this.isMuted('music')) return;
     try {
-      const c = this.ctx, t = c.currentTime;
-      const gain = c.createGain(); gain.gain.value = 0; gain.gain.setTargetAtTime(0.06, t, 1.5);
-      const filt = c.createBiquadFilter(); filt.type = 'lowpass'; filt.frequency.value = 600;
-      const lfo = c.createOscillator(); lfo.frequency.value = 0.07;
-      const lfoG = c.createGain(); lfoG.gain.value = 250; lfo.connect(lfoG); lfoG.connect(filt.frequency);
-      const oscs = [55, 82.4, 110.3, 164.8].map((f, i) => {
-        const o = c.createOscillator(); o.type = i % 2 ? 'triangle' : 'sawtooth'; o.frequency.value = f; o.detune.value = (i - 1.5) * 6;
-        const g = c.createGain(); g.gain.value = i === 0 ? 0.6 : 0.25; o.connect(g); g.connect(filt); o.start(); return o;
-      });
-      lfo.start(); filt.connect(gain); gain.connect(this.master);
-      this.musicNode = { gain, stop: () => { oscs.forEach((o) => o.stop()); lfo.stop(); gain.disconnect(); } };
+      const c = this.ctx;
+      const out = c.createGain(); out.gain.value = 0; out.gain.setTargetAtTime(MUSIC_VOL, c.currentTime, 2);
+      const duck = c.createGain(); duck.gain.value = 1;
+      const rev = c.createConvolver(); rev.buffer = this._impulse();
+      const wet = c.createGain(); wet.gain.value = 0.55;
+      const dry = c.createGain(); dry.gain.value = 0.6;
+      const bus = c.createGain();
+      bus.connect(dry); bus.connect(rev); rev.connect(wet);
+      dry.connect(duck); wet.connect(duck); duck.connect(out); out.connect(this.master);
+      const rng = createRng(randomSeed());
+      const m = { out, duck, bus, rng, next: c.currentTime + 0.2, bar: 0, timer: 0, nodes: new Set() };
+      m.timer = setInterval(() => this._schedule(m), 250);
+      this.musicNode = m;
+      this._schedule(m);
     } catch (e) { log.warn('MUSIC', String(e)); }
+  }
+  _stopMusic() {
+    const m = this.musicNode; if (!m) return;
+    this.musicNode = null;
+    clearInterval(m.timer);
+    try {
+      m.out.gain.setTargetAtTime(0, this.ctx.currentTime, 0.5);
+      setTimeout(() => { m.nodes.forEach((n) => { try { n.stop(); } catch (e) {} }); try { m.out.disconnect(); } catch (e) {} }, 2500);
+    } catch (e) {}
+  }
+  _impulse() {
+    if (this._imp) return this._imp;
+    const c = this.ctx, len = Math.floor(c.sampleRate * 3.2), b = c.createBuffer(2, len, c.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = b.getChannelData(ch); let s = 777 + ch * 99;
+      for (let i = 0; i < len; i++) { s = (s * 16807) % 2147483647; d[i] = (s / 1073741823.5 - 1) * Math.pow(1 - i / len, 2.6); }
+    }
+    this._imp = b; return b;
+  }
+  _note(m, type, freq, t, a, d, vol) {
+    const c = this.ctx, o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d);
+    o.connect(g); g.connect(m.bus); o.start(t); o.stop(t + a + d + 0.1);
+    m.nodes.add(o); o.onended = () => m.nodes.delete(o);
+  }
+  _schedule(m) {
+    if (!this.ctx || this.paused || this.musicNode !== m) return;
+    const c = this.ctx, BAR = 8;                       // аккорд держится 8 секунд
+    if (m.next < c.currentTime) m.next = c.currentTime + 0.1;
+    while (m.next < c.currentTime + 1.0) {
+      const t = m.next, chord = CHORDS[m.bar % CHORDS.length], r = m.rng;
+      // пэд: три голоса аккорда, по два слегка расстроенных генератора
+      chord.forEach((n) => {
+        const f = midi(n);
+        this._note(m, 'triangle', f, t, 2.5, BAR, 0.05);
+        this._note(m, 'sine', f * 1.003, t + 0.3, 2.5, BAR, 0.04);
+      });
+      this._note(m, 'sine', midi(chord[0] - 12), t, 3, BAR, 0.07);       // бас
+      // шкатулка: 4–7 нот из аккорда и гаммы, неровный ритм
+      const k = r.int(4, 7);
+      for (let i = 0; i < k; i++) {
+        const nt = t + 0.6 + r.next() * (BAR - 1.5);
+        const pool = chord.map((n) => n + 24).concat(SCALE.map((n) => n + 24));
+        const f = midi(r.pick(pool));
+        this._note(m, 'sine', f, nt, 0.005, 1.8, 0.035);
+        this._note(m, 'sine', f * 2.01, nt, 0.005, 0.6, 0.008);        // «стеклянный» обертон
+      }
+      // редкий колокол: неровные обертоны
+      if (m.bar % 2 === 1 && r.next() < 0.7) {
+        const f = midi(chord[0] - 12), bt = t + r.next() * 3;
+        [1, 2.76, 5.4].forEach((h, i) => this._note(m, 'sine', f * h, bt, 0.01, 5 - i, 0.05 / (i + 1)));
+      }
+      m.bar++; m.next += BAR;
+    }
+  }
+  duckMusic(on) {
+    const m = this.musicNode; if (!m || !this.ctx) return;
+    try { m.duck.gain.setTargetAtTime(on ? 0.35 : 1, this.ctx.currentTime, 0.3); } catch (e) {}
   }
 
   // ---------- звуки ----------

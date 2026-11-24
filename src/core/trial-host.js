@@ -29,8 +29,10 @@ export class TrialHost extends Scene {
     const def = ep.trials[idx];
     this.def = def;
     const mod = TRIALS[def.type];
+    const bgId = { shirma: 'bg-shirma', bagazhnik: 'bg-parking', misterx: 'bg-misterx' }[def.type];
+    const bg = bgId && app.assets.has(bgId) ? ' style="background-image:linear-gradient(rgba(13,7,22,0.72),rgba(13,7,22,0.88)),url(' + app.assets.url(bgId) + ');background-size:cover;background-position:center"' : '';
     root.innerHTML =
-      '<div class="trial-frame">' +
+      '<div class="trial-frame"' + bg + '>' +
         '<div class="trial-top">' +
           '<button class="btn small ghost" data-action="leave">' + this.t('ui.back') + '</button>' +
           '<div class="trial-name"><span class="ep-label">' + this.t('ui.episodeN', { n }) +
